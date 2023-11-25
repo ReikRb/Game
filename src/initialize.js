@@ -14,5 +14,19 @@ function initHTMLelements(){
 
     //Debugger Text Box
     globals.txtPruebas = document.getElementById("txtPruebas");
-    
+
 }
+
+//Inits Game Variables Method
+function initVars() {
+    
+    //Inits Game Time Management Variables
+    globals.preciousCycleMilliseconds =0;
+    globals.deltaTime = 0;
+    globals.frameTimeObj = 1 / FPS;
+
+    //Inits Game State
+    globals.gameState = Game.LOADING;
+}
+
+export {initHTMLelements, initVars}
