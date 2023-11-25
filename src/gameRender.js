@@ -19,3 +19,8 @@ export default function render(){
 
     }
 }
+
+function drawGame(){
+
+    //TO DO
+}
