@@ -15,7 +15,11 @@ export default function update(){
         
         default:
             console.error("Error: Game State invalid")
-            
+
     }
 
+    function playGame() {
+        
+        //TO DO
+    }
 }
