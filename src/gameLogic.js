@@ -18,8 +18,9 @@ export default function update(){
 
     }
 
-    function playGame() {
+}
+
+function playGame() {
         
-        //TO DO
-    }
+    //TO DO
 }
