@@ -22,5 +22,10 @@ export default function render(){
 
 function drawGame(){
 
-    //TO DO
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+
+
+    //Draws FPS in Screen
+    globals.ctx.fillText("FPS: " + 1/globals.deltaTime, 30, 30)
 }
