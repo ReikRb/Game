@@ -2,7 +2,7 @@
 
 
 import globals from "./globals.js";
-import { initHTMLelements, initVars, loadAssets } from "./initialize.js";
+import { initHTMLelements, initVars, loadAssets, initSprites } from "./initialize.js";
 import update from "./gameLogic.js"
 import render from "./gameRender.js"
 
@@ -19,6 +19,8 @@ function init() {
     //Loads all archives
     loadAssets();
 
+    //Inits Sprites
+    initSprites();
     //Inits game variables
     initVars();
 
