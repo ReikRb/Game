@@ -20,7 +20,7 @@ function init() {
     initVars();
 
     //First Frame Request
-    window.requestAnimationFrame(gameloop);
+    window.requestAnimationFrame(gameLoop);
 }
 
 
@@ -52,3 +52,4 @@ function gameLoop(timeStamp) {
 
     }
 }
+
