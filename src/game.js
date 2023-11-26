@@ -33,10 +33,10 @@ function gameLoop(timeStamp) {
     window.requestAnimationFrame(gameLoop, globals.canvas);
 
     //Real Time Loop Execution
-    const elapsedCycleSeconds = (timeStamp - globals.preciousCycleMilliseconds) / 1000; //seconds
+    const elapsedCycleSeconds = (timeStamp - globals.previousCycleMilliseconds) / 1000; //seconds
 
     //Last Executed Loop Time
-    globals.preciousCycleMilliseconds = timeStamp;
+    globals.previousCycleMilliseconds = timeStamp;
 
     //Fixes delayed Frame Time regarding frameTimeObj
     if (globals.deltaTime >= globals.frameTimeObj) {
