@@ -28,7 +28,6 @@ function init() {
 
 //Main Loop
 function gameLoop(timeStamp) {
-
     //Constantly request new frames
     window.requestAnimationFrame(gameLoop, globals.canvas);
 
@@ -38,6 +37,7 @@ function gameLoop(timeStamp) {
     //Last Executed Loop Time
     globals.previousCycleMilliseconds = timeStamp;
 
+    
     //Fixes delayed Frame Time regarding frameTimeObj
     if (globals.deltaTime >= globals.frameTimeObj) {
 

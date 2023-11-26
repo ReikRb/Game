@@ -27,5 +27,5 @@ function drawGame(){
 
 
     //Draws FPS in Screen
-    globals.ctx.fillText("FPS: " + 1/globals.deltaTime, 30, 30)
+    globals.ctx.fillText("FPS: " + (1 / globals.deltaTime), 30, 30)
 }

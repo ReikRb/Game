@@ -4,16 +4,16 @@ import {Game, FPS} from "./constants.js"
 //Inits HTML elements Method
 function initHTMLelements(){
     //Canvas
-    globals.canvas = document.getElementById("gameScreen");
+    globals.canvas = document.getElementById('gameScreen');
 
     //Context
-    globals.ctx = globals.canvas.getContext("2d");
+    globals.ctx = globals.canvas.getContext('2d');
 
     //Anti-Aliasing Removal
     globals.ctx.imageSmoothingEnabled = false;
 
     //Debugger Text Box
-    globals.txtPruebas = document.getElementById("txtPruebas");
+    globals.txtPruebas = document.getElementById('txtPruebas');
 
 }
 
@@ -21,7 +21,7 @@ function initHTMLelements(){
 function initVars() {
     
     //Inits Game Time Management Variables
-    globals.preciousCycleMilliseconds =0;
+    globals.previousCycleMilliseconds = 0;
     globals.deltaTime = 0;
     globals.frameTimeObj = 1 / FPS;
 
