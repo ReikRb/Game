@@ -1,5 +1,8 @@
 import globals from "./globals.js"
-import {Game, FPS} from "./constants.js"
+import {Game, FPS, SpriteId, State} from "./constants.js"
+import Sprite from "./Sprite.js"
+import ImageSet from "./ImageSet.js";
+import Frames from "./Frames.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -55,4 +58,23 @@ function loadHandler() {
         globals.gameState = Game.PLAYING;
     }
 }
-export {initHTMLelements, initVars, loadAssets}
+
+function initSprites() {
+    initPlayer();
+}
+
+function initPlayer(){
+    //Img Properties:           xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(44,    57,     64,      10,      6)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const player = new Sprite(SpriteId.PLAYER, State.UP, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(player)
+}
+
+export {initHTMLelements, initVars, loadAssets, initSprites}
