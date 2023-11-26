@@ -18,7 +18,7 @@ const SpriteId = {
 
 //Sprite State Identifier (Direction)
 const State = {
-    UP:    0,
+    IDLE:  0,
     LEFT:  1,
     DOWN:  2,
     RIGHT: 3

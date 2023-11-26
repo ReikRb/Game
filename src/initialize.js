@@ -36,7 +36,7 @@ function loadAssets(){
     //Assign value to global's tileSet
     globals.tileSet = new Image();
     globals.tileSet.addEventListener("load", loadHandler, false);
-    globals.tileSet.src = "./images/Run.png";
+    globals.tileSet.src = "./images/SpriteSheet.png";
 
     //Adds the Loaded tileSet to the Array
     globals.assetsToLoad.push(globals.tileSets)
@@ -65,13 +65,13 @@ function initSprites() {
 
 function initPlayer(){
     //Img Properties:           xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(77,    79,     77,      73,      62)
+    const imageSet = new ImageSet(80,    90,     90,      20,      10)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.UP, 100, 70, imageSet, frames)
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
