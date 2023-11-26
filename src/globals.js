@@ -10,7 +10,7 @@ export default {
     gameState: Game.INVALID,
 
     //Tiempo de ciclo anterior (ms.)
-    preciousCycleMilliseconds: -1,
+    previousCycleMilliseconds: -1,
 
     //Tiempo de ciclo de juego real (seconds)
     deltaTime: 0,
