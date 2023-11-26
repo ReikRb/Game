@@ -19,5 +19,14 @@ export default {
     frameTimeObj: 0,
 
     //Debugger Text Box
-    txtPruebas: {}
+    txtPruebas: {},
+
+    //Img Data(TILESET)
+    tileSet:{},
+
+    //Stores elements to load(IMG/Sounds)
+    assetsToLoad: [],
+
+    //Counter of elements loaded in game
+    assetsLoaded: 0
 }
