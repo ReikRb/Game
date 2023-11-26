@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game} from "./constants.js"
+import {Game, State, SpriteId} from "./constants.js"
 
 export default function update(){
 
@@ -22,5 +22,39 @@ export default function update(){
 
 function playGame() {
         
-    //TO DO
+    updateSprites();
+}
+
+
+function updateSprites() {
+    for (let i = 0; i < globals.sprites.length; i++) {
+        const sprite = globals.sprites[i];
+        updateSprite(sprite)
+    }
+}
+
+function updateSprite(sprite) {
+    const type = sprite.id
+
+    switch (type) {
+
+        //Player Case
+        case SpriteId.PLAYER:
+            updatePlayer(sprite)
+            break;
+    
+        default:
+
+            break;
+    }
+}
+function updatePlayer(sprite) {
+    //Updates Player's variables State
+
+    sprite.xPos  = 10;
+    sprite. yPos = 50;
+
+    sprite.frames.frameCounter = 2;
+
+    sprite.state = State.LEFT
 }
