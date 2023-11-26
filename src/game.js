@@ -37,8 +37,10 @@ function gameLoop(timeStamp) {
     //Last Executed Loop Time
     globals.previousCycleMilliseconds = timeStamp;
 
-    
+
     //Fixes delayed Frame Time regarding frameTimeObj
+    globals.deltaTime += elapsedCycleSeconds
+
     if (globals.deltaTime >= globals.frameTimeObj) {
 
         //Updates gameLogic.js
