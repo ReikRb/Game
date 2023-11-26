@@ -55,4 +55,4 @@ function loadHandler() {
         globals.gameState = Game.PLAYING;
     }
 }
-export {initHTMLelements, initVars}
+export {initHTMLelements, initVars, loadAssets}
