@@ -10,4 +10,17 @@ const Game = {
 //Frames Per Second
 const FPS = 30;
 
-export {Game, FPS}
+//Sprite type Identifier (ID)
+const SpriteId = {
+    PLAYER: 0
+}
+
+
+//Sprite State Identifier (Direction)
+const State = {
+    UP:    0,
+    LEFT:  1,
+    DOWN:  2,
+    RIGHT: 3
+}
+export {Game, FPS, SpriteId, State}
