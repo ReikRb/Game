@@ -28,5 +28,8 @@ export default {
     assetsToLoad: [],
 
     //Counter of elements loaded in game
-    assetsLoaded: 0
+    assetsLoaded: 0,
+
+    //Sprites Data Array
+    sprites: []
 }
