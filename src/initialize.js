@@ -39,4 +39,20 @@ function loadAssets(){
     globals.assetsToLoad.push(globals.tileSets)
 }
 
+function loadHandler() {
+
+    globals.assetsLoaded++; //Adds 1 to the counter
+
+    //Once all Elements are loaded
+    if (globals.assetsLoaded === globals.assetsToLoad.length) {
+        
+        //Removes Load Event Listener
+        globals.tileSet.removeEventListener("load", loadHandler, false)
+
+        console.log("Assets loaded")
+
+        //Starts Game
+        globals.gameState = Game.PLAYING;
+    }
+}
 export {initHTMLelements, initVars}
