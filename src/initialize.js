@@ -29,4 +29,14 @@ function initVars() {
     globals.gameState = Game.LOADING;
 }
 
+function loadAssets(){
+    //Assign value to global's tileSet
+    globals.tileSet = new Image();
+    globals.tileSet.addEventListener("load", loadHandler, false);
+    globals.tileSet.src = "./images/Run.png";
+
+    //Adds the Loaded tileSet to the Array
+    globals.assetsToLoad.push(globals.tileSets)
+}
+
 export {initHTMLelements, initVars}
