@@ -58,3 +58,15 @@ function updatePlayer(sprite) {
 
     sprite.state = State.LEFT
 }
+
+
+function updateSkeleton(sprite){
+
+    //Updates Skeleton's variables State
+    sprite.xPos = 150;
+    sprite.yPos = 130;
+
+    sprite.frames.frameCounter = 3;
+
+    sprite.state = State.LEFT
+}

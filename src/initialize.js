@@ -86,7 +86,7 @@ function initSkeleton(){
     const frames = new Frames (8)
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
+    const skeleton = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
