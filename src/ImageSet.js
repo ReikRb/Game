@@ -1,7 +1,9 @@
 //Manages tileSet Sprite
 export default class ImageSet{
 
-    constructor (xSize, ySize, gridSize, xOffset, yOffset){
+    constructor (initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset){
+        this.initFil       = initFil;
+        this.initCol       = initCol;
         this.xSize         = xSize;
         this.ySize         = ySize;
         this.xOffset       = xOffset;
