@@ -46,8 +46,8 @@ const State = {
 }
 
 const Tile = {
-    SIZE_64: 0,
-    SIZE_32: 1,
+    SIZE_64: 0, //Sprites 64x64
+    SIZE_32: 1, //Tiles de mapa 32x32
 }
 
 const Block = {

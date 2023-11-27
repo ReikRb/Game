@@ -29,6 +29,9 @@ function drawGame(){
     // //Draws FPS in Screen
     // globals.ctx.fillText("FPS: " + (1 / globals.deltaTime), 30, 30)
 
+    //Draws Map (Level)
+    renderMap();
+
     //Draw Elements
     drawSprites();
 }
@@ -54,7 +57,7 @@ function renderMap() {
             //Draws new Sprite's Frame at proper position
             globals.ctx.drawImage(
                 globals.tileSets[Tile.SIZE_32],  //Img file
-                xTile, Ytile,                    //X & Y Position Source
+                xTile, yTile,                    //X & Y Position Source
                 brickSize, brickSize,            //Height & Width Source
                 xPos, yPos ,                     //X & Y Position Destination
                 brickSize, brickSize             //Height and Width Destination
