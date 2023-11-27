@@ -49,7 +49,7 @@ function loadAssets(){
     tileSet.src = "./images/blocks.png";
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet)
-    
+
 }
 
 function loadHandler() {
@@ -60,7 +60,10 @@ function loadHandler() {
     if (globals.assetsLoaded === globals.assetsToLoad.length) {
         
         //Removes Load Event Listener
-        globals.tileSet.removeEventListener("load", loadHandler, false)
+        for (let i = 0; i < globals.tileSets.length; i++) {
+            globals.tileSet[i].removeEventListener("load", loadHandler, false)
+              
+        }
 
         console.log("Assets loaded")
 
