@@ -43,9 +43,14 @@ function drawSprites() {
 
 
 function renderSprite(sprite){
-    //Calculates tilemap drawing position
-    const xTile = sprite.frames.frameCounter * sprite.imageSet.gridSize + sprite.imageSet.xOffset
-    const yTile = sprite.state * sprite.imageSet.gridSize + sprite.imageSet.yOffset
+
+    //Sets initial tile position
+    const xPosInit = sprite.imageSet.initCol * sprite.imageSet.gridSize;
+    const yPosInit = sprite.imageSet.initFil * sprite.imageSet.gridSize;
+
+    //Sets tilemap drawing position
+    const xTile = xPosInit + sprite.frames.frameCounter * sprite.imageSet.gridSize + sprite.imageSet.xOffset
+    const yTile = yPosInit + sprite.state * sprite.imageSet.gridSize + sprite.imageSet.yOffset
 
     // Sprites position rounded down
     const xPos = Math.floor(sprite.xPos)
