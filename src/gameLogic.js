@@ -42,7 +42,11 @@ function updateSprite(sprite) {
         case SpriteId.PLAYER:
             updatePlayer(sprite)
             break;
-    
+
+        case SpriteId.SKELETON:
+            updateSkeleton(sprite)
+            break;
+
         default:
 
             break;
@@ -64,9 +68,9 @@ function updateSkeleton(sprite){
 
     //Updates Skeleton's variables State
     sprite.xPos = 150;
-    sprite.yPos = 130;
+    sprite.yPos = 102;
 
-    sprite.frames.frameCounter = 3;
+    sprite.frames.frameCounter = 0;
 
     sprite.state = State.LEFT
 }
