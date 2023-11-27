@@ -52,12 +52,17 @@ const Tile = {
 
 const Block = {
     EMPTY: 0,
-    TOP:   1,
-    RIGHT: 2,
-    LEFT:  3,
-    BOT:   4,
-    TOP_RIGHT: 5,
-    TOP_LEFT:  6,
-    BOT_RIGHT: 7,
+    TOP_LEFT:  1,
+    TOP:   2,
+    TOP_RIGHT: 3,
+    MOON: 4,
+    LEFT:  9,
+    DARK: 10,
+    RIGHT: 11,
+    SKY: 12,
+    BOT_LEFT:17,
+    BOT:   18,
+    BOT_RIGHT: 19,
+    CAVE:20,
 }
 export {Game, FPS, SpriteId, State, Tile, Block}
