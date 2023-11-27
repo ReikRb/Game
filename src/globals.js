@@ -35,4 +35,7 @@ export default {
 
     //Img Data (TILE-SET). Modified by Array
     tileSets: [],
+
+    //Level Data
+    level: {}
 }

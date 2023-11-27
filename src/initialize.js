@@ -3,6 +3,7 @@ import {Game, FPS, SpriteId, State} from "./constants.js"
 import Sprite from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
+import { Level, level1 } from "./Level.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -105,4 +106,12 @@ function initSkeleton(){
     globals.sprites.push(skeleton)
 }
 
-export {initHTMLelements, initVars, loadAssets, initSprites}
+function initLevel() {
+    
+    //Makes Properties of Map Img: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
+
+    //Makes & Saves Level
+    globals.level = new Level(level1, imageSet)
+}   
+export {initHTMLelements, initVars, loadAssets, initSprites} 
