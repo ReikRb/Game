@@ -114,4 +114,4 @@ function initLevel() {
     //Makes & Saves Level
     globals.level = new Level(level1, imageSet)
 }   
-export {initHTMLelements, initVars, loadAssets, initSprites} 
+export {initHTMLelements, initVars, loadAssets, initSprites, initLevel} 
