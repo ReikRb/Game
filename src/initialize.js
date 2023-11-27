@@ -64,8 +64,8 @@ function initSprites() {
 }
 
 function initPlayer(){
-    //Img Properties:           xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(80,    90,     90,      20,      10)
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0,       0,      80,    90,     90,      20,      10)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
