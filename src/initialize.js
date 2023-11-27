@@ -61,6 +61,7 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
+    initSkeleton();
 }
 
 function initPlayer(){
@@ -75,6 +76,20 @@ function initPlayer(){
 
     //Adds Sprite to Array
     globals.sprites.push(player)
+}
+
+function initSkeleton(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0,       0,      80,    90,     90,      20,      10)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(skeleton)
 }
 
 export {initHTMLelements, initVars, loadAssets, initSprites}
