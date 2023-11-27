@@ -44,4 +44,20 @@ const State = {
     DEAD_RIGHT_2:    7,
     DEAD_LEFT_2:     8,
 }
-export {Game, FPS, SpriteId, State}
+
+const Tile = {
+    SIZE_64: 0,
+    SIZE_32: 1,
+}
+
+const Block = {
+    EMPTY: 0,
+    TOP:   1,
+    RIGHT: 2,
+    LEFT:  3,
+    BOT:   4,
+    TOP_RIGHT: 5,
+    TOP_LEFT:  6,
+    BOT_RIGHT: 7,
+}
+export {Game, FPS, SpriteId, State, Tile, Block}
