@@ -33,13 +33,23 @@ function initVars() {
 }
 
 function loadAssets(){
-    //Assign value to global's tileSet
-    globals.tileSet = new Image();
-    globals.tileSet.addEventListener("load", loadHandler, false);
-    globals.tileSet.src = "./images/SpriteSheet.png";
+    let tileSet;
+    
+    //Loads SpriteSheet Img
+    tileSet = new Image();
+    tileSet.addEventListener("load", loadHandler, false);
+    tileSet.src = "./images/SpriteSheet.png";
+    globals.tileSets.push(tileSet);
+    globals.assetsToLoad.push(tileSet);
 
-    //Adds the Loaded tileSet to the Array
-    globals.assetsToLoad.push(globals.tileSets)
+
+    //Loads Blocks Img
+    tileSet = new Image();
+    tileSet.addEventListener("load", loadHandler, false);
+    tileSet.src = "./images/blocks.png";
+    globals.tileSets.push(tileSet);
+    globals.assetsToLoad.push(tileSet)
+    
 }
 
 function loadHandler() {
