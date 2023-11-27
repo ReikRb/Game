@@ -90,7 +90,7 @@ function renderSprite(sprite){
 
     //Draws new frame on proper position
     globals.ctx.drawImage(
-        globals.tileSet,                                //Img File
+        globals.tileSets[Tile.SIZE_64],                 //Img File
         xTile, yTile,                                   //X & Y Position Source
         sprite.imageSet.xSize, sprite.imageSet.ySize,   //Height & Width Source
         xPos, yPos,                                     //Final X & Y Position
