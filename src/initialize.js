@@ -62,7 +62,7 @@ function loadHandler() {
         
         //Removes Load Event Listener
         for (let i = 0; i < globals.tileSets.length; i++) {
-            globals.tileSet[i].removeEventListener("load", loadHandler, false)
+            globals.tileSets[i].removeEventListener("load", loadHandler, false)
               
         }
 
