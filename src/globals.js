@@ -31,5 +31,8 @@ export default {
     assetsLoaded: 0,
 
     //Sprites Data Array
-    sprites: []
+    sprites: [],
+
+    //Img Data (TILE-SET). Modified by Array
+    tileSets: [],
 }
