@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game} from "./constants.js"
-
+import { Tile } from "./constants.js";
 //Graphic Renderer Method
 export default function render(){
 
@@ -32,6 +32,38 @@ function drawGame(){
     //Draw Elements
     drawSprites();
 }
+
+//Map Drawer Method
+function renderMap() {
+    const brickSize = globals.level.imageSet.gridSize;
+    const levelData = globals.level.data;
+
+    //Draws Map
+    const num_fil = levelData.length;
+    const num_col = levelData[0].length;
+
+    for (let i = 0; i < num_fil; i++) {
+        for (let j = 0; j < num_col; j++) {
+
+            const xTile = (levelData[i][j] - 1) * brickSize;
+            const yTile = 0;
+            const xPos  = j * brickSize
+            const yPos  = i * brickSize
+
+
+            //Draws new Sprite's Frame at proper position
+            globals.ctx.drawImage(
+                globals.tileSets[Tile.SIZE_32],  //Img file
+                xTile, Ytile,                    //X & Y Position Source
+                brickSize, brickSize,            //Height & Width Source
+                xPos, yPos ,                     //X & Y Position Destination
+                brickSize, brickSize             //Height and Width Destination
+            );
+        }
+        
+    }
+}
+
 
 function drawSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
