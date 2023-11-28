@@ -5,6 +5,8 @@ export default {
     //Canvas y Context
     canvas: {},
     ctx: {},
+    canvasHUD: {},
+    ctxHUD: {},
 
     //Estado de juego
     gameState: Game.INVALID,
