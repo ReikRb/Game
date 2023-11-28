@@ -24,6 +24,7 @@ function drawGame(){
 
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
 
 
     // //Draws FPS in Screen
@@ -33,7 +34,53 @@ function drawGame(){
     renderMap();
 
     //Draw Elements
-    drawSprites();
+    renderSprites();
+
+    //Draw HUD
+    renderHUD();
+
+
+}
+
+
+function renderHUD() {
+    //Raw Data
+    const score     = 1500;
+    const highScore = 120000;
+    const life      = 40;
+    const time      = 3000;
+
+    //Draw Score
+    globals.ctxHUD.font = "8px emulogic";
+    globals.ctxHUD.fillStyle = "lightblue";
+    globals.ctxHUD.fillText("SCORE", 8, 8);
+    globals.ctxHUD.fillStyle = "lightgray";
+    globals.ctxHUD.fillText(" " + score, 8, 16);
+    
+    //Draw High Score
+    globals.ctxHUD.fillStyle = "lightblue";
+    globals.ctxHUD.fillText("HIGH SCORE", 72, 8);
+    globals.ctxHUD.fillStyle = "lightgray";
+    globals.ctxHUD.fillText(" " + highScore, 72, 16);
+
+    //Draw Life
+    globals.ctxHUD.fillStyle = "lightblue";
+    globals.ctxHUD.fillText("LIFE", 168, 8);
+    globals.ctxHUD.fillStyle = "lightgray";
+    globals.ctxHUD.fillRect(168, 9, life, 7);
+
+    //Round Life Corners (1px)
+    globals.ctxHUD.fillStyle = "black";
+    globals.ctxHUD.fillRect(168, 9, 1, 1);
+    globals.ctxHUD.fillRect(168, 15, 1, 1);
+    globals.ctxHUD.fillRect(168 + life - 1, 9, 1, 1);
+    globals.ctxHUD.fillRect(168 + life - 1, 15, 1, 1);
+
+    //Draw Time
+    globals.ctxHUD.fillStyle = "lightblue";
+    globals.ctxHUD.fillText("TIME", 224, 8);
+    globals.ctxHUD.fillStyle = "lightgray";
+    globals.ctxHUD.fillText(time, 224, 16);
 }
 
 //Map Drawer Method
@@ -68,7 +115,7 @@ function renderMap() {
 }
 
 
-function drawSprites() {
+function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
 

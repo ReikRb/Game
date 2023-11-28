@@ -13,11 +13,11 @@ function initHTMLelements(){
     //Context
     globals.ctx = globals.canvas.getContext('2d');
 
-        //Canvas HUD
-        globals.canvas = document.getElementById('gameHUD');
+    //Canvas HUD
+    globals.canvasHUD = document.getElementById('gameHUD');
 
-        //Context HUD
-        globals.ctx = globals.canvas.getContext('2d');
+    //Context HUD
+    globals.ctxHUD = globals.canvasHUD.getContext('2d');
 
     //Anti-Aliasing Removal
     globals.ctx.imageSmoothingEnabled = false;
