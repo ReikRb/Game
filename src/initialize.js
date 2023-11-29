@@ -80,10 +80,14 @@ function loadHandler() {
 }
 
 function initSprites() {
+    initKey();
     initPlayer();
     initChair();
     initSkeleton();
-    initKey();
+    initEmptyCrystalLife()
+    initLife()
+    initEmptyCrystalMana()
+    initMana();
 }
 
 function initPlayer(){
@@ -115,9 +119,10 @@ function initChair() {
         globals.sprites.push(chair)
 }
 
+//TERMINAR DE REVISAR LAS ANIMACIONES
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(15,       0,      80,    90,     140,      40,      60)
+    const imageSet = new ImageSet(21,       0,      100,    90,     140,      0,      60)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -131,7 +136,7 @@ function initSkeleton(){
 
 function initKey(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(20,       0,      30,    30,     140,      60,      50)
+    const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -141,6 +146,64 @@ function initKey(){
 
     //Adds Sprite to Array
     globals.sprites.push(key)
+}
+
+function initEmptyCrystalLife(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const EmptyCrystalLife = new Sprite(SpriteId.EMPTY_CRYSTAL_LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(EmptyCrystalLife)
+
+}
+
+function initLife(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(9,       6,      28,    51,     140,     70,      108)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const life = new Sprite(SpriteId.LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(life)
+}
+
+function initEmptyCrystalMana(){
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
+
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
+    
+        //Sprite Creation
+        const EmptyCrystalMana = new Sprite(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames)
+    
+        //Adds Sprite to Array
+        globals.sprites.push(EmptyCrystalMana)
+
+}
+
+function initMana(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(9,       5,      28,    51,     140,     70,      108)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const mana = new Sprite(SpriteId.MANA, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(mana)
 }
 
 

@@ -55,6 +55,22 @@ function updateSprite(sprite) {
             updateChair(sprite)
             break;
     
+        case SpriteId.LIFE:
+            updateLife(sprite)
+            break;
+
+        case SpriteId.MANA:
+            updateMana(sprite)
+            break;
+
+        case SpriteId.EMPTY_CRYSTAL_LIFE:
+            updateEmptyCrystalLife(sprite)
+            break;
+
+        case SpriteId.EMPTY_CRYSTAL_MANA:
+             updateEmptyCrystalMana(sprite)
+             break;
+    
         default:
 
             break;
@@ -86,7 +102,7 @@ function updateChair(sprite) {
 function updateSkeleton(sprite){
 
     //Updates Skeleton's variables State
-    sprite.xPos = 200;
+    sprite.xPos = 270;
     sprite.yPos = 39;
 
     sprite.frames.frameCounter = 0;
@@ -97,9 +113,50 @@ function updateSkeleton(sprite){
 function updateKey(sprite){
 
     //Updates Key's variables State
+    sprite.xPos = 320;
+    sprite.yPos = 39;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateEmptyCrystalLife(sprite){
+
+    //Updates Key's variables State
     sprite.xPos = 200;
     sprite.yPos = 39;
 
     sprite.frames.frameCounter = 0;
 
 }
+
+function updateLife(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 200;
+    sprite.yPos = 59;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateEmptyCrystalMana(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 228;
+    sprite.yPos = 39;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateMana(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 228;
+    sprite.yPos = 59;
+    // sprite.imageSet.yOffset = 60
+    sprite.frames.frameCounter = 0;
+
+}
+

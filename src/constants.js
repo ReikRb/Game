@@ -16,6 +16,10 @@ const SpriteId = {
     SKELETON: 1,
     KEY:      2,
     CHAIR:    3,
+    LIFE:     4,
+    MANA:     5,
+    EMPTY_CRYSTAL_LIFE: 6,
+    EMPTY_CRYSTAL_MANA: 7,
 }
 
 
