@@ -14,6 +14,7 @@ const FPS = 30;
 const SpriteId = {
     PLAYER:   0,
     SKELETON: 1,
+    KEY:      2,
 }
 
 
@@ -43,6 +44,9 @@ const State = {
     DAMAGED_LEFT_2:  6,
     DEAD_RIGHT_2:    7,
     DEAD_LEFT_2:     8,
+
+    //Collectables States
+    IDLE_3:          0
 }
 
 const Tile = {

@@ -121,11 +121,12 @@ function initKey(){
     const frames = new Frames (8)
 
     //Sprite Creation
-    const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
+    const key = new Sprite(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames)
 
     //Adds Sprite to Array
-    globals.sprites.push(skeleton)
+    globals.sprites.push(key)
 }
+
 
 function initLevel() {
     
@@ -134,5 +135,7 @@ function initLevel() {
 
     //Makes & Saves Level
     globals.level = new Level(level1, imageSet)
-}   
+}  
+
+
 export {initHTMLelements, initVars, loadAssets, initSprites, initLevel} 

@@ -47,6 +47,10 @@ function updateSprite(sprite) {
             updateSkeleton(sprite)
             break;
 
+        case SpriteId.KEY:
+            updateKey(sprite)
+            break;
+            
         default:
 
             break;
@@ -73,4 +77,14 @@ function updateSkeleton(sprite){
     sprite.frames.frameCounter = 0;
 
     sprite.state = State.IDLE
+}
+
+function updateKey(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 200;
+    sprite.yPos = 39;
+
+    sprite.frames.frameCounter = 0;
+
 }
