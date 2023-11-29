@@ -81,6 +81,7 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
+    initChair();
     initSkeleton();
     initKey();
 }
@@ -97,6 +98,21 @@ function initPlayer(){
 
     //Adds Sprite to Array
     globals.sprites.push(player)
+}
+
+function initChair() {
+
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(6,       4,      140,    110,     140,     10,      40)
+    
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (2)
+
+    //Sprite Creation
+    const chair = new Sprite(SpriteId.CHAIR, State.IDLE, 100, 70, imageSet, frames)
+
+        //Adds Sprite to Array
+        globals.sprites.push(chair)
 }
 
 function initSkeleton(){

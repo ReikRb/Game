@@ -15,6 +15,7 @@ const SpriteId = {
     PLAYER:   0,
     SKELETON: 1,
     KEY:      2,
+    CHAIR:    3,
 }
 
 

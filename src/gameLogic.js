@@ -50,7 +50,11 @@ function updateSprite(sprite) {
         case SpriteId.KEY:
             updateKey(sprite)
             break;
-            
+
+        case SpriteId.CHAIR:
+            updateChair(sprite)
+            break;
+    
         default:
 
             break;
@@ -59,8 +63,19 @@ function updateSprite(sprite) {
 function updatePlayer(sprite) {
     //Updates Player's variables State
 
-    sprite.xPos  = 0            ;
+    sprite.xPos  = 0;
     sprite. yPos = 19;
+
+    sprite.frames.frameCounter = 0;
+
+    sprite.state = State.IDLE
+}
+
+function updateChair(sprite) {
+    //Updates Player's variables State
+
+    sprite.xPos  = -40;
+    sprite. yPos = 0;
 
     sprite.frames.frameCounter = 0;
 
