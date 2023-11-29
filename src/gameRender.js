@@ -85,9 +85,9 @@ function renderHUD() {
 
 //Map Drawer Method
 function renderMap() {
-    const brickSize = globals.level.imageSet.gridSize;
-    const levelData = globals.level.data;
-
+    const brickSize     = globals.level.imageSet.gridSize;
+    const levelData     = globals.level.data;
+    const tileSetColNum = 8;
     //Draws Map
     const num_fil = levelData.length;
     const num_col = levelData[0].length;
@@ -95,8 +95,8 @@ function renderMap() {
     for (let i = 0; i < num_fil; i++) {
         for (let j = 0; j < num_col; j++) {
 
-            const xTile =           (levelData[i][j] % num_col - 1) * brickSize;
-            const yTile = Math.floor(levelData[i][j] / num_col) * brickSize;
+            const xTile =           (levelData[i][j] % tileSetColNum - 1) * brickSize;
+            const yTile = Math.floor(levelData[i][j] / tileSetColNum) * brickSize;
             const xPos  = j * brickSize
             const yPos  = i * brickSize
 
