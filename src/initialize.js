@@ -86,7 +86,7 @@ function initSprites() {
 
 function initPlayer(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0,       0,      80,    90,     90,      20,      10)
+    const imageSet = new ImageSet(10,       0,      90,    90,     110,      50,      30)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -100,7 +100,7 @@ function initPlayer(){
 
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(5,       0,      80,    90,     90,      20,      10)
+    const imageSet = new ImageSet(15,       0,      80,    90,     110,      50,      30)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
