@@ -55,8 +55,8 @@ function updateSprite(sprite) {
 function updatePlayer(sprite) {
     //Updates Player's variables State
 
-    sprite.xPos  = 10;
-    sprite. yPos = 39;
+    sprite.xPos  = 0            ;
+    sprite. yPos = 19;
 
     sprite.frames.frameCounter = 0;
 
@@ -67,7 +67,7 @@ function updatePlayer(sprite) {
 function updateSkeleton(sprite){
 
     //Updates Skeleton's variables State
-    sprite.xPos = 150;
+    sprite.xPos = 200;
     sprite.yPos = 39;
 
     sprite.frames.frameCounter = 0;

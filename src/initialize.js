@@ -82,11 +82,12 @@ function loadHandler() {
 function initSprites() {
     initPlayer();
     initSkeleton();
+    initKey();
 }
 
 function initPlayer(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(10,       0,      90,    90,     110,      50,      30)
+    const imageSet = new ImageSet(2,       0,      140,    110,     140,     10,      40)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -100,7 +101,21 @@ function initPlayer(){
 
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(15,       0,      80,    90,     110,      50,      30)
+    const imageSet = new ImageSet(15,       0,      80,    90,     140,      40,      60)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(skeleton)
+}
+
+function initKey(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(20,       0,      30,    30,     140,      60,      50)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
