@@ -249,7 +249,7 @@ function initChair() {
     const frames = new Frames (2)
 
     //Sprite Creation
-    const chair = new Sprite(SpriteId.CHAIR, State.IDLE, 100, 70, imageSet, frames)
+    const chair = new Sprite(SpriteId.CHAIR, State.IDLE_3, 100, 70, imageSet, frames)
 
         //Adds Sprite to Array
         globals.sprites.push(chair)
