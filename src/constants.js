@@ -12,39 +12,47 @@ const FPS = 30;
 
 //Sprite type Identifier (ID)
 const SpriteId = {
-    PLAYER:   0,
-    SKELETON: 1,
-    KEY:      2,
-    CHAIR:    3,
-    LIFE:     4,
-    MANA:     5,
+    PLAYER:             0,
+    SKELETON:           1,
+    KEY:                2,
+    CHAIR:              3,
+    LIFE:               4,
+    MANA:               5,
     EMPTY_CRYSTAL_LIFE: 6,
     EMPTY_CRYSTAL_MANA: 7,
-    EMPTY_POWER:   8,
-    POWER:         9,
-    EMPTY_KEY:    10,
-    OBTAINED_KEY: 11,
-    CHECKPOINT:12,
+    EMPTY_POWER:        8,
+    POWER:              9,
+    EMPTY_KEY:          10,
+    OBTAINED_KEY:       11,
+    CHECKPOINT:         12,
+    ATTACK_VFX:         13,
+    FIREBALL:           14,
 }
 
 
 //Sprite State Identifier (Direction)
 const State = {
-    IDLE_RIGHT:   0,
-    IDLE_LEFT:    1,
-    RUN_RIGHT:    2,
-    RUN_LEFT:     3,
-    JUMP_RIGHT:   4,
-    JUMP_LEFT:    5,
-    FALL_RIGHT:   6,
-    FALL_LEFT:    7,
-    DAMAGED_RIGHT: 8,
-    DAMAGED_LEFT:  9,
-    DEAD_RIGHT:    10,
-    DEAD_LEFT:     11,
-    ATTACK_RIGHT:  12,
-    ATTACK_LEFT:   13,
 
+    //PLAYER States
+    IDLE_RIGHT:      0,
+    IDLE_LEFT:       1,
+    RUN_RIGHT:       2,
+    RUN_LEFT:        3,
+    JUMP_RIGHT:      4,
+    JUMP_LEFT:       5,
+    FALL_RIGHT:      6,
+    FALL_LEFT:       7,
+    DAMAGED_RIGHT:   8,
+    DAMAGED_LEFT:    9,
+    DEAD_RIGHT:     10,
+    DEAD_LEFT:      11,
+    ATTACK_RIGHT:   12,
+    ATTACK_LEFT:    13,
+
+    //PLAYER ATTCK VFX & FIREBALL
+    RIGHT:           0,
+    LEFT:            1,
+    
     // SKELETON States 
     RUN_RIGHT_2:     0,
     RUN_LEFT_2:      1,

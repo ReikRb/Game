@@ -90,6 +90,13 @@ function updateSprite(sprite) {
         case SpriteId.CHECKPOINT:
             updateCheckPoint(sprite)
             break;
+        case SpriteId.ATTACK_VFX:
+            updatePlayerAttackVFX(sprite)
+            break;
+
+        case SpriteId.FIREBALL:
+            updateFireball(sprite)
+            break;
 
         default:
 
@@ -184,9 +191,25 @@ function updatePlayer(sprite) {
     sprite.xPos  = 0;
     sprite. yPos = 179;
 
-    sprite.frames.frameCounter = 3;
+    sprite.frames.frameCounter = 7;
 
     sprite.state = State.ATTACK_RIGHT
+}
+
+function updatePlayerAttackVFX(sprite) {
+    sprite.xPos  = 70;
+    sprite. yPos = 179;
+
+    sprite.frames.frameCounter = 3;
+    sprite.state = State.RIGHT
+}
+
+function updateFireball(sprite) {
+    sprite.xPos  = 200;
+    sprite. yPos = 179;
+
+    sprite.frames.frameCounter = 1;
+    sprite.state = State.RIGHT
 }
 
 function updateChair(sprite) {

@@ -92,6 +92,8 @@ function initSprites() {
     initCheckPoint();
     initKey();
     initPlayer();
+    initPlayerFireball();
+    initPlayerAttackVFX();
     initChair();
     initSkeleton();
 }
@@ -252,6 +254,35 @@ function initChair() {
         //Adds Sprite to Array
         globals.sprites.push(chair)
 }
+
+function initPlayerAttackVFX() {
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(4,       3,      80,    82,     140,     36,      40)
+    
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (4)
+    
+        //Sprite Creation
+        const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames)
+    
+            //Adds Sprite to Array
+            globals.sprites.push(attack)
+}
+
+function initPlayerFireball() {
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(6,       2,      80,    82,     140,     36,      40)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (2)
+
+    //Sprite Creation
+    const fireball = new Sprite(SpriteId.FIREBALL, State.RIGHT, 100, 70, imageSet, frames)
+
+        //Adds Sprite to Array
+        globals.sprites.push(fireball)
+}
+
 
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset

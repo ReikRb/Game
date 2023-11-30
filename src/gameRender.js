@@ -102,7 +102,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        drawSpriteRectangle(sprite)
+        // drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }
