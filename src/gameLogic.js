@@ -143,7 +143,7 @@ function updateKey(sprite){
 function updateEmptyCrystalLife(sprite){
 
     //Updates Key's variables State
-    sprite.xPos = 100;
+    sprite.xPos = 95;
     sprite.yPos = 0;
 
     sprite.frames.frameCounter = 0;
@@ -153,7 +153,7 @@ function updateEmptyCrystalLife(sprite){
 function updateLife(sprite){
 
     //Updates Key's variables State
-    sprite.xPos = 100;
+    sprite.xPos = 95;
     sprite.yPos = 20;
 
     sprite.frames.frameCounter = 0;
@@ -174,8 +174,8 @@ function updateMana(sprite){
 
     //Updates Key's variables State
     sprite.xPos = 128;
-    sprite.yPos = 20 ;
-    sprite.imageSet.yOffset = 60
+    sprite.yPos = 30 ;
+    sprite.imageSet.yOffset = 118
     sprite.frames.frameCounter = 0;
 
 }

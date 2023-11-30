@@ -5,7 +5,7 @@
 
 
 #gameScreen {
-    width: 1080px;
+    width: 1152px;
     height: 768px;
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
@@ -15,7 +15,7 @@
 
 
 #gameHUD {
-    width: 1080px;
+    width: 1152px;
     height: 100px;
     margin-bottom: -5px;
     background-color: black;
