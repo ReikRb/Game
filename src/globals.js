@@ -35,6 +35,8 @@ export default {
     //Sprites Data Array
     sprites: [],
 
+    SpritesHUD: 0,
+
     //Img Data (TILE-SET). Modified by Array
     tileSets: [],
 

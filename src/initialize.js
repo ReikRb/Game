@@ -80,15 +80,16 @@ function loadHandler() {
 }
 
 function initSprites() {
-    initKey();
-    initPlayer();
-    initChair();
-    initSkeleton();
     initEmptyCrystalLife()
     initLife()
     initEmptyCrystalMana()
     initMana();
+    initKey();
+    initPlayer();
+    initChair();
+    initSkeleton();
 }
+
 
 function initPlayer(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
@@ -160,6 +161,7 @@ function initEmptyCrystalLife(){
 
     //Adds Sprite to Array
     globals.sprites.push(EmptyCrystalLife)
+    globals.SpritesHUD++
 
 }
 
@@ -175,6 +177,7 @@ function initLife(){
 
     //Adds Sprite to Array
     globals.sprites.push(life)
+    globals.SpritesHUD++
 }
 
 function initEmptyCrystalMana(){
@@ -189,6 +192,7 @@ function initEmptyCrystalMana(){
     
         //Adds Sprite to Array
         globals.sprites.push(EmptyCrystalMana)
+        globals.SpritesHUD++
 
 }
 
@@ -204,6 +208,7 @@ function initMana(){
 
     //Adds Sprite to Array
     globals.sprites.push(mana)
+    globals.SpritesHUD++
 }
 
 

@@ -16,7 +16,7 @@
 
 #gameHUD {
     width: 1080px;
-    height: 64px;
+    height: 100px;
     margin-bottom: -5px;
     background-color: black;
     image-rendering: -moz-crisp-edges;
