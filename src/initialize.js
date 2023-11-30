@@ -96,79 +96,7 @@ function initSprites() {
     initSkeleton();
 }
 
-
-function initPlayer(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
-
-    //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(player)
-}
-
-function initChair() {
-
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(6,       4,      140,    110,     140,     10,      40)
-    
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (2)
-
-    //Sprite Creation
-    const chair = new Sprite(SpriteId.CHAIR, State.IDLE, 100, 70, imageSet, frames)
-
-        //Adds Sprite to Array
-        globals.sprites.push(chair)
-}
-
-//TERMINAR DE REVISAR LAS ANIMACIONES
-function initSkeleton(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
-
-    //Sprite Creation
-    const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(skeleton)
-}
-
-function initKey(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
-
-    //Sprite Creation
-    const key = new Sprite(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(key)
-}
-
-function initCheckPoint(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (5)
-
-    //Sprite Creation
-    const checkpoint = new Sprite(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(checkpoint)
-    
-}
+//Interface inits
 function initEmptyCrystalLife(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
@@ -294,6 +222,81 @@ function initObtainedKey(){
     globals.SpritesHUD++
     
 }
+
+//In-Game inits
+function initPlayer(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(player)
+}
+
+function initChair() {
+
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(6,       4,      140,    110,     140,     10,      40)
+    
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (2)
+
+    //Sprite Creation
+    const chair = new Sprite(SpriteId.CHAIR, State.IDLE, 100, 70, imageSet, frames)
+
+        //Adds Sprite to Array
+        globals.sprites.push(chair)
+}
+
+function initSkeleton(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(skeleton)
+}
+
+function initKey(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (8)
+
+    //Sprite Creation
+    const key = new Sprite(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(key)
+}
+
+function initCheckPoint(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (5)
+
+    //Sprite Creation
+    const checkpoint = new Sprite(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(checkpoint)
+    
+}
+
+
 
 
 
