@@ -99,7 +99,7 @@ function initSprites() {
 
 function initPlayer(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(2,       0,      140,    110,     140,     10,      40)
+    const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -129,7 +129,7 @@ function initChair() {
 //TERMINAR DE REVISAR LAS ANIMACIONES
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(21,       0,      100,    90,     140,      0,      60)
+    const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8)
@@ -157,7 +157,7 @@ function initKey(){
 
 function initCheckPoint(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(16,       2,      45,    45,     140,     64,      110)
+    const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (5)

@@ -96,50 +96,7 @@ function updateSprite(sprite) {
             break;
     }
 }
-function updatePlayer(sprite) {
-    //Updates Player's variables State
-
-    sprite.xPos  = 0;
-    sprite. yPos = 19;
-
-    sprite.frames.frameCounter = 0;
-
-    sprite.state = State.IDLE
-}
-
-function updateChair(sprite) {
-    //Updates Player's variables State
-
-    sprite.xPos  = -40;
-    sprite. yPos = 0;
-
-    sprite.frames.frameCounter = 0;
-
-    sprite.state = State.IDLE
-}
-
-
-function updateSkeleton(sprite){
-
-    //Updates Skeleton's variables State
-    sprite.xPos = 270;
-    sprite.yPos = 39;
-
-    sprite.frames.frameCounter = 0;
-
-    sprite.state = State.IDLE
-}
-
-function updateKey(sprite){
-
-    //Updates Key's variables State
-    sprite.xPos = 320;
-    sprite.yPos = 39;
-
-    sprite.frames.frameCounter = 0;
-
-}
-
+//HUD Sprites Functions
 function updateEmptyCrystalLife(sprite){
 
     //Updates Key's variables State
@@ -220,11 +177,55 @@ function updateObtainedKey(sprite){
 
 }
 
+//In-Game Sprites Functions
+function updatePlayer(sprite) {
+    //Updates Player's variables State
+
+    sprite.xPos  = 0;
+    sprite. yPos = 179;
+
+    sprite.frames.frameCounter = 3;
+
+    sprite.state = State.ATTACK_RIGHT
+}
+
+function updateChair(sprite) {
+    //Updates Player's variables State
+
+    sprite.xPos  = -50;
+    sprite. yPos = 159;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+
+function updateSkeleton(sprite){
+
+    //Updates Skeleton's variables State
+    sprite.xPos = 270;
+    sprite.yPos = 199;
+
+    sprite.frames.frameCounter = 0;
+
+    sprite.state = State.RUN_LEFT_2
+}
+
+function updateKey(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 400;
+    sprite.yPos = 169;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
 function updateCheckPoint(sprite){
 
     //Updates Key's variables State
-    sprite.xPos = 159;
-    sprite.yPos = 50;
+    sprite.xPos = 167;
+    sprite.yPos = 217;
 
     sprite.frames.frameCounter = 0;
 

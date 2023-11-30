@@ -102,7 +102,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        // drawSpriteRectangle(sprite)
+        drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }
@@ -121,8 +121,8 @@ function drawSpriteRectangle(sprite) {
     const w1 = sprite.imageSet.xSize
     const h1 = sprite.imageSet.ySize
 
-    globals.ctxHUD.fillStyle = "green"
-    globals.ctxHUD.fillRect(x1, y1, w1, h1)
+    globals.ctx.fillStyle = "green"
+    globals.ctx.fillRect(x1, y1, w1, h1)
 }
 function renderSprite(sprite){
 
