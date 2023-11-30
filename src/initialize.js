@@ -81,12 +81,15 @@ function loadHandler() {
 
 function initSprites() {
 
-    initEmptyCrystalLife()
-    initLife()
-    initEmptyCrystalMana()
+    initEmptyCrystalLife();
+    initLife();
+    initEmptyCrystalMana();
     initMana();
-    initEmptyPower()
-    initPower()
+    initEmptyPower();
+    initPower();
+    initEmptyKey();
+    // initObtainedKey();
+    initCheckPoint();
     initKey();
     initPlayer();
     initChair();
@@ -152,6 +155,20 @@ function initKey(){
     globals.sprites.push(key)
 }
 
+function initCheckPoint(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(16,       2,      45,    45,     140,     64,      110)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (5)
+
+    //Sprite Creation
+    const checkpoint = new Sprite(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(checkpoint)
+    
+}
 function initEmptyCrystalLife(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
@@ -245,6 +262,40 @@ function initPower(){
     globals.SpritesHUD++
     
 }
+
+function initEmptyKey(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(8,       6,      60,    45,     140,     54,      55)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const emptyKey = new Sprite(SpriteId.EMPTY_KEY, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(emptyKey)
+    globals.SpritesHUD++
+    
+}
+
+function initObtainedKey(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(8,       7,      60,    45,     140,     54,      55)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const obtainedKey = new Sprite(SpriteId.OBTAINED_KEY, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(obtainedKey)
+    globals.SpritesHUD++
+    
+}
+
+
 
 
 function initLevel() {

@@ -79,6 +79,18 @@ function updateSprite(sprite) {
             updatePower(sprite)
             break;
     
+        case SpriteId.EMPTY_KEY:
+            updateEmptyKey(sprite)
+            break;
+        
+        case SpriteId.OBTAINED_KEY:
+            updateObtainedKey(sprite)
+            break;
+
+        case SpriteId.CHECKPOINT:
+            updateCheckPoint(sprite)
+            break;
+
         default:
 
             break;
@@ -163,7 +175,7 @@ function updateMana(sprite){
     //Updates Key's variables State
     sprite.xPos = 128;
     sprite.yPos = 20 ;
-    // sprite.imageSet.yOffset = 60
+    sprite.imageSet.yOffset = 60
     sprite.frames.frameCounter = 0;
 
 }
@@ -183,6 +195,36 @@ function updatePower(sprite){
     //Updates Key's variables State
     sprite.xPos = 209;
     sprite.yPos = 0;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateEmptyKey(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 159;
+    sprite.yPos = 0;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateObtainedKey(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 159;
+    sprite.yPos = 0;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateCheckPoint(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 159;
+    sprite.yPos = 50;
 
     sprite.frames.frameCounter = 0;
 

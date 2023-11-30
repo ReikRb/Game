@@ -20,8 +20,11 @@ const SpriteId = {
     MANA:     5,
     EMPTY_CRYSTAL_LIFE: 6,
     EMPTY_CRYSTAL_MANA: 7,
-    EMPTY_POWER: 8,
-    POWER: 9,
+    EMPTY_POWER:   8,
+    POWER:         9,
+    EMPTY_KEY:    10,
+    OBTAINED_KEY: 11,
+    CHECKPOINT:12,
 }
 
 
