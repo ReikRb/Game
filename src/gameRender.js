@@ -45,23 +45,23 @@ function drawGame(){
 
 function renderHUD() {
     //Raw Data
-    const score     = 1500;
-    const highScore = 12000000;
+    const score     = 1154700;
+    const highScore = 1200000;
     const life      = 40;
     const time      = 3000;
 
     //Draw Score
     globals.ctxHUD.font = "8px emulogic";
-    // globals.ctxHUD.fillStyle = "lightblue";
-    // globals.ctxHUD.fillText("SCORE", 8, 8);
+    globals.ctxHUD.fillStyle = "red";
+    globals.ctxHUD.fillText("SCORE", 0, 35);
     globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText(" " + score, 0, 16);
+    globals.ctxHUD.fillText("" + score, 0, 45);
     
     //Draw High Score
-    // globals.ctxHUD.fillStyle = "lightblue";
-    // globals.ctxHUD.fillText("HIGHSCORE", 180, 8);
+    globals.ctxHUD.fillStyle = "red";
+    globals.ctxHUD.fillText("HIGHSCORE", 0, 8);
     globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText(" " + highScore, 0, 8);
+    globals.ctxHUD.fillText("" + highScore, 0, 16);
 
 
 renderSpritesHUD()
