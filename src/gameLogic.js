@@ -68,8 +68,16 @@ function updateSprite(sprite) {
             break;
 
         case SpriteId.EMPTY_CRYSTAL_MANA:
-             updateEmptyCrystalMana(sprite)
-             break;
+            updateEmptyCrystalMana(sprite)
+            break;
+
+        case SpriteId.EMPTY_POWER:
+            updateEmptyPower(sprite)
+            break;
+    
+        case SpriteId.POWER:
+            updatePower(sprite)
+            break;
     
         default:
 
@@ -156,6 +164,26 @@ function updateMana(sprite){
     sprite.xPos = 128;
     sprite.yPos = 20 ;
     // sprite.imageSet.yOffset = 60
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updateEmptyPower(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 209;
+    sprite.yPos = 0;
+
+    sprite.frames.frameCounter = 0;
+
+}
+
+function updatePower(sprite){
+
+    //Updates Key's variables State
+    sprite.xPos = 209;
+    sprite.yPos = 0;
+
     sprite.frames.frameCounter = 0;
 
 }

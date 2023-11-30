@@ -80,10 +80,13 @@ function loadHandler() {
 }
 
 function initSprites() {
+
     initEmptyCrystalLife()
     initLife()
     initEmptyCrystalMana()
     initMana();
+    initEmptyPower()
+    initPower()
     initKey();
     initPlayer();
     initChair();
@@ -209,6 +212,38 @@ function initMana(){
     //Adds Sprite to Array
     globals.sprites.push(mana)
     globals.SpritesHUD++
+}
+
+function initEmptyPower(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const emptyPower = new Sprite(SpriteId.EMPTY_POWER, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(emptyPower)
+    globals.SpritesHUD++
+    
+}
+
+function initPower(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(8,       5,      50,    50,     140,     54,      55)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Sprite Creation
+    const power = new Sprite(SpriteId.POWER, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(power)
+    globals.SpritesHUD++
+    
 }
 
 
