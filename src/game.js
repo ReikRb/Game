@@ -62,5 +62,5 @@ function gameLoop(timeStamp) {
         globals.deltaTime -= globals.frameTimeObj;
 
     }
-}
+    }
 

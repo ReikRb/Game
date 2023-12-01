@@ -197,10 +197,10 @@ function updatePlayer(sprite) {
 }
 
 function updatePlayerAttackVFX(sprite) {
-    sprite.xPos  = 70;
-    sprite. yPos = 179;
+    sprite.xPos  = 78;
+    sprite. yPos = 181;
 
-    sprite.frames.frameCounter = 3;
+    sprite.frames.frameCounter = 4;
     sprite.state = State.RIGHT
 }
 

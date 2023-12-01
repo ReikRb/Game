@@ -257,10 +257,10 @@ function initChair() {
 
 function initPlayerAttackVFX() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(4,       3,      80,    82,     140,     36,      40)
+        const imageSet = new ImageSet(4,       2,      90,    82,     140,     44,      40)
     
         //Animation Data (8 Frames / State)
-        const frames = new Frames (4)
+        const frames = new Frames (5)
     
         //Sprite Creation
         const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames)

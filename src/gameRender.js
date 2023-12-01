@@ -24,7 +24,7 @@ function drawGame(){
 
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
-    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
 
 
     // //Draws FPS in Screen
@@ -71,7 +71,7 @@ renderSpritesHUD()
 function renderMap() {
     const brickSize     = globals.level.imageSet.gridSize;
     const levelData     = globals.level.data;
-    const tileSetColNum = 8;
+const tileSetColNum = 8;
     //Draws Map
     const num_fil = levelData.length;
     const num_col = levelData[0].length;
@@ -102,7 +102,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        // drawSpriteRectangle(sprite)
+// drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }
