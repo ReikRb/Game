@@ -70,21 +70,13 @@ function updateSprite(sprite) {
         case SpriteId.EMPTY_CRYSTAL_MANA:
             updateEmptyCrystalMana(sprite)
             break;
-
-        case SpriteId.EMPTY_POWER:
-            updateEmptyPower(sprite)
+    
+        case SpriteId.POWERHUD:
+            updatePowerHUD(sprite)
             break;
     
-        case SpriteId.POWER:
-            updatePower(sprite)
-            break;
-    
-        case SpriteId.EMPTY_KEY:
-            updateEmptyKey(sprite)
-            break;
-        
-        case SpriteId.OBTAINED_KEY:
-            updateObtainedKey(sprite)
+        case SpriteId.KEYHUD:
+            updateKeyHUD(sprite)
             break;
 
         case SpriteId.CHECKPOINT:
@@ -144,7 +136,7 @@ function updateMana(sprite){
 
 }
 
-function updateEmptyPower(sprite){
+function updatePowerHUD(sprite){
 
     //Updates Key's variables State
     sprite.xPos = 209;
@@ -154,27 +146,7 @@ function updateEmptyPower(sprite){
 
 }
 
-function updatePower(sprite){
-
-    //Updates Key's variables State
-    sprite.xPos = 209;
-    sprite.yPos = 0;
-
-    sprite.frames.frameCounter = 0;
-
-}
-
-function updateEmptyKey(sprite){
-
-    //Updates Key's variables State
-    sprite.xPos = 159;
-    sprite.yPos = 0;
-
-    sprite.frames.frameCounter = 0;
-
-}
-
-function updateObtainedKey(sprite){
+function updateKeyHUD(sprite){
 
     //Updates Key's variables State
     sprite.xPos = 159;

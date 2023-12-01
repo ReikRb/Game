@@ -85,10 +85,8 @@ function initSprites() {
     initLife();
     initEmptyCrystalMana();
     initMana();
-    initEmptyPower();
-    initPower();
-    initEmptyKey();
-    // initObtainedKey();
+    initPowerHUD();
+    initKeyHUD();
     initCheckPoint();
     initKey();
     initPlayer();
@@ -161,69 +159,39 @@ function initMana(){
     globals.SpritesHUD++
 }
 
-function initEmptyPower(){
+
+function initPowerHUD(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
+    const frames = new Frames (2)
 
     //Sprite Creation
-    const emptyPower = new Sprite(SpriteId.EMPTY_POWER, State.IDLE_3, 100, 70, imageSet, frames)
+    const powerHUD = new Sprite(SpriteId.POWERHUD, State.IDLE_3, 100, 70, imageSet, frames)
 
     //Adds Sprite to Array
-    globals.sprites.push(emptyPower)
+    globals.sprites.push(powerHUD)
     globals.SpritesHUD++
     
 }
 
-function initPower(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(8,       5,      50,    50,     140,     54,      55)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
-
-    //Sprite Creation
-    const power = new Sprite(SpriteId.POWER, State.IDLE_3, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(power)
-    globals.SpritesHUD++
-    
-}
-
-function initEmptyKey(){
+function initKeyHUD(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       6,      60,    45,     140,     54,      55)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
+    const frames = new Frames (2)
 
     //Sprite Creation
-    const emptyKey = new Sprite(SpriteId.EMPTY_KEY, State.IDLE_3, 100, 70, imageSet, frames)
+    const keyHUD = new Sprite(SpriteId.KEYHUD, State.IDLE_3, 100, 70, imageSet, frames)
 
     //Adds Sprite to Array
-    globals.sprites.push(emptyKey)
+    globals.sprites.push(keyHUD)
     globals.SpritesHUD++
     
 }
 
-function initObtainedKey(){
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(8,       7,      60,    45,     140,     54,      55)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
-
-    //Sprite Creation
-    const obtainedKey = new Sprite(SpriteId.OBTAINED_KEY, State.IDLE_3, 100, 70, imageSet, frames)
-
-    //Adds Sprite to Array
-    globals.sprites.push(obtainedKey)
-    globals.SpritesHUD++
-    
-}
 
 //In-Game inits
 function initPlayer(){

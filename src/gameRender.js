@@ -64,14 +64,14 @@ function renderHUD() {
     globals.ctxHUD.fillText("" + highScore, 0, 16);
 
 
-renderSpritesHUD()
+    renderSpritesHUD()
 }
 
 //Map Drawer Method
 function renderMap() {
     const brickSize     = globals.level.imageSet.gridSize;
     const levelData     = globals.level.data;
-const tileSetColNum = 8;
+    const tileSetColNum = 9;
     //Draws Map
     const num_fil = levelData.length;
     const num_col = levelData[0].length;
