@@ -1,5 +1,5 @@
-1.- Verificar la posicion de todas las animaciones del png
+1.- 
 2.- Introducir multiples capas de tiles a la imprimación (para evitar esquinas blancas)
-3.- Averiguar por que la posicion 8 del tile no se representa
+3.-
 4.-
 5.-

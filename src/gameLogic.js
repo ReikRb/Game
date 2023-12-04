@@ -163,7 +163,7 @@ function updatePlayer(sprite) {
     sprite.xPos  = 0;
     sprite. yPos = 179;
 
-    sprite.frames.frameCounter = 7;
+    sprite.frames.frameCounter = 4;
 
     sprite.state = State.ATTACK_RIGHT
 }
