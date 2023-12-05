@@ -21,6 +21,13 @@ export default function update(){
             updateSprites()
             break;
         
+        case Game.LOAD_LEVEL:
+            globals.sprites = []
+            initLevel()
+            initSprites()
+            globals.gameState = Game.PLAYING
+            break;
+
         case Game.PLAYING:
             playGame();
             break;
