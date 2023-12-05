@@ -136,6 +136,10 @@ function updateSprite(sprite) {
             updateParchment(sprite)
             break;
 
+        case SpriteId.PLATFORM:
+            updatePlatform(sprite)
+            break;
+
         default:
 
             break;
@@ -240,6 +244,13 @@ function updateChair(sprite) {
 
 }
 
+function updatePlatform(sprite) {
+    //Updates Platform's variables State
+
+    sprite.xPos  = -50;
+    sprite. yPos = 159;
+
+}
 
 function updateSkeleton(sprite){
 

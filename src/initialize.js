@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.HIGHSCORE;
+        globals.gameState = Game.LOAD_LEVEL;
     }
 }
 
@@ -323,7 +323,6 @@ function initDoor(){
 }
 
 function initParchment() {
-    //MODIFICAR XSIZE E YSIZE
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(19,       4,      576,    445,     140,     0,      45)
 
@@ -337,8 +336,21 @@ function initParchment() {
         globals.sprites.push(parchment)
 }
 
+function initPlatform() {
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      78)
+
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
+    
+        //Sprite Creation
+        const platform = new Sprite(SpriteId.PLATFORM, State.IDLE_3, 100, 70, imageSet, frames)
+    
+        //Adds Sprite to Array
+        globals.sprites.push(platform)
+}
+
 function initDummy() {
-    //MODIFICAR XSIZE E YSIZE
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(23,       0,      67,    66,     140,     48,      81)
 
