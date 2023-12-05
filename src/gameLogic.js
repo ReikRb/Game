@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, State, SpriteId} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initHighScore } from "./initialize.js";
 
 export default function update(){
 
@@ -32,6 +32,10 @@ export default function update(){
             playGame();
             break;
         
+        case Game.HIGHSCORE:
+            globals.sprites = []
+            initHighScore();
+            break;
         default:
             console.error("Error: Game State invalid")
 
@@ -111,6 +115,10 @@ function updateSprite(sprite) {
 
         case SpriteId.DUMMY:
             updateDummy(sprite)
+            break;
+
+        case SpriteId.PARCHMENT:
+            updateParchment(sprite)
             break;
 
         default:
@@ -257,6 +265,14 @@ function updateCheckPoint(sprite){
     sprite.yPos = 217;
 
     sprite.frames.frameCounter = 0;
+
+}
+
+function updateParchment(sprite){
+
+    //Updates Parchment's variables State
+    sprite.xPos = 0;
+    sprite.yPos = 0;
 
 }
 

@@ -17,6 +17,10 @@ export default function render(){
             drawMenu();
             break;
 
+        case Game.HIGHSCORE:
+            drawHighScore();
+            break;
+            
         case Game.PLAYING:
             drawGame();
             break;
@@ -58,6 +62,13 @@ function drawMenu() {
         renderMap();
         
         renderSprites();
+}
+function drawHighScore() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+    renderSprites();
 }
 
 
@@ -120,7 +131,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        // drawSpriteRectangle(sprite)
+        drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }

@@ -5,9 +5,10 @@ const Game = {
     LOADING:  0,
     LOAD_MAIN_MENU:1,
     MAIN_MENU:2,
-    LOAD_LEVEL:3,
-    PLAYING:  4,
-    OVER:     5
+    HIGHSCORE:3,
+    LOAD_LEVEL:4,
+    PLAYING:  5,
+    OVER:     6
 }
 
 //Frames Per Second
@@ -31,7 +32,7 @@ const SpriteId = {
     DOOR:               13,
     DUMMY:              14,
     //Background
-    PARCHMENT:          14
+    PARCHMENT:          15
 
 }
 
@@ -72,7 +73,7 @@ const State = {
     //DUMMY states
     IDLE: 0,
     DEAD: 1,
-    
+
     //Collectables States
     IDLE_3:          0
 }

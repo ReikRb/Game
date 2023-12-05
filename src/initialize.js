@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.LOAD_LEVEL;
+        globals.gameState = Game.HIGHSCORE;
     }
 }
 
@@ -103,7 +103,10 @@ function initMainMenuSprites() {
     initPlayerAttackVFX();
     initChair();
     initDummy()
+}
 
+function initHighScore() {
+    initParchment()
 }
 
 //Interface inits
@@ -322,13 +325,13 @@ function initDoor(){
 function initParchment() {
     //MODIFICAR XSIZE E YSIZE
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(19,       4,      35,    45,     140,     64,      110)
+        const imageSet = new ImageSet(19,       4,      576,    445,     140,     0,      45)
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
     
         //Sprite Creation
-        const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 100, 70, imageSet, frames)
+        const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 0, 0, imageSet, frames)
     
         //Adds Sprite to Array
         globals.sprites.push(parchment)
@@ -343,10 +346,10 @@ function initDummy() {
         const frames = new Frames (1)
     
         //Sprite Creation
-        const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 100, 70, imageSet, frames)
+        const dummy = new Sprite(SpriteId.DUMMY, State.IDLE, 100, 70, imageSet, frames)
     
         //Adds Sprite to Array
-        globals.sprites.push(parchment)
+        globals.sprites.push(dummy)
 }
 
 
@@ -368,4 +371,4 @@ function initLevel() {
 }  
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites, initMainMenuSprites, initMainMenuMap, initLevel} 
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initHighScore } 
