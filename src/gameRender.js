@@ -81,6 +81,25 @@ function drawHighScore() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     renderSprites();
+
+            //Draw SortBy
+            globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
+            globals.ctxHUD.fillStyle = "orangered";
+            globals.ctxHUD.fillText("SORT BY :", 5, 30);
+    
+            //Draw Show
+            globals.ctxHUD.fillStyle = "orangered";
+            globals.ctxHUD.fillText("SHOW :", 100, 30);
+    
+            //Draw Date
+            globals.ctxHUD.fillStyle = "orangered";
+            globals.ctxHUD.fillText("DATE :", 185, 30);
+
+            //Draw Date
+            globals.ctx.font = "30px Medieval Scroll of Wisdom";
+            globals.ctx.fillStyle = "orangered";
+            globals.ctx.fillText("LEADERBOARD", 155, 90);
+
 }
 
 function drawGameOver() {
@@ -88,6 +107,20 @@ function drawGameOver() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     
+        //Draw SortBy
+        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
+        globals.ctxHUD.fillStyle = "orangered";
+        globals.ctxHUD.fillText("SORT BY :", 5, 30);
+    
+        //Draw Show
+        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
+        globals.ctxHUD.fillStyle = "orangered";
+        globals.ctxHUD.fillText("SHOW :", 100, 30);
+    
+        //Draw Date
+        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
+        globals.ctxHUD.fillStyle = "orangered";
+        globals.ctxHUD.fillText("DATE :", 185, 30);
 }
 
 function drawControls() {
@@ -97,6 +130,7 @@ function drawControls() {
     
     renderSprites();
 }
+
 function drawHistory() {
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
