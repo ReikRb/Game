@@ -3,7 +3,7 @@ import {Game, FPS, SpriteId, State} from "./constants.js"
 import Sprite from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
-import { Level, level1 } from "./Level.js";
+import { Level, level1, mainMenu } from "./Level.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.PLAYING;
+        globals.gameState = Game.LOAD_MAIN_MENU;
     }
 }
 
@@ -94,6 +94,16 @@ function initSprites() {
     initPlayerAttackVFX();
     initChair();
     initSkeleton();
+    
+}
+
+function initMainMenuSprites() {
+    initPlayer();
+    initPlayerFireball();
+    initPlayerAttackVFX();
+    initChair();
+    initDummy()
+
 }
 
 //Interface inits
@@ -211,7 +221,7 @@ function initPlayer(){
 function initChair() {
 
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(6,       4,      140,    110,     140,     10,      40)
+    const imageSet = new ImageSet(6,       4,      104,    75,     140,     10,      50)
     
     //Animation Data (8 Frames / State)
     const frames = new Frames (2)
@@ -294,11 +304,59 @@ function initCheckPoint(){
     globals.sprites.push(checkpoint)
     
 }
+function initDoor(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(17,       2,      11,    96,     140,     68,      54)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (4)
+
+    //Sprite Creation
+    const door = new Sprite(SpriteId.DOOR, State.IDLE_3, 100, 70, imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(door)
+    
+}
+
+function initParchment() {
+    //MODIFICAR XSIZE E YSIZE
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(19,       4,      35,    45,     140,     64,      110)
+
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
+    
+        //Sprite Creation
+        const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 100, 70, imageSet, frames)
+    
+        //Adds Sprite to Array
+        globals.sprites.push(parchment)
+}
+
+function initDummy() {
+    //MODIFICAR XSIZE E YSIZE
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(23,       0,      67,    66,     140,     48,      81)
+
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
+    
+        //Sprite Creation
+        const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 100, 70, imageSet, frames)
+    
+        //Adds Sprite to Array
+        globals.sprites.push(parchment)
+}
 
 
+function initMainMenuMap() {
+        //Makes Properties of Map Img: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
 
-
-
+        //Makes & Saves Level
+        globals.level = new Level(mainMenu, imageSet)
+}
 
 function initLevel() {
     
@@ -310,4 +368,4 @@ function initLevel() {
 }  
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites, initLevel} 
+export {initHTMLelements, initVars, loadAssets, initSprites, initMainMenuSprites, initMainMenuMap, initLevel} 

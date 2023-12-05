@@ -3,8 +3,11 @@
 const Game = {
     INVALID: -1,
     LOADING:  0,
-    PLAYING:  1,
-    OVER:     2
+    LOAD_MAIN_MENU:1,
+    MAIN_MENU:2,
+    LOAD_LEVEL:3,
+    PLAYING:  4,
+    OVER:     5
 }
 
 //Frames Per Second
@@ -25,6 +28,11 @@ const SpriteId = {
     CHECKPOINT:         10,
     ATTACK_VFX:         11,
     FIREBALL:           12,
+    DOOR:               13,
+    DUMMY:              14,
+    //Background
+    PARCHMENT:          14
+
 }
 
 
@@ -61,6 +69,10 @@ const State = {
     ATTACK_RIGHT_2:  6,
     ATTACK_LEFT_2:   7,
 
+    //DUMMY states
+    IDLE: 0,
+    DEAD: 1,
+    
     //Collectables States
     IDLE_3:          0
 }
@@ -80,21 +92,40 @@ const Block = {
     TOP_RIGHT_2: 6,
     BOTH_SIDES_UP:7,
     TOP_LEFT_2: 8,
-    STAR_1: 9,
-    LEFT:  10,
-    DARK: 11,
-    RIGHT: 12,
-    SKY: 13,
-    BOTH_SIDES: 14,
-    BOT_RIGHT_2: 15,
-    BOTH_SIDES_DOWN:16,
-    BOT_LEFT_2: 17,
-    STAR_2: 18,
-    BOT_LEFT:19,
-    BOT:   20,
-    BOT_RIGHT: 21,
-    CAVE:22,
-    BOTH_SIDES_FINAL_DOWN: 23,
+    PLATFORM_LEFT_2:9,
+    PLATFORM_LEFT_1:10,
+    STAR_1: 11,
+    STAR_2: 12,
+    SPIKES_BOT:13,
+    SPIKES_TOP:14,
+    LEFT:  15,
+    DARK: 16,
+    RIGHT: 17,
+    SKY: 18,
+    BOTH_SIDES_VERTICAL: 19,
+    BOT_RIGHT_2: 20,
+    BOTH_SIDES_DOWN:21,
+    BOT_LEFT_2: 22,
+    PLATFORM_RIGHT_1:23,
+    PLATFORM_RIGHT_2:24,
+    GRASS_1: 25,
+    GRASS_2: 26,
+    SPIKES_LEFT: 27,
+    SPIKES_RIGHT: 28,
+    BOT_LEFT:29,
+    BOT:   30,
+    BOT_RIGHT: 31,
+    CAVE:32,
+    BOTH_SIDES_FINAL_DOWN: 33,
+    BOTH_SIDES_FINAL_LEFT: 34,
+    BOTH_SIDES_HORIZONTAL: 35,
+    BOTH_SIDES_FINAL_RIGHT:36,
+    MOBILE_PLATFORM_LEFT: 37,
+    MOBILE_PLATFORM_MID: 38,
+    MOBILE_PLATFORM_RIGHT: 39
+
+
+
 
 }
 export {Game, FPS, SpriteId, State, Tile, Block}

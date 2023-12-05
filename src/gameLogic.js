@@ -1,5 +1,6 @@
 import globals from "./globals.js"
 import {Game, State, SpriteId} from "./constants.js"
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel } from "./initialize.js";
 
 export default function update(){
 
@@ -7,6 +8,17 @@ export default function update(){
     switch(globals.gameState){
         case Game.LOADING:
             console.log("Loading assets...");
+            break;
+        
+        case Game.LOAD_MAIN_MENU:
+            globals.sprites = []
+            initMainMenuMap()
+            initMainMenuSprites()
+            globals.gameState = Game.MAIN_MENU
+            break;
+
+        case Game.MAIN_MENU:
+            updateSprites()
             break;
         
         case Game.PLAYING:
@@ -90,6 +102,10 @@ function updateSprite(sprite) {
             updateFireball(sprite)
             break;
 
+        case SpriteId.DUMMY:
+            updateDummy(sprite)
+            break;
+
         default:
 
             break;
@@ -163,7 +179,7 @@ function updatePlayer(sprite) {
     sprite.xPos  = 0;
     sprite. yPos = 179;
 
-    sprite.frames.frameCounter = 4;
+    sprite.frames.frameCounter = 3;
 
     sprite.state = State.ATTACK_RIGHT
 }
@@ -204,6 +220,17 @@ function updateSkeleton(sprite){
     sprite.frames.frameCounter = 0;
 
     sprite.state = State.RUN_LEFT_2
+}
+
+function updateDummy(sprite){
+
+    //Updates Skeleton's variables State
+    sprite.xPos = 368;
+    sprite.yPos = 195;
+
+    sprite.frames.frameCounter = 0;
+
+    sprite.state = State.IDLE
 }
 
 function updateKey(sprite){

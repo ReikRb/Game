@@ -9,7 +9,14 @@ export default function render(){
         case Game.LOADING:
             //Draws Loading
             break;
-        
+        case Game.LOAD_MAIN_MENU:
+            drawMenu();
+            break;
+
+        case Game.MAIN_MENU:
+            drawMenu();
+            break;
+
         case Game.PLAYING:
             drawGame();
             break;
@@ -24,7 +31,7 @@ function drawGame(){
 
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
-globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
 
 
     // //Draws FPS in Screen
@@ -40,6 +47,17 @@ globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height
     renderHUD();
 
 
+}
+
+function drawMenu() {
+        //Erases Screen
+        globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+        globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+        //Draws Map (mainMenu)
+        renderMap();
+        
+        renderSprites();
 }
 
 
@@ -71,7 +89,7 @@ function renderHUD() {
 function renderMap() {
     const brickSize     = globals.level.imageSet.gridSize;
     const levelData     = globals.level.data;
-    const tileSetColNum = 9;
+    const tileSetColNum = 14;
     //Draws Map
     const num_fil = levelData.length;
     const num_col = levelData[0].length;

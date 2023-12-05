@@ -19,14 +19,14 @@ function init() {
     //Loads all archives
     loadAssets();
 
-    //Inits Sprites
-    initSprites();
+    // //Inits Sprites
+    // initSprites();
 
     //Inits game variables
     initVars();
 
-    //Inits Game Map
-    initLevel();
+    // //Inits Game Map
+    // initLevel();
 
     //First Frame Request
     window.requestAnimationFrame(gameLoop);
