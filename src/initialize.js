@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.HIGHSCORE;
+        globals.gameState = Game.CONTROLS;
     }
 }
 
@@ -105,7 +105,7 @@ function initMainMenuSprites() {
     initDummy()
 }
 
-function initHighScore() {
+function initParchmentBackground() {
     initParchment()
 }
 
@@ -371,4 +371,4 @@ function initLevel() {
 }  
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initHighScore } 
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground } 

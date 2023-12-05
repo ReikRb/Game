@@ -1,14 +1,16 @@
 
 //Estados
 const Game = {
-    INVALID: -1,
-    LOADING:  0,
-    LOAD_MAIN_MENU:1,
-    MAIN_MENU:2,
-    HIGHSCORE:3,
-    LOAD_LEVEL:4,
-    PLAYING:  5,
-    OVER:     6
+    INVALID:        -1,
+    LOADING:         0,
+    LOAD_MAIN_MENU:  1,
+    MAIN_MENU:       2,
+    HIGHSCORE:       3,
+    LOAD_LEVEL:      4,
+    PLAYING:         5,
+    GAMEOVER:        6,
+    CONTROLS:        7,
+    HISTORY :        8,
 }
 
 //Frames Per Second

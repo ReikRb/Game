@@ -24,6 +24,18 @@ export default function render(){
         case Game.PLAYING:
             drawGame();
             break;
+
+        case Game.GAMEOVER:
+            drawGameOver()
+            break;
+
+        case Game.CONTROLS:
+            drawControls();
+            break;
+
+        case Game.HISTORY:
+            drawHistory();
+            break;
         
         default:
             console.error("Error: Game State invalid")
@@ -63,7 +75,29 @@ function drawMenu() {
         
         renderSprites();
 }
+
 function drawHighScore() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    renderSprites();
+}
+
+function drawGameOver() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+}
+
+function drawControls() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+    renderSprites();
+}
+function drawHistory() {
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
@@ -131,7 +165,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        drawSpriteRectangle(sprite)
+        // drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }

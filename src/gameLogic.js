@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, State, SpriteId} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initHighScore } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground } from "./initialize.js";
 
 export default function update(){
 
@@ -34,8 +34,23 @@ export default function update(){
         
         case Game.HIGHSCORE:
             globals.sprites = []
-            initHighScore();
+            initParchmentBackground();
             break;
+
+        case Game.GAMEOVER:
+            globals.sprites = []
+            break;
+
+        case Game.CONTROLS:
+            globals.sprites = []
+            initParchmentBackground();
+            break;
+
+        case Game.HISTORY:
+            globals.sprites = []
+            initParchmentBackground();
+            break;
+            
         default:
             console.error("Error: Game State invalid")
 
