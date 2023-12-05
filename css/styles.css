@@ -3,6 +3,14 @@
     src: url("../fonts/emulogic.ttf");
 }
 
+body{
+margin-left:381px;
+margin-right: 381px;
+background-color: bisque;
+border: 3px;
+border-color: black;
+border-style: solid;
+}
 
 #gameScreen {
     width: 1152px;
