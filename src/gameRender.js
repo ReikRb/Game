@@ -88,17 +88,59 @@ function drawHighScore() {
             globals.ctxHUD.fillText("SORT BY :", 5, 30);
     
             //Draw Show
-            globals.ctxHUD.fillStyle = "orangered";
             globals.ctxHUD.fillText("SHOW :", 100, 30);
     
             //Draw Date
-            globals.ctxHUD.fillStyle = "orangered";
             globals.ctxHUD.fillText("DATE :", 185, 30);
 
-            //Draw Date
+            //Draw Title
             globals.ctx.font = "30px Medieval Scroll of Wisdom";
-            globals.ctx.fillStyle = "orangered";
+            globals.ctx.fillStyle = "black";
             globals.ctx.fillText("LEADERBOARD", 155, 90);
+
+            //Draw List
+            globals.ctx.font = "15px Medieval Scroll of Wisdom";
+            globals.ctx.fillText("RANK", 115, 130);
+            globals.ctx.fillText("NAME", 235, 130);
+            globals.ctx.fillText("SCORE", 355, 130);
+
+            globals.ctx.font = "12px Medieval Scroll of Wisdom";
+            globals.ctx.fillText("1", 135, 160);
+            globals.ctx.fillText("AAA", 243, 160);
+            globals.ctx.fillText("127574", 365, 160);
+
+            globals.ctx.fillText("2", 135, 190);
+            globals.ctx.fillText("URB", 243, 190);
+            globals.ctx.fillText("113896", 365, 190);
+
+            globals.ctx.fillText("3", 135, 220);
+            globals.ctx.fillText("AFS", 243, 220);
+            globals.ctx.fillText("105893", 365, 220);
+
+            globals.ctx.fillText("4", 135, 250);
+            globals.ctx.fillText("ZZZ", 243, 250);
+            globals.ctx.fillText("102833", 365, 250);
+
+            globals.ctx.fillText("5", 135, 280);
+            globals.ctx.fillText("YRM", 243, 280);
+            globals.ctx.fillText("98734", 365, 280);
+
+            globals.ctx.fillText("6", 135, 310);
+            globals.ctx.fillText("OCS", 243, 310);
+            globals.ctx.fillText("79385", 365, 310);
+
+            globals.ctx.fillText("7", 135, 340);
+            globals.ctx.fillText("JGF", 243, 340);
+            globals.ctx.fillText("50389", 365, 340);
+
+
+
+
+
+
+
+
+
 
 }
 
@@ -107,20 +149,7 @@ function drawGameOver() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     
-        //Draw SortBy
-        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
-        globals.ctxHUD.fillStyle = "orangered";
-        globals.ctxHUD.fillText("SORT BY :", 5, 30);
-    
-        //Draw Show
-        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
-        globals.ctxHUD.fillStyle = "orangered";
-        globals.ctxHUD.fillText("SHOW :", 100, 30);
-    
-        //Draw Date
-        globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
-        globals.ctxHUD.fillStyle = "orangered";
-        globals.ctxHUD.fillText("DATE :", 185, 30);
+
 }
 
 function drawControls() {
@@ -199,7 +228,7 @@ function renderMap() {
 function renderSprites() {
     for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        drawSpriteRectangle(sprite)
+        // drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }
