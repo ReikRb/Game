@@ -96,7 +96,7 @@ function drawHighScore() {
 
             //Draw SortBy
             globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
-            globals.ctxHUD.fillStyle = "orangered";
+            globals.ctxHUD.fillStyle = "white";
             globals.ctxHUD.fillText("SORT BY :", 5, 30);
     
             //Draw Show
@@ -224,7 +224,7 @@ function drawHistory() {
 
     //Draw Title
     globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
-    globals.ctxHUD.fillStyle = "orangered";
+    globals.ctxHUD.fillStyle = "white";
     globals.ctxHUD.fillText("Chapter 3: To the Twilight Inn", 58, 30);
 
     //Draw Return Button
