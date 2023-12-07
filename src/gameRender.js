@@ -180,6 +180,39 @@ function drawControls() {
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     
     renderSprites();  
+
+    //Draw Title
+    globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
+    globals.ctxHUD.fillStyle = "white";
+    globals.ctxHUD.fillText("The Decrepit Throne", 78, 30);
+
+
+    //Draw Title
+    globals.ctx.font = "30px Medieval Scroll of Wisdom";
+    globals.ctx.fillStyle = "black";
+    globals.ctx.fillText("CONTROLS", 195, 90);
+    //Draw Return Button
+    globals.ctx.font = "15px Medieval Scroll of Wisdom";
+    globals.ctx.fillStyle = "black";
+    globals.ctx.fillText("GO BACK", 30, 40);
+
+    //Draw History
+    globals.ctx.font = "15px Medieval Scroll of Wisdom";
+    globals.ctx.fillText(`LEFT`, 150, 120)
+    globals.ctx.fillText(`>`, 260, 120)
+    globals.ctx.fillText(`LEFT ARROW`, 330, 120)
+    globals.ctx.fillText(`RIGHT`, 150, 160)
+    globals.ctx.fillText(`>`, 260, 160)
+    globals.ctx.fillText(`RIGHT ARROW`, 330, 160)
+    globals.ctx.fillText(`JUMP`, 150, 200)
+    globals.ctx.fillText(`>`, 260, 200)
+    globals.ctx.fillText(`SPACEBAR`, 330, 200)
+    globals.ctx.fillText(`FIRE`, 150, 240)
+    globals.ctx.fillText(`>`, 260, 240)
+    globals.ctx.fillText(`Z`, 330, 240)
+    globals.ctx.fillText(`RETURN`, 150, 280)
+    globals.ctx.fillText(`>`, 260, 280)
+    globals.ctx.fillText(`X`, 330, 280)
 }
 
 function drawHistory() {

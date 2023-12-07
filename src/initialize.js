@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.LOAD_MAIN_MENU;
+        globals.gameState = Game.CONTROLS;
     }
 }
 
