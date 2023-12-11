@@ -59,8 +59,21 @@ export default function update(){
 }
 
 function playGame() {
-        
+    
     updateSprites();
+    updateLevelTime();
+}
+function updateLevelTime() {
+    //Adds the value modifier counter
+    globals.levelTime.timeChangeCounter += globals.deltaTime;
+
+    //Once enough time has passed, modifies the timer value
+    if (globals.levelTime.timeChangeCounter > globals.levelTime.timeChangeValue) {
+        globals.levelTime.value--;
+
+        //Then resets the timeChangeCounter
+        globals.levelTime.timeChangeCounter = 0;
+    }
 }
 
 
