@@ -303,13 +303,35 @@ function updatePlatform(sprite) {
 
 function updateSkeleton(sprite){
 
+    switch (sprite.state) {
+        case State.RUN_RIGHT_2:
+            //If character moves right X is positive
+            sprite.physics.vx = sprite.physics.vLimit;
+            break;
+
+        case State.RUN_LEFT_2:
+            //If character moves left X is negative
+            sprite.physics.vx = -sprite.physics.vLimit;
+        break;
+        
+        default:
+            console.error("Error: State invalid");
+    }
+
     //Updates Skeleton's variables State
-    sprite.xPos = 270;
     sprite.yPos = 199;
 
-    sprite.frames.frameCounter = 0;
+    //Calculates movement in X
+    sprite.xPos += sprite.physics.vx * globals.deltaTime
 
-    sprite.state = State.RUN_LEFT_2
+    updateAnimationFrame(sprite)
+    // updateDirectionRandom(sprite)
+
+    //Edges collision calculation
+    const isCollision = calculateCollisionWithBorders(sprite)
+    if (isCollision) {
+        swapDirection(sprite)
+    }
 }
 
 function updateDummy(sprite){
@@ -368,4 +390,36 @@ function updateAnimationFrame(sprite) {
     if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
         sprite.frames.frameCounter = 0
     }
+}
+
+function calculateCollisionWithBorders(sprite) {
+    let isCollision = false;
+
+    //Collision with right edge
+    if (sprite.xPos + sprite.imageSet.xSize > globals.canvas.width) {
+        isCollision = true
+
+    //Collision with left edge
+    } else if (sprite.xPos < 0) {
+        isCollision = true
+    }
+
+    return isCollision;
+}
+
+function updateDirectionRandom(sprite){
+    //Adds deltaTime to directionChangeCounter
+    sprite.directionChangeCounter += globals.deltaTime
+    
+    if (sprite.directionChangeCounter > sprite.maxTimeToChangeDirection) {
+        
+        sprite.directionChangeCounter = 0
+        
+        sprite.maxTimeToChangeDirection = Math.floor(Math.random()*8) + 1
+        
+        swapDirection(sprite);
+    }
+}
+function swapDirection(sprite) {
+    sprite.state = sprite.state ===  State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
 }

@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, FPS, SpriteId, State} from "./constants.js"
-import Sprite from "./Sprite.js"
+import Sprite,{ Skeleton } from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
@@ -303,14 +303,16 @@ function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
 
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (8,6)
+    //Animation Data (7 Frames / State)
+    const frames = new Frames (7,6)
 
     //Creates Physic obj with vLimit 40
     const physics = new Physics(40);
 
+    const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
+
     //Sprite Creation
-    const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 300, 70, imageSet, frames, physics, initTimeToChangeDirection)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)

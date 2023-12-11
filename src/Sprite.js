@@ -14,8 +14,9 @@ export default class Sprite{
 }
 
 export class Skeleton extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, maxTimeToChangeDirection){
+        super (id, state, xPos, yPos, imageSet, frames, physics)
         this.directionChangeCounter     = 0;
-        this.maxTimeToChangeDirection   = this.maxTimeToChangeDirection;
+        this.maxTimeToChangeDirection   = maxTimeToChangeDirection;
     }
 }
