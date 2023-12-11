@@ -77,6 +77,7 @@ function updateLevelTime() {
 }
 
 
+
 function updateSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
@@ -223,37 +224,72 @@ function updateKeyHUD(sprite){
 function updatePlayer(sprite) {
     //Updates Player's variables State
 
-    sprite.xPos  = 0;
-    sprite. yPos = 179;
+    switch (sprite.state) {
+        case State.RUN_RIGHT:
+            //If character moves right X is positive
+            sprite.physics.vx = sprite.physics.vLimit;
+            break;
 
-    sprite.frames.frameCounter = 3;
+        case State.RUN_LEFT:
+            //If character moves left X is negative
+            sprite.physics.vx = -sprite.physics.vLimit;
+        break;
+        
+        default:
+            console.error("Error: State invalid");
+    }
+
+    //Calculates movement in X
+    sprite.xPos += sprite.physics.vx * globals.deltaTime
+
+    updateAnimationFrame(sprite)
+
+    sprite. yPos = 179;
 
     sprite.state = State.ATTACK_RIGHT
 }
 
 function updatePlayerAttackVFX(sprite) {
-    sprite.xPos  = 78;
+        updateAnimationFrame(sprite)
+
     sprite. yPos = 181;
 
-    sprite.frames.frameCounter = 4;
     sprite.state = State.RIGHT
 }
 
 function updateFireball(sprite) {
-    sprite.xPos  = 200;
+    switch (sprite.state) {
+        case State.RIGHT:
+            //If character moves right X is positive
+            sprite.physics.vx = sprite.physics.vLimit;
+            break;
+
+        case State.LEFT:
+            //If character moves left X is negative
+            sprite.physics.vx = -sprite.physics.vLimit;
+        break;
+        
+        default:
+            console.error("Error: State invalid");
+    }
     sprite. yPos = 179;
 
-    sprite.frames.frameCounter = 1;
+        //Calculates movement in X
+        sprite.xPos += sprite.physics.vx * globals.deltaTime
+
+        updateAnimationFrame(sprite)
+
     sprite.state = State.RIGHT
 }
 
 function updateChair(sprite) {
     //Updates Player's variables State
-
+    updateAnimationFrame(sprite)
+    
     sprite.xPos  = -50;
     sprite. yPos = 159;
 
-    sprite.frames.frameCounter = 0;
+
 
 }
 
@@ -293,7 +329,7 @@ function updateKey(sprite){
     sprite.xPos = 400;
     sprite.yPos = 169;
 
-    sprite.frames.frameCounter = 0;
+    updateAnimationFrame(sprite)
 
 }
 
@@ -303,7 +339,8 @@ function updateCheckPoint(sprite){
     sprite.xPos = 167;
     sprite.yPos = 217;
 
-    sprite.frames.frameCounter = 0;
+    updateAnimationFrame(sprite)
+
 
 }
 
@@ -315,3 +352,20 @@ function updateParchment(sprite){
 
 }
 
+
+function updateAnimationFrame(sprite) {
+    //Increase time between frames
+    sprite.frames.frameChangeCounter++;
+
+    //changes frame once the counter equals the speed
+    if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
+        //Changes frame then resets counter
+        sprite.frames.frameCounter++;
+        sprite.frames.frameChangeCounter = 0;
+    }
+
+    //Once the max frames are reached it resets (Animation loop)
+    if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
+        sprite.frames.frameCounter = 0
+    }
+}

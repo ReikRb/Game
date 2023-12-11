@@ -5,6 +5,7 @@ import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
+import Physics from "./Physics.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -79,7 +80,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.HISTORY;
+        globals.gameState = Game.LOAD_LEVEL;
     }
 }
 
@@ -119,10 +120,12 @@ function initEmptyCrystalLife(){
     const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
+    const frames = new Frames (1,2)
 
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
     //Sprite Creation
-    const EmptyCrystalLife = new Sprite(SpriteId.EMPTY_CRYSTAL_LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+    const EmptyCrystalLife = new Sprite(SpriteId.EMPTY_CRYSTAL_LIFE, State.IDLE_3, 100, 70, imageSet, frames,physics)
 
     //Adds Sprite to Array
     globals.sprites.push(EmptyCrystalLife)
@@ -135,10 +138,13 @@ function initLife(){
     const imageSet = new ImageSet(9,       6,      28,    51,     140,     70,      108)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
+    const frames = new Frames (1,2)
+
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
 
     //Sprite Creation
-    const life = new Sprite(SpriteId.LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+    const life = new Sprite(SpriteId.LIFE, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(life)
@@ -150,10 +156,13 @@ function initEmptyCrystalMana(){
         const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
 
         //Animation Data (8 Frames / State)
-        const frames = new Frames (1)
+        const frames = new Frames (1,2)
+    
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
     
         //Sprite Creation
-        const EmptyCrystalMana = new Sprite(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames)
+        const EmptyCrystalMana = new Sprite(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames, physics)
     
         //Adds Sprite to Array
         globals.sprites.push(EmptyCrystalMana)
@@ -166,10 +175,13 @@ function initMana(){
     const imageSet = new ImageSet(9,       5,      28,    51,     140,     70,      108)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
+    const frames = new Frames (1,2)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
 
     //Sprite Creation
-    const mana = new Sprite(SpriteId.MANA, State.IDLE_3, 100, 70, imageSet, frames)
+    const mana = new Sprite(SpriteId.MANA, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(mana)
@@ -182,10 +194,13 @@ function initPowerHUD(){
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (2)
+    const frames = new Frames (2,6)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
 
     //Sprite Creation
-    const powerHUD = new Sprite(SpriteId.POWERHUD, State.IDLE_3, 100, 70, imageSet, frames)
+    const powerHUD = new Sprite(SpriteId.POWERHUD, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(powerHUD)
@@ -198,10 +213,13 @@ function initKeyHUD(){
     const imageSet = new ImageSet(8,       6,      60,    45,     140,     54,      55)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (2)
+    const frames = new Frames (2,1)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
 
     //Sprite Creation
-    const keyHUD = new Sprite(SpriteId.KEYHUD, State.IDLE_3, 100, 70, imageSet, frames)
+    const keyHUD = new Sprite(SpriteId.KEYHUD, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(keyHUD)
@@ -216,10 +234,13 @@ function initPlayer(){
     const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
+    const frames = new Frames (8, 3)
+
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 100, 70, imageSet, frames)
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 20, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -231,24 +252,30 @@ function initChair() {
     const imageSet = new ImageSet(6,       4,      104,    75,     140,     10,      50)
     
     //Animation Data (8 Frames / State)
-    const frames = new Frames (2)
+    const frames = new Frames (2,16)
+
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
 
     //Sprite Creation
-    const chair = new Sprite(SpriteId.CHAIR, State.IDLE_3, 100, 70, imageSet, frames)
+    const chair = new Sprite(SpriteId.CHAIR, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
-        //Adds Sprite to Array
-        globals.sprites.push(chair)
+    //Adds Sprite to Array
+    globals.sprites.push(chair)
 }
 
 function initPlayerAttackVFX() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(4,       2,      90,    82,     140,     44,      40)
+        const imageSet = new ImageSet(25,       0,      90,    82,     140,     44,      40)
     
         //Animation Data (8 Frames / State)
-        const frames = new Frames (5)
+        const frames = new Frames (8,3)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
     
         //Sprite Creation
-        const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames)
+        const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames, physics)
     
             //Adds Sprite to Array
             globals.sprites.push(attack)
@@ -259,10 +286,13 @@ function initPlayerFireball() {
     const imageSet = new ImageSet(6,       2,      80,    82,     140,     36,      40)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (2)
+    const frames = new Frames (2,6)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(100);
 
     //Sprite Creation
-    const fireball = new Sprite(SpriteId.FIREBALL, State.RIGHT, 100, 70, imageSet, frames)
+    const fireball = new Sprite(SpriteId.FIREBALL, State.RIGHT, 100, 70, imageSet, frames,physics)
 
         //Adds Sprite to Array
         globals.sprites.push(fireball)
@@ -274,7 +304,10 @@ function initSkeleton(){
     const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
+    const frames = new Frames (8,6)
+
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
 
     //Sprite Creation
     const skeleton = new Sprite(SpriteId.SKELETON, State.IDLE_2, 100, 70, imageSet, frames)
@@ -288,10 +321,13 @@ function initKey(){
     const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (8)
+    const frames = new Frames (8,7)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
 
     //Sprite Creation
-    const key = new Sprite(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames)
+    const key = new Sprite(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames,physics)
 
     //Adds Sprite to Array
     globals.sprites.push(key)
@@ -302,10 +338,13 @@ function initCheckPoint(){
     const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (5)
+    const frames = new Frames (5,8)
+
+        //Creates Physic obj with vLimit 40
+    const physics = new Physics(40);
 
     //Sprite Creation
-    const checkpoint = new Sprite(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames)
+    const checkpoint = new Sprite(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
