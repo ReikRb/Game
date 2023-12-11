@@ -74,18 +74,18 @@ function drawMenu() {
             //Draw Title
     globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
     globals.ctxHUD.fillStyle = "white";
-    globals.ctxHUD.fillText("The decrepit Throne", 78, 30);
+    globals.ctxHUD.fillText("The decrepit Throne", 52, 30);
 
             //Draw Return Button
     globals.ctx.font = "25px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
-    globals.ctx.fillText("> NEW GAME", 210, 40);
+    globals.ctx.fillText("> NEW GAME", 190, 40);
 
-    globals.ctx.fillText("HISTORY", 210, 80);
+    globals.ctx.fillText("HISTORY", 190, 80);
 
-    globals.ctx.fillText("CONTROLS", 210, 120);
+    globals.ctx.fillText("CONTROLS", 190, 120);
 
-    globals.ctx.fillText("LEADERBOARD", 210, 160);
+    globals.ctx.fillText("LEADERBOARD", 190, 160);
 }
 
 function drawHighScore() {
@@ -266,18 +266,19 @@ function renderHUD() {
     const life      = 40;
     const time      = globals.levelTime.value;
 
-    //Draw Score
-    globals.ctxHUD.font = "8px emulogic";
-    globals.ctxHUD.fillStyle = "red";
-    globals.ctxHUD.fillText("SCORE", 0, 35);
-    globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText("" + score, 0, 45);
-    
     //Draw High Score
     globals.ctxHUD.fillStyle = "red";
     globals.ctxHUD.fillText("HIGHSCORE", 0, 8);
     globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText("" + highScore, 0, 16);
+    globals.ctxHUD.fillText("" + highScore, 0, 18);
+
+    //Draw Score
+    globals.ctxHUD.font = "8px emulogic";
+    globals.ctxHUD.fillStyle = "red";
+    globals.ctxHUD.fillText("SCORE", 0, 31);
+    globals.ctxHUD.fillStyle = "lightgray";
+    globals.ctxHUD.fillText("" + score, 0, 41);
+    
 
 
     renderSpritesHUD()

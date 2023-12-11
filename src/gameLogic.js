@@ -285,7 +285,7 @@ function updateFireball(sprite) {
 function updateChair(sprite) {
     //Updates Player's variables State
     updateAnimationFrame(sprite)
-    
+
     sprite.xPos  = -50;
     sprite. yPos = 159;
 
@@ -318,7 +318,7 @@ function updateDummy(sprite){
     sprite.xPos = 368;
     sprite.yPos = 195;
 
-    sprite.frames.frameCounter = 0;
+    updateAnimationFrame(sprite)
 
     sprite.state = State.IDLE
 }

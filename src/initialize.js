@@ -321,7 +321,7 @@ function initKey(){
     const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (8,7)
+    const frames = new Frames (8,11)
 
         //Creates Physic obj with vLimit 40
         const physics = new Physics(40);
@@ -398,10 +398,13 @@ function initDummy() {
         const imageSet = new ImageSet(23,       0,      67,    66,     140,     48,      81)
 
         //Animation Data (8 Frames / State)
-        const frames = new Frames (1)
+        const frames = new Frames (8,8)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(40);
     
         //Sprite Creation
-        const dummy = new Sprite(SpriteId.DUMMY, State.IDLE, 100, 70, imageSet, frames)
+        const dummy = new Sprite(SpriteId.DUMMY, State.IDLE, 100, 70, imageSet, frames, physics)
     
         //Adds Sprite to Array
         globals.sprites.push(dummy)
