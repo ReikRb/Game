@@ -225,7 +225,7 @@ function drawHistory() {
     //Draw Title
     globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
     globals.ctxHUD.fillStyle = "white";
-    globals.ctxHUD.fillText("Chapter 3: To the Twilight Inn", 58, 30);
+    globals.ctxHUD.fillText("Chapter 3: To the Twilight Inn", 28, 30);
 
     //Draw Return Button
     globals.ctx.font = "15px Medieval Scroll of Wisdom";
@@ -234,31 +234,28 @@ function drawHistory() {
 
     //Draw History
     globals.ctx.font = "10px Medieval Scroll of Wisdom";
-    globals.ctx.fillText(`With the chair restored and its magic renewed, Joseph was granted with the power of the chair on a magical`, 70, 80)
-    globals.ctx.fillText(`staff and a spellbook. He then decided to embark towards the Twilight Inn, a magical refuge where`, 70, 90)
-    globals.ctx.fillText(`he hoped to find a new purpose for his life torn apart by madness and obsession.`, 70, 100)
-    globals.ctx.fillText(`Without the company of the villagers, who still held their distrust towards him, Joseph ventured alone,`, 70, 110)
-    globals.ctx.fillText(`guiding the chair in a magic bubble so he didn't have to carry it through the Lowlands.`, 70, 120)
+    globals.ctx.fillText(`With the chair restored and its magic renewed, Joseph was granted, `, 70, 80)
+    globals.ctx.fillText(`thanks to the chair, a magical staff and a spellbook. He then decided `, 70, 90)
+    globals.ctx.fillText(`to embark towards the Twilight Inn, a magical refuge where he `, 70, 100)
+    globals.ctx.fillText(`hoped to find a new purpose for his life torn apart by madness and `, 70, 110)
+    globals.ctx.fillText(`obsession. Without the company of the villagers, who still held their `, 70, 120)
+    globals.ctx.fillText(`distrust towards him, Joseph ventured alone, guiding the chair in `, 70, 130)
+    globals.ctx.fillText(`a magic bubble so he didn't have to carry it through the Lowlands.`, 70, 140)
 
-    globals.ctx.fillText(`The journey was an odyssey in itself. Joseph had to navigate dark forests, always with the chair by his side,`, 70, 140)
-    globals.ctx.fillText(`glowing with a magical radiance that left traces along the way. During his traverse, Joseph encountered`, 70, 150)
-    globals.ctx.fillText(`mystical creatures & bandits drawn by the chair's energy, testing him. He faced challenges of cunning and magic,`, 70, 160)
-    globals.ctx.fillText(`proving that the chair, despite its dark past, could also be a symbol of protection.`, 70, 170)
+    globals.ctx.fillText(`On a stormy night, he dreamt of visions from the past, revealing the true `, 70, 160)
+    globals.ctx.fillText(`nature of the chair, and his own internal struggles. The chair's magic, `, 70, 170)
+    globals.ctx.fillText(`though restored, still toyed with his sanity, but Joseph was determined.`, 70, 180)
 
-    globals.ctx.fillText(`On a stormy night, Joseph sought refuge in a cave, shielding the chair from nature's fury.`, 70, 190)
-    globals.ctx.fillText(`While resting, he dreamt of visions from the past, revelations about the true nature of the chair, `, 70, 200)
-    globals.ctx.fillText(`and his own internal struggles. The chair's magic, though restored, still toyed with his sanity,`, 70, 210)
-    globals.ctx.fillText(`but Joseph was determined to find redemption at the Twilight Inn.`, 70, 220)
-
-    globals.ctx.fillText(`The journey continued through endless plains and challenging mountains. `, 70, 240)
-    globals.ctx.fillText(`Joseph, with the chair as his sole companion, rediscovered the inner strength he had lost in his`, 70, 250)
-    globals.ctx.fillText(`previous madness. The chair, now more than a mere object, became an ally in his journey of self-affirmation.`, 70, 260)
-
-    globals.ctx.fillText(`Finally, after days of travel, Joseph arrived at the last challenge he had to face, the catacombs. `, 70, 280)
-    globals.ctx.fillText(`Horrible things awaited him if he wanted to achieve his destiny.  The Twilight Inn.`, 70, 290)
-
-    globals.ctx.fillText(`Horrible creatures, bandits (which were looting the corpses left behind) & and the catacomb itself`, 70, 310)
-    globals.ctx.fillText(` which had really difficult trials to keep away the humans of the resting souls.`, 70, 320) 
+    globals.ctx.fillText(`The journey continued through endless challenges. Joseph, with the`, 70, 200)
+    globals.ctx.fillText(`chair as his sole companion, rediscovered the inner strength he had `, 70, 210)
+    globals.ctx.fillText(`lost in his previous madness. The chair, now more than a mere object,`, 70, 220)
+    globals.ctx.fillText(`became an ally in his journey of self-affirmation.`, 70, 230)
+    
+    globals.ctx.fillText(`Finally, after days of travel, Joseph arrived at the last challenge `, 70, 250)
+    globals.ctx.fillText(`he had to face, the catacombs. Horrible things awaited him if he `, 70, 260)
+    globals.ctx.fillText(`wanted to achieve his destiny. Horrible creatures, bandits and the `, 70, 270)
+    globals.ctx.fillText(`catacomb itself which had really difficult trials to keep away`, 70, 280) 
+    globals.ctx.fillText(`the humans of the resting souls.`, 70, 290)
 }
 
 

@@ -75,7 +75,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.HIGHSCORE;
+        globals.gameState = Game.HISTORY;
     }
 }
 
