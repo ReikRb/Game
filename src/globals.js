@@ -20,6 +20,9 @@ export default {
     //Tiempo de ciclo objetivo (seconds, constante)
     frameTimeObj: 0,
 
+    //Temporizador nivel
+    levelTime: {},
+    
     //Debugger Text Box
     txtPruebas: {},
 

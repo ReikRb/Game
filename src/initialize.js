@@ -4,6 +4,7 @@ import Sprite from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
+import Timer from "./Timer.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -38,7 +39,10 @@ function initVars() {
     //Inits Game State
     globals.gameState = Game.LOADING;
 }
-
+function initTimers() {
+    //Sets timer to 200 with changes/0,5s.
+    globals.levelTime = new Timer(200, 0.5)
+}
 function loadAssets(){
     let tileSet;
     
@@ -383,4 +387,4 @@ function initLevel() {
 }  
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground } 
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers } 

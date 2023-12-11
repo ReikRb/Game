@@ -264,7 +264,7 @@ function renderHUD() {
     const score     = 1154700;
     const highScore = 1200000;
     const life      = 40;
-    const time      = 3000;
+    const time      = globals.levelTime.value;
 
     //Draw Score
     globals.ctxHUD.font = "8px emulogic";
