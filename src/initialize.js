@@ -252,10 +252,10 @@ function initPlayer(){
     const frames = new Frames (8, 3)
 
     //Creates Physic obj with vLimit 40
-    const physics = new Physics(60, 40, 0.99);
+    const physics = new Physics(60, 40, 0.2, -50);
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 70, imageSet, frames, physics)
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 300, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(player)

@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, State, SpriteId} from "./constants.js"
+import {Game, State, SpriteId, GRAVITY} from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPlayerAttackVFX,initPlayerFireball } from "./initialize.js";
 
 export default function update(){
@@ -259,6 +259,7 @@ function updatePlayer(sprite) {
             break
 
         case State.ATTACK_RIGHT:
+        case State.ATTACK_LEFT:
             initPlayerAttackVFX();
             initPlayerFireball();
             break;
@@ -286,17 +287,31 @@ function updatePlayer(sprite) {
     if (isCollision) {
         sprite.xPos -= sprite.physics.vx * globals.deltaTime
     }
+
+    
+    sprite.physics.ay = GRAVITY;
+    
+    if (!sprite.physics.isOnGround) {
+        sprite.physics.vy += sprite.physics.ay * globals.deltaTime;
+    } else {
+        if (globals.action.jump) {
+            sprite.physics.isOnGround = false;
+            sprite.physics.vy += sprite.physics.jumpForce;
+        }
+    }
+    
+    sprite.yPos += sprite.physics.vy * globals.deltaTime;
+    
+    if (sprite.yPos > globals.canvas.height - sprite.imageSet.ySize) {
+        sprite.physics.isOnGround = true;
+        sprite.yPos = globals.canvas.height - sprite.imageSet.ySize;
+        sprite.physics.vy = 0;
+    }
     updateAnimationFrame(sprite)
-
-    sprite. yPos = 179;
-
-    // sprite.state = State.ATTACK_RIGHT
 }
 
 function updatePlayerAttackVFX(sprite) {
         updateAnimationFrame(sprite)
-
-    sprite. yPos = 181;
 
     sprite.state = State.RIGHT
     // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {

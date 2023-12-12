@@ -15,6 +15,10 @@ export function keydownHandler(event) {
         case Key.FIRE:
             globals.action.fire = true;
             break;
+        
+        case Key.JUMP:
+            globals.action.jump = true;
+            break;
 
     }
 }
@@ -33,5 +37,8 @@ export function keyupHandler(event) {
             globals.action.fire = false;
             break;
 
+        case Key.JUMP:
+            globals.action.jump = false;
+            break;
     }
 }

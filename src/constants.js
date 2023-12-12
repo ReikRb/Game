@@ -15,6 +15,7 @@ const Game = {
 
 //Frames Per Second
 const FPS = 30;
+const GRAVITY = 9;
 
 //Sprite type Identifier (ID)
 const SpriteId = {
@@ -137,4 +138,4 @@ const Block = {
 
 
 }
-export {Game, FPS, SpriteId, Key, State, Tile, Block}
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY}
