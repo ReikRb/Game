@@ -255,7 +255,7 @@ function initPlayer(){
     const physics = new Physics(60, 40, 0.2, -50);
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 300, imageSet, frames, physics)
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(player)

@@ -163,6 +163,8 @@ function updateSprite(sprite) {
 function readKeyboardAndAssignState(sprite) {
     sprite.state =  globals.action.moveLeft               ? State.RUN_LEFT    :    //Left key
                     globals.action.moveRight              ? State.RUN_RIGHT   :    //Right key
+                    globals.action.jump && sprite.state === State.RUN_RIGHT                   ? State.JUMP_RIGHT  :
+                    sprite.yPos ===274 &&sprite.state ===State. JUMP_RIGHT ? State.IDLE_RIGHT:
                     sprite.state === State.RUN_LEFT       ? State.IDLE_LEFT   :    //No key state left
                     sprite.state === State.RUN_RIGHT      ? State.IDLE_RIGHT  :    //No key state right
                     sprite.state;
@@ -236,6 +238,10 @@ function updatePlayer(sprite) {
     //Keyboard event reader
     readKeyboardAndAssignState(sprite);
 
+    console.log("Right: " + globals.action.moveRight )
+    console.log("Jump: " + globals.action.jump)
+    console.log(sprite.state)
+    console.log (sprite.yPos)
     const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
 
     //Updates Player's variables State
@@ -263,6 +269,13 @@ function updatePlayer(sprite) {
             initPlayerAttackVFX();
             initPlayerFireball();
             break;
+        
+        case State.JUMP_RIGHT:
+        case State.JUMP_LEFT:
+            sprite.frames.framesPerState = 2
+            sprite.frames.frameCounter = 0
+            break;
+
     }
 
     //XY Speed Calculation
