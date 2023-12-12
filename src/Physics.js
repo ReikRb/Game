@@ -8,6 +8,7 @@ export default class Physics {
         this.aLimit     = aLimit;
         this.friction   = friction;
         this.jumpForce  = jumpForce
-        this.isOnGround = false
+        this.isOnGround = true
+        this.isFalling  = false
     }
 }

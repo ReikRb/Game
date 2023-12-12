@@ -15,7 +15,7 @@ const Game = {
 
 //Frames Per Second
 const FPS = 30;
-const GRAVITY = 9;
+const GRAVITY = 900;
 
 //Sprite type Identifier (ID)
 const SpriteId = {

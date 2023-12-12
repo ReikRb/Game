@@ -161,16 +161,26 @@ function updateSprite(sprite) {
 }
 
 function readKeyboardAndAssignState(sprite) {
-    sprite.state =  globals.action.moveLeft               ? State.RUN_LEFT    :    //Left key
+    
+    sprite.state =  sprite.physics.vy > 0  && globals.action.moveRight ? State.FALL_RIGHT:
+                    sprite.physics.vy > 0  && sprite.state === State.JUMP_RIGHT ? State.FALL_RIGHT:
+                    sprite.physics.vy > 0  && globals.action.moveLeft ? State.FALL_LEFT:
+                    sprite.physics.vy > 0  && sprite.state === State.JUMP_LEFT ? State.FALL_LEFT:
+                    globals.action.jump  && sprite.state  === State.RUN_RIGHT       ? State.JUMP_RIGHT  :
+                    globals.action.jump  && sprite.state  === State.RUN_LEFT       ? State.JUMP_LEFT  :
+                    !sprite.physics.isOnGround            ? sprite.state      :
+                    globals.action.moveLeft               ? State.RUN_LEFT    :    //Left key
                     globals.action.moveRight              ? State.RUN_RIGHT   :    //Right key
-                    globals.action.jump && sprite.state === State.RUN_RIGHT                   ? State.JUMP_RIGHT  :
-                    sprite.yPos ===274 &&sprite.state ===State. JUMP_RIGHT ? State.IDLE_RIGHT:
+                    sprite.yPos  === 274 && sprite.state  === State.FALL_RIGHT      ? State.IDLE_RIGHT  :
+                    sprite.yPos  === 274 && sprite.state  === State.FALL_LEFT      ? State.IDLE_LEFT  :
                     sprite.state === State.RUN_LEFT       ? State.IDLE_LEFT   :    //No key state left
                     sprite.state === State.RUN_RIGHT      ? State.IDLE_RIGHT  :    //No key state right
                     sprite.state;
-
-
 }
+
+// function checkDirection(sprite) {
+//     return sprite.state % 2
+// }
 
 //HUD Sprites Functions
 function updateEmptyCrystalLife(sprite){
@@ -238,22 +248,21 @@ function updatePlayer(sprite) {
     //Keyboard event reader
     readKeyboardAndAssignState(sprite);
 
-    console.log("Right: " + globals.action.moveRight )
-    console.log("Jump: " + globals.action.jump)
-    console.log(sprite.state)
-    console.log (sprite.yPos)
     const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
 
+    console.log(sprite.physics.vy)
     //Updates Player's variables State
     switch (sprite.state) {
         case State.RUN_RIGHT:
             sprite.frames.framesPerState = 8
+            
             //If character moves right X is positive
             sprite.physics.ax = sprite.physics.aLimit;
             break;
 
         case State.RUN_LEFT:
             sprite.frames.framesPerState = 8
+            
             //If character moves left X is negative
             sprite.physics.ax = -sprite.physics.aLimit;
         break;
@@ -261,6 +270,7 @@ function updatePlayer(sprite) {
         case State.IDLE_LEFT:
         case State.IDLE_RIGHT:
             sprite.frames.framesPerState = 6
+            
             sprite.physics.ax = 0
             break
 
@@ -309,6 +319,7 @@ function updatePlayer(sprite) {
     } else {
         if (globals.action.jump) {
             sprite.physics.isOnGround = false;
+            sprite.physics.isFalling  = true;
             sprite.physics.vy += sprite.physics.jumpForce;
         }
     }
@@ -317,6 +328,7 @@ function updatePlayer(sprite) {
     
     if (sprite.yPos > globals.canvas.height - sprite.imageSet.ySize) {
         sprite.physics.isOnGround = true;
+        sprite.physics.isFalling  = false;
         sprite.yPos = globals.canvas.height - sprite.imageSet.ySize;
         sprite.physics.vy = 0;
     }
@@ -466,7 +478,7 @@ function updateAnimationFrame(sprite) {
                 //changes frame once the counter equals the speed
                 if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
                     //Changes frame then resets counter
-                    sprite.frames.frameCounter++;
+                    sprite.frames.frameCounter = (sprite.frames.frameCounter +1) % sprite.frames.framesPerState
                     sprite.frames.frameChangeCounter = 0;
                 }
             
@@ -476,7 +488,6 @@ function updateAnimationFrame(sprite) {
                         let index = globals.sprites.indexOf(sprite)
                         globals.sprites.splice(index,1)
                     }
-                    sprite.frames.frameCounter = 0
                 }
 }
 
