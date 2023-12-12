@@ -39,7 +39,13 @@ const SpriteId = {
 
 }
 
-
+//Keyboard key codes
+const Key = {
+    LEFT: 37,
+    RIGHT:39,
+    JUMP: 32,
+    FIRE: 90,
+}
 //Sprite State Identifier (Direction)
 const State = {
 
@@ -78,7 +84,8 @@ const State = {
     DEAD: 1,
 
     //Collectables States
-    IDLE_3:          0
+    IDLE_3:          0,
+
 }
 
 const Tile = {
@@ -130,4 +137,4 @@ const Block = {
 
 
 }
-export {Game, FPS, SpriteId, State, Tile, Block}
+export {Game, FPS, SpriteId, Key, State, Tile, Block}

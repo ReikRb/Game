@@ -6,6 +6,7 @@ import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics from "./Physics.js";
+import { keydownHandler,keyupHandler } from "./events.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -31,7 +32,7 @@ function initHTMLelements(){
 
 //Inits Game Variables Method
 function initVars() {
-    
+
     //Inits Game Time Management Variables
     globals.previousCycleMilliseconds = 0;
     globals.deltaTime = 0;
@@ -39,14 +40,23 @@ function initVars() {
 
     //Inits Game State
     globals.gameState = Game.LOADING;
+
+    globals.action = {
+        moveLeft:   false,
+        moveRight:  false,
+        fire:       false,
+        jump:       false
+    }
 }
+
 function initTimers() {
     //Sets timer to 200 with changes/0,5s.
     globals.levelTime = new Timer(200, 0.5)
 }
+
 function loadAssets(){
     let tileSet;
-    
+
     //Loads SpriteSheet Img
     tileSet = new Image();
     tileSet.addEventListener("load", loadHandler, false);
@@ -64,17 +74,22 @@ function loadAssets(){
 
 }
 
+function initEvents() {
+    //Add the Keyboard event listeners
+    window.addEventListener("keydown",  keydownHandler, false);
+    window.addEventListener("keyup",    keyupHandler, false)
+}
 function loadHandler() {
 
     globals.assetsLoaded++; //Adds 1 to the counter
 
     //Once all Elements are loaded
     if (globals.assetsLoaded === globals.assetsToLoad.length) {
-        
+
         //Removes Load Event Listener
         for (let i = 0; i < globals.tileSets.length; i++) {
             globals.tileSets[i].removeEventListener("load", loadHandler, false)
-              
+
         }
 
         console.log("Assets loaded")
@@ -95,11 +110,11 @@ function initSprites() {
     initCheckPoint();
     initKey();
     initPlayer();
-    initPlayerFireball();
-    initPlayerAttackVFX();
+    // initPlayerFireball();
+    // initPlayerAttackVFX();
     initChair();
     initSkeleton();
-    
+
 }
 
 function initMainMenuSprites() {
@@ -157,13 +172,13 @@ function initEmptyCrystalMana(){
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1,2)
-    
+
         //Creates Physic obj with vLimit 40
         const physics = new Physics(40);
-    
+
         //Sprite Creation
         const EmptyCrystalMana = new Sprite(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames, physics)
-    
+
         //Adds Sprite to Array
         globals.sprites.push(EmptyCrystalMana)
         globals.SpritesHUD++
@@ -205,7 +220,7 @@ function initPowerHUD(){
     //Adds Sprite to Array
     globals.sprites.push(powerHUD)
     globals.SpritesHUD++
-    
+
 }
 
 function initKeyHUD(){
@@ -224,7 +239,7 @@ function initKeyHUD(){
     //Adds Sprite to Array
     globals.sprites.push(keyHUD)
     globals.SpritesHUD++
-    
+
 }
 
 
@@ -237,10 +252,10 @@ function initPlayer(){
     const frames = new Frames (8, 3)
 
     //Creates Physic obj with vLimit 40
-    const physics = new Physics(40);
+    const physics = new Physics(60, 40, 0.99);
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE, 20, 70, imageSet, frames, physics)
+    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 70, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -250,7 +265,7 @@ function initChair() {
 
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(6,       4,      104,    75,     140,     10,      50)
-    
+
     //Animation Data (8 Frames / State)
     const frames = new Frames (2,16)
 
@@ -267,16 +282,16 @@ function initChair() {
 function initPlayerAttackVFX() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(25,       0,      90,    82,     140,     44,      40)
-    
+
         //Animation Data (8 Frames / State)
         const frames = new Frames (8,3)
 
         //Creates Physic obj with vLimit 40
         const physics = new Physics(40);
-    
+
         //Sprite Creation
         const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames, physics)
-    
+
             //Adds Sprite to Array
             globals.sprites.push(attack)
 }
@@ -350,7 +365,7 @@ function initCheckPoint(){
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
-    
+
 }
 function initDoor(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
@@ -364,7 +379,7 @@ function initDoor(){
 
     //Adds Sprite to Array
     globals.sprites.push(door)
-    
+
 }
 
 function initParchment() {
@@ -373,10 +388,10 @@ function initParchment() {
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
-    
+
         //Sprite Creation
         const parchment = new Sprite(SpriteId.PARCHMENT, State.IDLE_3, 0, 0, imageSet, frames)
-    
+
         //Adds Sprite to Array
         globals.sprites.push(parchment)
 }
@@ -387,10 +402,10 @@ function initPlatform() {
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
-    
+
         //Sprite Creation
         const platform = new Sprite(SpriteId.PLATFORM, State.IDLE_3, 100, 70, imageSet, frames)
-    
+
         //Adds Sprite to Array
         globals.sprites.push(platform)
 }
@@ -404,10 +419,10 @@ function initDummy() {
 
         //Creates Physic obj with vLimit 40
         const physics = new Physics(40);
-    
+
         //Sprite Creation
         const dummy = new Sprite(SpriteId.DUMMY, State.IDLE, 100, 70, imageSet, frames, physics)
-    
+
         //Adds Sprite to Array
         globals.sprites.push(dummy)
 }
@@ -422,13 +437,13 @@ function initMainMenuMap() {
 }
 
 function initLevel() {
-    
+
     //Makes Properties of Map Img: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
 
     //Makes & Saves Level
     globals.level = new Level(level1, imageSet)
-}  
+}
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers } 
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX }

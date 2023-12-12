@@ -22,7 +22,7 @@ export default {
 
     //Temporizador nivel
     levelTime: {},
-    
+
     //Debugger Text Box
     txtPruebas: {},
 
@@ -44,5 +44,8 @@ export default {
     tileSets: [],
 
     //Level Data
-    level: {}
+    level: {},
+
+    //Obj that saves pressed key state
+    action:{},
 }

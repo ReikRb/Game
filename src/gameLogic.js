@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, State, SpriteId} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPlayerAttackVFX,initPlayerFireball } from "./initialize.js";
 
 export default function update(){
 
@@ -159,6 +159,17 @@ function updateSprite(sprite) {
             break;
     }
 }
+
+function readKeyboardAndAssignState(sprite) {
+    sprite.state =  globals.action.moveLeft               ? State.RUN_LEFT    :    //Left key
+                    globals.action.moveRight              ? State.RUN_RIGHT   :    //Right key
+                    sprite.state === State.RUN_LEFT       ? State.IDLE_LEFT   :    //No key state left
+                    sprite.state === State.RUN_RIGHT      ? State.IDLE_RIGHT  :    //No key state right
+                    sprite.state;
+
+
+}
+
 //HUD Sprites Functions
 function updateEmptyCrystalLife(sprite){
 
@@ -222,31 +233,64 @@ function updateKeyHUD(sprite){
 
 //In-Game Sprites Functions
 function updatePlayer(sprite) {
-    //Updates Player's variables State
+    //Keyboard event reader
+    readKeyboardAndAssignState(sprite);
 
+    const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
+
+    //Updates Player's variables State
     switch (sprite.state) {
         case State.RUN_RIGHT:
+            sprite.frames.framesPerState = 8
             //If character moves right X is positive
-            sprite.physics.vx = sprite.physics.vLimit;
+            sprite.physics.ax = sprite.physics.aLimit;
             break;
 
         case State.RUN_LEFT:
+            sprite.frames.framesPerState = 8
             //If character moves left X is negative
-            sprite.physics.vx = -sprite.physics.vLimit;
+            sprite.physics.ax = -sprite.physics.aLimit;
         break;
-        
-        default:
-            console.error("Error: State invalid");
+
+        case State.IDLE_LEFT:
+        case State.IDLE_RIGHT:
+            sprite.frames.framesPerState = 6
+            sprite.physics.ax = 0
+            break
+
+        case State.ATTACK_RIGHT:
+            initPlayerAttackVFX();
+            initPlayerFireball();
+            break;
+    }
+
+    //XY Speed Calculation
+    sprite.physics.vx += sprite.physics.ax * globals.deltaTime;
+
+    if ((sprite.state === State.RUN_LEFT && sprite.physics.vx  > 0) ||
+        (sprite.state === State.RUN_RIGHT && sprite.physics.vx < 0) ||
+        (!isLeftOrRightPressed)) {
+        sprite.physics.vx *= sprite.physics.friction;
+    }
+
+    if (sprite.physics.vx > sprite.physics.vLimit) {
+        sprite.physics.vx = sprite.physics.vLimit
+    } else if (sprite.physics.vx < -sprite.physics.vLimit) {
+        sprite.physics.vx =- sprite.physics.vLimit;
     }
 
     //Calculates movement in X
     sprite.xPos += sprite.physics.vx * globals.deltaTime
 
+    const isCollision = calculateCollisionWithBorders(sprite)
+    if (isCollision) {
+        sprite.xPos -= sprite.physics.vx * globals.deltaTime
+    }
     updateAnimationFrame(sprite)
 
     sprite. yPos = 179;
 
-    sprite.state = State.ATTACK_RIGHT
+    // sprite.state = State.ATTACK_RIGHT
 }
 
 function updatePlayerAttackVFX(sprite) {
@@ -255,6 +299,10 @@ function updatePlayerAttackVFX(sprite) {
     sprite. yPos = 181;
 
     sprite.state = State.RIGHT
+    // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
+    //     let index = globals.sprites.indexOf(sprite)
+    //     globals.sprites.splice(index,1)
+    // }
 }
 
 function updateFireball(sprite) {
@@ -272,14 +320,20 @@ function updateFireball(sprite) {
         default:
             console.error("Error: State invalid");
     }
-    sprite. yPos = 179;
+    sprite.yPos = 179;
 
         //Calculates movement in X
         sprite.xPos += sprite.physics.vx * globals.deltaTime
 
         updateAnimationFrame(sprite)
+            //Edges collision calculation
 
-    sprite.state = State.RIGHT
+    const isCollision = calculateCollisionWithBorders(sprite)
+    if (isCollision) {
+        let index = globals.sprites.indexOf(sprite)
+        globals.sprites.splice(index,1)
+    }
+
 }
 
 function updateChair(sprite) {
@@ -347,6 +401,7 @@ function updateDummy(sprite){
 
 function updateKey(sprite){
 
+    sprite.frames.framesPerState = 8
     //Updates Key's variables State
     sprite.xPos = 400;
     sprite.yPos = 169;
@@ -376,20 +431,25 @@ function updateParchment(sprite){
 
 
 function updateAnimationFrame(sprite) {
-    //Increase time between frames
-    sprite.frames.frameChangeCounter++;
 
-    //changes frame once the counter equals the speed
-    if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
-        //Changes frame then resets counter
-        sprite.frames.frameCounter++;
-        sprite.frames.frameChangeCounter = 0;
-    }
-
-    //Once the max frames are reached it resets (Animation loop)
-    if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
-        sprite.frames.frameCounter = 0
-    }
+            //Increase time between frames
+            sprite.frames.frameChangeCounter++;
+            
+                //changes frame once the counter equals the speed
+                if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
+                    //Changes frame then resets counter
+                    sprite.frames.frameCounter++;
+                    sprite.frames.frameChangeCounter = 0;
+                }
+            
+                //Once the max frames are reached it resets (Animation loop)
+                if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
+                    if (sprite.id === SpriteId.ATTACK_VFX) {
+                        let index = globals.sprites.indexOf(sprite)
+                        globals.sprites.splice(index,1)
+                    }
+                    sprite.frames.frameCounter = 0
+                }
 }
 
 function calculateCollisionWithBorders(sprite) {
