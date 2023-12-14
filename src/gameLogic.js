@@ -162,20 +162,25 @@ function updateSprite(sprite) {
 
 function readKeyboardAndAssignState(sprite) {
     
-    sprite.state =  sprite.physics.vy > 0  && globals.action.moveRight ? State.FALL_RIGHT:
-                    sprite.physics.vy > 0  && sprite.state === State.JUMP_RIGHT ? State.FALL_RIGHT:
-                    sprite.physics.vy > 0  && globals.action.moveLeft ? State.FALL_LEFT:
-                    sprite.physics.vy > 0  && sprite.state === State.JUMP_LEFT ? State.FALL_LEFT:
-                    globals.action.jump  && sprite.state  === State.RUN_RIGHT       ? State.JUMP_RIGHT  :
-                    globals.action.jump  && sprite.state  === State.RUN_LEFT       ? State.JUMP_LEFT  :
-                    !sprite.physics.isOnGround            ? sprite.state      :
-                    globals.action.moveLeft               ? State.RUN_LEFT    :    //Left key
-                    globals.action.moveRight              ? State.RUN_RIGHT   :    //Right key
-                    sprite.yPos  === 274 && sprite.state  === State.FALL_RIGHT      ? State.IDLE_RIGHT  :
-                    sprite.yPos  === 274 && sprite.state  === State.FALL_LEFT      ? State.IDLE_LEFT  :
-                    sprite.state === State.RUN_LEFT       ? State.IDLE_LEFT   :    //No key state left
-                    sprite.state === State.RUN_RIGHT      ? State.IDLE_RIGHT  :    //No key state right
+    sprite.state =  sprite.physics.vy > 0       && globals.action.moveRight             ? State.FALL_RIGHT      :
+                    sprite.physics.vy > 0       && sprite.state  === State.JUMP_RIGHT   ? State.FALL_RIGHT      :
+                    sprite.physics.vy > 0       && globals.action.moveLeft              ? State.FALL_LEFT       :
+                    sprite.physics.vy > 0       && sprite.state  === State.JUMP_LEFT    ? State.FALL_LEFT       :
+                    globals.action.jump         && sprite.state  === State.RUN_RIGHT    ? State.JUMP_RIGHT      :
+                    globals.action.jump         && sprite.state  === State.RUN_LEFT     ? State.JUMP_LEFT       :
+                    globals.action.jump         && sprite.state  === State.IDLE_RIGHT   ? State.JUMP_RIGHT      :
+                    globals.action.jump         && sprite.state  === State.IDLE_LEFT    ? State.JUMP_LEFT       :
+                    !sprite.physics.isOnGround                                          ? sprite.state          :
+                    globals.action.fire         && sprite.state  === State.IDLE_RIGHT   ? State.ATTACK_RIGHT    : 
+                    globals.action.moveLeft                                             ? State.RUN_LEFT        :    //Left key
+                    globals.action.moveRight                                            ? State.RUN_RIGHT       :    //Right key
+                    sprite.yPos  === 274        && sprite.state  === State.FALL_RIGHT   ? State.IDLE_RIGHT      :
+                    sprite.yPos  === 274        && sprite.state  === State.FALL_LEFT    ? State.IDLE_LEFT       :
+                    sprite.state === State.RUN_LEFT                                     ? State.IDLE_LEFT       :    //No key state left
+                    sprite.state === State.RUN_RIGHT                                    ? State.IDLE_RIGHT      :    //No key state right
+                    sprite.state === State.ATTACK_RIGHT                                 ? State.IDLE_RIGHT      :
                     sprite.state;
+                    
 }
 
 // function checkDirection(sprite) {
@@ -250,7 +255,6 @@ function updatePlayer(sprite) {
 
     const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
 
-    console.log(sprite.physics.vy)
     //Updates Player's variables State
     switch (sprite.state) {
         case State.RUN_RIGHT:
@@ -278,10 +282,13 @@ function updatePlayer(sprite) {
         case State.ATTACK_LEFT:
             initPlayerAttackVFX();
             initPlayerFireball();
+            setTimeout(1000)
             break;
         
         case State.JUMP_RIGHT:
         case State.JUMP_LEFT:
+        case State.FALL_LEFT:
+        case State.FALL_RIGHT:
             sprite.frames.framesPerState = 2
             sprite.frames.frameCounter = 0
             break;
@@ -333,6 +340,8 @@ function updatePlayer(sprite) {
         sprite.physics.vy = 0;
     }
     updateAnimationFrame(sprite)
+
+
 }
 
 function updatePlayerAttackVFX(sprite) {
@@ -377,12 +386,28 @@ function updateFireball(sprite) {
 }
 
 function updateChair(sprite) {
-    //Updates Player's variables State
+    //Updates Chair's variables State
+    let player
+    for (let i = 0; i < globals.sprites.length; i++) {
+        const element = globals.sprites[i];
+        if (element.id === SpriteId.PLAYER) {
+            player = element
+        }
+    }
+    if (player.state === State.ATTACK_RIGHT ||
+        player.state === State.RUN_RIGHT ||
+        player.state === State.DAMAGED_RIGHT ||
+        player.state == State.JUMP_RIGHT ||
+        player.state == State.FALL_RIGHT ||
+        player.state == State.IDLE_RIGHT
+        ) {
+            sprite.xPos  = player.xPos -50;
+    } else{
+        sprite.xPos = player.xPos + 50
+    }
+    sprite. yPos = player.yPos -20;
+    
     updateAnimationFrame(sprite)
-
-    sprite.xPos  = -50;
-    sprite. yPos = 159;
-
 
 
 }
