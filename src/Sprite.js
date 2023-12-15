@@ -10,6 +10,7 @@ export default class Sprite{
         this.imageSet = imageSet;   //Sprite Image Data
         this.frames   = frames;     //Frame Animation Data
         this.physics  = physics     //Physics Data
+        this.previousState = state
     }
 }
 

@@ -79,6 +79,7 @@ function initEvents() {
     window.addEventListener("keydown",  keydownHandler, false);
     window.addEventListener("keyup",    keyupHandler, false)
 }
+
 function loadHandler() {
 
     globals.assetsLoaded++; //Adds 1 to the counter
@@ -279,7 +280,7 @@ function initChair() {
     globals.sprites.push(chair)
 }
 
-function initPlayerAttackVFX() {
+function initPlayerAttackVFX(xPos, yPos, STATE) {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(25,       0,      90,    82,     140,     44,      40)
 
@@ -290,13 +291,13 @@ function initPlayerAttackVFX() {
         const physics = new Physics(40);
 
         //Sprite Creation
-        const attack = new Sprite(SpriteId.ATTACK_VFX, State.RIGHT, 100, 70, imageSet, frames, physics)
+        const attack = new Sprite(SpriteId.ATTACK_VFX, STATE, xPos, yPos, imageSet, frames, physics)
 
             //Adds Sprite to Array
             globals.sprites.push(attack)
 }
 
-function initPlayerFireball() {
+function initPlayerFireball(xPos, yPos, STATE) {
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(6,       2,      80,    82,     140,     36,      40)
 
@@ -307,7 +308,7 @@ function initPlayerFireball() {
         const physics = new Physics(100);
 
     //Sprite Creation
-    const fireball = new Sprite(SpriteId.FIREBALL, State.RIGHT, 100, 70, imageSet, frames,physics)
+    const fireball = new Sprite(SpriteId.FIREBALL, STATE, xPos, yPos, imageSet, frames,physics)
 
         //Adds Sprite to Array
         globals.sprites.push(fireball)

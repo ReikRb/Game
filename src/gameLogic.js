@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, State, SpriteId, GRAVITY} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPlayerAttackVFX,initPlayerFireball } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPlayerAttackVFX, initPlayerFireball } from "./initialize.js";
 
 export default function update(){
 
@@ -63,6 +63,7 @@ function playGame() {
     updateSprites();
     updateLevelTime();
 }
+
 function updateLevelTime() {
     //Adds the value modifier counter
     globals.levelTime.timeChangeCounter += globals.deltaTime;
@@ -162,24 +163,38 @@ function updateSprite(sprite) {
 
 function readKeyboardAndAssignState(sprite) {
     
-    sprite.state =  sprite.physics.vy > 0       && globals.action.moveRight             ? State.FALL_RIGHT      :
-                    sprite.physics.vy > 0       && sprite.state  === State.JUMP_RIGHT   ? State.FALL_RIGHT      :
-                    sprite.physics.vy > 0       && globals.action.moveLeft              ? State.FALL_LEFT       :
-                    sprite.physics.vy > 0       && sprite.state  === State.JUMP_LEFT    ? State.FALL_LEFT       :
-                    globals.action.jump         && sprite.state  === State.RUN_RIGHT    ? State.JUMP_RIGHT      :
-                    globals.action.jump         && sprite.state  === State.RUN_LEFT     ? State.JUMP_LEFT       :
-                    globals.action.jump         && sprite.state  === State.IDLE_RIGHT   ? State.JUMP_RIGHT      :
-                    globals.action.jump         && sprite.state  === State.IDLE_LEFT    ? State.JUMP_LEFT       :
-                    !sprite.physics.isOnGround                                          ? sprite.state          :
-                    globals.action.fire         && sprite.state  === State.IDLE_RIGHT   ? State.ATTACK_RIGHT    : 
-                    globals.action.moveLeft                                             ? State.RUN_LEFT        :    //Left key
-                    globals.action.moveRight                                            ? State.RUN_RIGHT       :    //Right key
-                    sprite.yPos  === 274        && sprite.state  === State.FALL_RIGHT   ? State.IDLE_RIGHT      :
-                    sprite.yPos  === 274        && sprite.state  === State.FALL_LEFT    ? State.IDLE_LEFT       :
-                    sprite.state === State.RUN_LEFT                                     ? State.IDLE_LEFT       :    //No key state left
-                    sprite.state === State.RUN_RIGHT                                    ? State.IDLE_RIGHT      :    //No key state right
-                    sprite.state === State.ATTACK_RIGHT                                 ? State.IDLE_RIGHT      :
-                    sprite.state;
+    if (!sprite.physics.isOnGround) {
+        sprite.state =  sprite.physics.vy > 0       && sprite.physics.vx > 0              ? State.FALL_RIGHT      :
+                        sprite.physics.vy > 0       && sprite.physics.vx < 0              ? State.FALL_LEFT       :
+                        sprite.physics.vy < 0       && sprite.physics.vx > 0              ? State.JUMP_RIGHT      :
+                        sprite.physics.vy < 0       && sprite.physics.vx < 0              ? State.JUMP_LEFT       :
+                        sprite.physics.vy < 0       && State.IDLE_RIGHT                   ? State.JUMP_RIGHT      :
+                        sprite.physics.vy < 0       && State.IDLE_LEFT                    ? State.JUMP_LEFT       :
+                        sprite.state          
+        
+    } else {
+        if (sprite.physics.isShooting) {
+            sprite.state =  globals.action.fire            && sprite.state  === State.IDLE_RIGHT     ? State.ATTACK_RIGHT    : 
+                            globals.action.fire            && sprite.state  === State.ATTACK_RIGHT   ? State.ATTACK_RIGHT    :
+                            globals.action.fire            && sprite.state  === State.IDLE_LEFT      ? State.ATTACK_LEFT     : 
+                            globals.action.fire            && sprite.state  === State.ATTACK_LEFT    ? State.ATTACK_LEFT     :
+                            sprite.state === State.ATTACK_LEFT                                       ? State.IDLE_LEFT       :
+                            sprite.state;
+            
+        } else {
+            sprite.state =    
+                            globals.action.moveRight                                                ? State.RUN_RIGHT       :    //Right key
+                            globals.action.moveLeft                                                 ? State.RUN_LEFT        :    //Left key
+                            sprite.physics.vy === 0        && sprite.state  === State.FALL_RIGHT    ? State.IDLE_RIGHT      :
+                            sprite.physics.vy === 0        && sprite.state  === State.FALL_LEFT     ? State.IDLE_LEFT       :
+                            sprite.state === State.RUN_LEFT                                         ? State.IDLE_LEFT       :    //No key state left
+                            sprite.state === State.RUN_RIGHT                                        ? State.IDLE_RIGHT      :    //No key state right
+                            sprite.state % 2 === 0 ? State.IDLE_RIGHT :
+                            sprite.state;
+
+        }
+       
+    }
                     
 }
 
@@ -250,11 +265,18 @@ function updateKeyHUD(sprite){
 
 //In-Game Sprites Functions
 function updatePlayer(sprite) {
+    
     //Keyboard event reader
     readKeyboardAndAssignState(sprite);
-
     const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
-
+    if (sprite.previousState === State.ATTACK_RIGHT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) != 1) {
+        sprite.state = State.ATTACK_RIGHT
+        sprite.physics.isShooting = true
+    } else if (sprite.previousState === State.ATTACK_RIGHT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) === 1){
+        sprite.frames.frameCounter = 0
+        sprite.frames.frameChangeCounter = 0
+        sprite.physics.shootingIntervalCounter = 0
+    }
     //Updates Player's variables State
     switch (sprite.state) {
         case State.RUN_RIGHT:
@@ -279,10 +301,39 @@ function updatePlayer(sprite) {
             break
 
         case State.ATTACK_RIGHT:
+            sprite.frames.framesPerState = 8
+            if (sprite.previousState != State.ATTACK_RIGHT) {
+                sprite.physics.shootingIntervalCounter = 0
+            }
+                if (sprite.frames.frameCounter / (sprite.frames.framesPerState-1) != 1 && sprite.physics.shootingIntervalCounter === 0) {
+                    initPlayerAttackVFX((sprite.xPos+78), sprite.yPos, State.RIGHT);
+                    setTimeout(() => { initPlayerFireball((sprite.xPos + 78), sprite.yPos, State.RIGHT); }, 400);
+                }
+                if (sprite.physics.shootingIntervalCounter === sprite.physics.shootingInterval) {
+                    sprite.physics.shootingIntervalCounter = 0
+
+                } else{
+                    sprite.physics.shootingIntervalCounter++
+                }
+            
+            
+            break;
         case State.ATTACK_LEFT:
-            initPlayerAttackVFX();
-            initPlayerFireball();
-            setTimeout(1000)
+            sprite.frames.framesPerState = 8
+            if (globals.action.fire) {
+                if (sprite.physics.shootingIntervalCounter === 0) {
+                    setTimeout(() => { initPlayerFireball((sprite.xPos-22), sprite.yPos, State.LEFT); }, 400);
+                    initPlayerAttackVFX((sprite.xPos-22), sprite.yPos, State.LEFT);
+                }
+                if (sprite.physics.shootingIntervalCounter === sprite.physics.shootingInterval) {
+                    sprite.physics.shootingIntervalCounter = 0
+                } else{
+                    sprite.physics.shootingIntervalCounter++
+                }
+            } else {
+                sprite.frames.frameCounter = 0
+            }
+            
             break;
         
         case State.JUMP_RIGHT:
@@ -313,6 +364,7 @@ function updatePlayer(sprite) {
     //Calculates movement in X
     sprite.xPos += sprite.physics.vx * globals.deltaTime
 
+    calculateShoot(sprite)
     const isCollision = calculateCollisionWithBorders(sprite)
     if (isCollision) {
         sprite.xPos -= sprite.physics.vx * globals.deltaTime
@@ -326,7 +378,7 @@ function updatePlayer(sprite) {
     } else {
         if (globals.action.jump) {
             sprite.physics.isOnGround = false;
-            sprite.physics.isFalling  = true;
+
             sprite.physics.vy += sprite.physics.jumpForce;
         }
     }
@@ -335,23 +387,32 @@ function updatePlayer(sprite) {
     
     if (sprite.yPos > globals.canvas.height - sprite.imageSet.ySize) {
         sprite.physics.isOnGround = true;
-        sprite.physics.isFalling  = false;
+
         sprite.yPos = globals.canvas.height - sprite.imageSet.ySize;
         sprite.physics.vy = 0;
     }
     updateAnimationFrame(sprite)
 
-
+    sprite.previousState = sprite.state
 }
 
 function updatePlayerAttackVFX(sprite) {
-        updateAnimationFrame(sprite)
+    let player
+    for (let i = 0; i < globals.sprites.length; i++) {
+        const element = globals.sprites[i];
+        if (element.id === SpriteId.PLAYER) {
+            player = element
+        }
+    }
+        sprite. yPos = player.yPos 
 
-    sprite.state = State.RIGHT
-    // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
-    //     let index = globals.sprites.indexOf(sprite)
-    //     globals.sprites.splice(index,1)
-    // }
+        let index = globals.sprites.indexOf(sprite)
+        if (sprite.frames.frameCounter === sprite.frames.framesPerState-1) {
+            // setTimeout(() => { globals.sprites.splice(index,1); }, 10);
+            globals.sprites.splice(index,1)
+        }
+
+    updateAnimationFrame(sprite)
 }
 
 function updateFireball(sprite) {
@@ -369,7 +430,6 @@ function updateFireball(sprite) {
         default:
             console.error("Error: State invalid");
     }
-    sprite.yPos = 179;
 
         //Calculates movement in X
         sprite.xPos += sprite.physics.vx * globals.deltaTime
@@ -403,7 +463,7 @@ function updateChair(sprite) {
         ) {
             sprite.xPos  = player.xPos -50;
     } else{
-        sprite.xPos = player.xPos + 50
+            sprite.xPos = player.xPos + 50
     }
     sprite. yPos = player.yPos -20;
     
@@ -498,24 +558,34 @@ function updateParchment(sprite){
 function updateAnimationFrame(sprite) {
 
             //Increase time between frames
+            if (sprite.previousState != sprite.state){
+        sprite.frames.frameCounter = 0
+        sprite.frames.frameChangeCounter = 0
+        sprite.physics.shootingIntervalCounter = 0
+    }
             sprite.frames.frameChangeCounter++;
+            //changes frame once the counter equals the speed
+            if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
+                //Changes frame then resets counter
+                sprite.frames.frameCounter = (sprite.frames.frameCounter +1) % sprite.frames.framesPerState
+                sprite.frames.frameChangeCounter = 0;
+            }
             
-                //changes frame once the counter equals the speed
-                if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
-                    //Changes frame then resets counter
-                    sprite.frames.frameCounter = (sprite.frames.frameCounter +1) % sprite.frames.framesPerState
-                    sprite.frames.frameChangeCounter = 0;
-                }
-            
-                //Once the max frames are reached it resets (Animation loop)
-                if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
-                    if (sprite.id === SpriteId.ATTACK_VFX) {
-                        let index = globals.sprites.indexOf(sprite)
-                        globals.sprites.splice(index,1)
-                    }
-                }
+                // //Once the max frames are reached it resets (Animation loop)
+                // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
+                //     if (sprite.id === SpriteId.ATTACK_VFX) {
+                //         let index = globals.sprites.indexOf(sprite)
+                //         globals.sprites.splice(index,1)
+                //     }
+                // }
 }
-
+function calculateShoot(sprite) {
+    if (globals.action.fire) {
+        sprite.physics.isShooting = true
+    } else {
+        sprite.physics.isShooting = false
+    }
+}
 function calculateCollisionWithBorders(sprite) {
     let isCollision = false;
 

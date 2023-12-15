@@ -9,6 +9,9 @@ export default class Physics {
         this.friction   = friction;
         this.jumpForce  = jumpForce
         this.isOnGround = true
-        this.isFalling  = false
+        this.isShooting = false
+        this.hasShoot   = false
+        this.shootingIntervalCounter = 0;
+        this.shootingInterval = 20;
     }
 }
