@@ -5,8 +5,9 @@ import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
-import Physics from "./Physics.js";
+import Physics, { Eliptic } from "./Physics.js";
 import { keydownHandler,keyupHandler } from "./events.js";
+import { setPlatformPosition } from "./gameLogic.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -111,8 +112,7 @@ function initSprites() {
     initCheckPoint();
     initKey();
     initPlayer();
-    // initPlayerFireball();
-    // initPlayerAttackVFX();
+    initPlatform()
     initChair();
     initSkeleton();
 
@@ -404,8 +404,18 @@ function initPlatform() {
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
 
+        //Initial Physics values
+        const initAngle = 90 * Math.PI / 180;
+        const omega = 0.7;
+        const xRotCenter = globals.canvas.width /2;
+        const yRotCenter = globals.canvas.height /2;
+
+        const physics = new Eliptic(60, 0, 1, 0, omega, initAngle, xRotCenter, yRotCenter);
+
         //Sprite Creation
-        const platform = new Sprite(SpriteId.PLATFORM, State.IDLE_3, 100, 70, imageSet, frames)
+        const platform = new Sprite(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics)
+
+        setPlatformPosition(platform);
 
         //Adds Sprite to Array
         globals.sprites.push(platform)

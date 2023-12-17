@@ -66,10 +66,14 @@ const State = {
     ATTACK_RIGHT:   12,
     ATTACK_LEFT:    13,
 
-    //PLAYER ATTCK VFX & FIREBALL
+    //PLAYER ATTACK VFX & FIREBALL
     RIGHT:           0,
     LEFT:            1,
     
+    //PLATFORM States
+    PLATFORM_RIGHT: 0,
+    PLATFORM_LEFT:  0,
+
     // SKELETON States 
     RUN_RIGHT_2:     0,
     RUN_LEFT_2:      1,
