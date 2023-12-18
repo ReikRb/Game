@@ -1,4 +1,4 @@
-
+import { Collision } from "./constants.js";
 //Manages Sprite Class
 export default class Sprite{
 
@@ -19,5 +19,13 @@ export class Skeleton extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.directionChangeCounter     = 0;
         this.maxTimeToChangeDirection   = maxTimeToChangeDirection;
+    }
+}
+
+export class Crystal extends Sprite {
+    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+        super (id, state, xPos, yPos, imageSet, frames, physics)
+
+        this.collisionBorder = Collision.NO_COLLISION
     }
 }

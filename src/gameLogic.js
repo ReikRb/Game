@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, State, SpriteId, GRAVITY} from "./constants.js"
+import {Game, State, SpriteId, GRAVITY, Collision} from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPlayerAttackVFX, initPlayerFireball } from "./initialize.js";
 
 export default function update(){
@@ -155,6 +155,10 @@ function updateSprite(sprite) {
             updatePlatform(sprite)
             break;
 
+        case SpriteId.MANACRYSTAL:
+            updateCrystal(sprite)
+            break;
+
         default:
 
             break;
@@ -164,13 +168,13 @@ function updateSprite(sprite) {
 function readKeyboardAndAssignState(sprite) {
     
     if (!sprite.physics.isOnGround) {
-        sprite.state =  sprite.physics.vy > 0               && sprite.physics.vx > 0                 ? State.FALL_RIGHT      :
-                        sprite.physics.vy > 0               && sprite.physics.vx < 0                 ? State.FALL_LEFT       :
-                        sprite.physics.vy < 0               && sprite.physics.vx > 0                 ? State.JUMP_RIGHT      :
-                        sprite.physics.vy < 0               && sprite.physics.vx < 0                 ? State.JUMP_LEFT       :
-                        sprite.physics.vy < 0               && State.IDLE_RIGHT                      ? State.JUMP_RIGHT      :
-                        sprite.physics.vy < 0               && State.IDLE_LEFT                       ? State.JUMP_LEFT       :
-                        sprite.state          
+            sprite.state =  sprite.physics.vy > 0           && sprite.physics.vx > 0                 ? State.FALL_RIGHT      :
+                            sprite.physics.vy > 0           && sprite.physics.vx < 0                 ? State.FALL_LEFT       :
+                            sprite.physics.vy < 0           && sprite.physics.vx > 0                 ? State.JUMP_RIGHT      :
+                            sprite.physics.vy < 0           && sprite.physics.vx < 0                 ? State.JUMP_LEFT       :
+                            sprite.physics.vy < 0           && State.IDLE_RIGHT                      ? State.JUMP_RIGHT      :
+                            sprite.physics.vy < 0           && State.IDLE_LEFT                       ? State.JUMP_LEFT       :
+                            sprite.state          
         
     } else {
         if (sprite.physics.isShooting) {
@@ -285,6 +289,7 @@ function updatePlayer(sprite) {
         sprite.frames.frameChangeCounter = 0
         sprite.physics.shootingIntervalCounter = 0
     }
+    
     //Updates Player's variables State
     switch (sprite.state) {
         case State.RUN_RIGHT:
@@ -583,18 +588,18 @@ function updateParchment(sprite){
 function updateAnimationFrame(sprite) {
 
             //Increase time between frames
-            if (sprite.previousState != sprite.state){
+    if (sprite.previousState != sprite.state){
         sprite.frames.frameCounter = 0
         sprite.frames.frameChangeCounter = 0
         sprite.physics.shootingIntervalCounter = 0
     }
-            sprite.frames.frameChangeCounter++;
+    sprite.frames.frameChangeCounter++;
             //changes frame once the counter equals the speed
-            if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
+    if (sprite.frames.frameChangeCounter === sprite.frames.speed) {
                 //Changes frame then resets counter
-                sprite.frames.frameCounter = (sprite.frames.frameCounter +1) % sprite.frames.framesPerState
-                sprite.frames.frameChangeCounter = 0;
-            }
+        sprite.frames.frameCounter = (sprite.frames.frameCounter +1) % sprite.frames.framesPerState
+        sprite.frames.frameChangeCounter = 0;
+    }
             
                 // //Once the max frames are reached it resets (Animation loop)
                 // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
@@ -642,4 +647,55 @@ function updateDirectionRandom(sprite){
 function swapDirection(sprite) {
     sprite.state = sprite.state ===  State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
 
+}
+
+function updateCrystal(sprite){
+
+    switch (sprite.collisionBorder) {
+
+        case Collision.RIGHT:
+        sprite.physics.vx = -sprite.physics.vLimit;
+        break;
+        case Collision.LEFT:
+        sprite.physics.vx = sprite.physics.vLimit;
+        break;
+        case Collision.UP:
+        sprite.physics.vy = sprite.physics.vLimit;
+        break;
+        case Collision.DOWN:
+        sprite.physics.vy = -sprite.physics.vLimit;
+        break;
+        
+        default:
+        //Si no hay colisión, mantenemos las velocidades
+    }
+    sprite.xPos += sprite.physics.vx * globals.deltaTime;
+    sprite.yPos += sprite.physics.vy * globals.deltaTime;
+    
+    //Movimiento de rebote. Cambiamos velocidades según haya colisión con las paredes switch (sprite.collisionBorder)
+    updateAnimationFrame(sprite);
+    calculateCollisionWithFourBorders (sprite);
+}
+
+function calculateCollisionWithFourBorders (sprite){
+if (sprite.xPos + sprite.imageSet.xSize > globals.canvas.width)
+{
+    sprite.collisionBorder = Collision.RIGHT;
+}else if (sprite.xPos < 0)
+{
+    sprite.collisionBorder = Collision.LEFT;
+}
+
+else if (sprite.yPos < 0)
+{
+    sprite.collisionBorder = Collision.UP;
+}
+else if (sprite.yPos + sprite.imageSet.ySize > globals.canvas.height)
+{
+    sprite.collisionBorder = Collision.DOWN;
+}
+else
+{
+sprite.collisionBorder = Collision.NO_COLLISION;
+}
 }

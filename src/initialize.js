@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game, FPS, SpriteId, State} from "./constants.js"
-import Sprite,{ Skeleton } from "./Sprite.js"
+import Sprite,{ Crystal, Skeleton } from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
@@ -115,6 +115,7 @@ function initSprites() {
     initPlatform()
     initChair();
     initSkeleton();
+    initMana2()
 
 }
 
@@ -202,6 +203,26 @@ function initMana(){
     //Adds Sprite to Array
     globals.sprites.push(mana)
     globals.SpritesHUD++
+}
+
+function initMana2(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(9,       5,      28,    51,     140,     70,      88)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1,2)
+
+        //Creates Physic obj with vLimit 40
+        const physics = new Physics(70);
+
+    //Sprite Creation
+    const mana = new Crystal(SpriteId.MANACRYSTAL, State.IDLE_3, 100, 70, imageSet, frames, physics)
+
+    mana.physics.vx = mana.physics.vLimit;
+    mana.physics.vy = mana.physics.vLimit;
+
+    //Adds Sprite to Array
+    globals.sprites.push(mana)
 }
 
 

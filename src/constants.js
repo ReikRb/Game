@@ -36,7 +36,8 @@ const SpriteId = {
     DUMMY:              14,
     PLATFORM:           15,
     //Background
-    PARCHMENT:          16
+    PARCHMENT:          16,
+    MANACRYSTAL: 17
 
 }
 
@@ -97,7 +98,13 @@ const Tile = {
     SIZE_64: 0, //Sprites 64x64
     SIZE_32: 1, //Tiles de mapa 32x32
 }
-
+const Collision = {
+    NO_COLLISION: 0,
+    UP: 1,
+    DOWN: 2,
+    LEFT:3,
+    RIGHT:4
+}
 const Block = {
     EMPTY:                  0,
     TOP_LEFT:               1,
@@ -142,4 +149,4 @@ const Block = {
 
 
 }
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY}
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision}

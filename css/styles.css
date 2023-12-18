@@ -15,6 +15,7 @@ border-style: solid;
 #gameScreen {
     width: 1152px;
     height: 768px;
+    background-color: rgb(46, 17, 0);
     image-rendering: -moz-crisp-edges;
     image-rendering: -webkit-crisp-edges;
     image-rendering: pixelated;
