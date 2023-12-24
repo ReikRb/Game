@@ -1,11 +1,11 @@
 import globals from "./globals.js"
 import {Game, FPS, SpriteId, State} from "./constants.js"
-import Sprite,{ Crystal, Skeleton } from "./Sprite.js"
+import Sprite,{ Crystal, Skeleton, Player } from "./Sprite.js"
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
 import { Level, level1, mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
-import Physics, { Eliptic } from "./Physics.js";
+import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
 import { keydownHandler,keyupHandler } from "./events.js";
 import { setPlatformPosition } from "./gameLogic.js";
 
@@ -274,10 +274,10 @@ function initPlayer(){
     const frames = new Frames (8, 3)
 
     //Creates Physic obj with vLimit 40
-    const physics = new Physics(150, 130, 0.7, -450);
+    const physics = new PlayerPhysics(150, 130, 0.7, -450);
 
     //Sprite Creation
-    const player = new Sprite(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -344,7 +344,7 @@ function initSkeleton(){
     const frames = new Frames (7,6)
 
     //Creates Physic obj with vLimit 40
-    const physics = new Physics(40);
+    const physics = new UniformHorizontalMove(40);
 
     const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
@@ -431,7 +431,7 @@ function initPlatform() {
         const xRotCenter = globals.canvas.width /2;
         const yRotCenter = globals.canvas.height /2;
 
-        const physics = new Eliptic(60, 0, 1, 0, omega, initAngle, xRotCenter, yRotCenter);
+        const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
 
         //Sprite Creation
         const platform = new Sprite(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics)

@@ -274,17 +274,17 @@ function updatePlayer(sprite) {
     //Keyboard event reader
     readKeyboardAndAssignState(sprite);
     const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
-    if (sprite.previousState === State.ATTACK_RIGHT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) != 1) {
+    if        (sprite.previousState === State.ATTACK_RIGHT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) !=  1) {
         sprite.state = State.ATTACK_RIGHT
         sprite.physics.isShooting = true
     } else if (sprite.previousState === State.ATTACK_RIGHT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) === 1){
         sprite.frames.frameCounter = 0
         sprite.frames.frameChangeCounter = 0
         sprite.physics.shootingIntervalCounter = 0
-    } else if (sprite.previousState === State.ATTACK_LEFT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) != 1) {
+    } else if (sprite.previousState === State.ATTACK_LEFT  && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) !=  1) {
         sprite.state = State.ATTACK_LEFT
         sprite.physics.isShooting = true
-    } else if (sprite.previousState === State.ATTACK_LEFT && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) === 1){
+    } else if (sprite.previousState === State.ATTACK_LEFT  && sprite.frames.frameCounter / (sprite.frames.framesPerState-1) === 1){
         sprite.frames.frameCounter = 0
         sprite.frames.frameChangeCounter = 0
         sprite.physics.shootingIntervalCounter = 0
@@ -389,7 +389,8 @@ function updatePlayer(sprite) {
     } else {
         if (globals.action.jump) {
             sprite.physics.isOnGround = false;
-
+            sprite.physics.vy += sprite.physics.jumpForce;
+        } else if ( globals.action.jump != sprite.jumpEvent){
             sprite.physics.vy += sprite.physics.jumpForce;
         }
     }
@@ -405,17 +406,18 @@ function updatePlayer(sprite) {
     updateAnimationFrame(sprite)
 
     sprite.previousState = sprite.state
+    sprite.jumpEvent = globals.action.jump
 }
 
 function updatePlayerAttackVFX(sprite) {
-    let player
-    for (let i = 0; i < globals.sprites.length; i++) {
-        const element = globals.sprites[i];
-        if (element.id === SpriteId.PLAYER) {
-            player = element
-        }
-    }
-        sprite. yPos = player.yPos 
+    // let player
+    // for (let i = 0; i < globals.sprites.length; i++) {
+    //     const element = globals.sprites[i];
+    //     if (element.id === SpriteId.PLAYER) {
+    //         player = element
+    //     }
+    // }
+    //     sprite. yPos = player.yPos 
 
         let index = globals.sprites.indexOf(sprite)
         if (sprite.frames.frameCounter === sprite.frames.framesPerState-1) {

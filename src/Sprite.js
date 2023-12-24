@@ -11,6 +11,15 @@ export default class Sprite{
         this.frames   = frames;     //Frame Animation Data
         this.physics  = physics     //Physics Data
         this.previousState = state
+
+    }
+}
+
+export class Player extends Sprite {
+    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+        super (id, state, xPos, yPos, imageSet, frames, physics)
+        this.jumpEvent = false
+        this.jumpCount = 0
     }
 }
 
