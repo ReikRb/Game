@@ -77,12 +77,11 @@ function updateLevelTime() {
     }
 }
 
-
-
 function updateSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
-        updateSprite(sprite)
+        sprite.update()
+        // updateSprite(sprite)
     }
 }
 
@@ -482,7 +481,6 @@ function updateChair(sprite) {
     
     updateAnimationFrame(sprite)
 
-
 }
 
 function updatePlatform(sprite) {
@@ -490,9 +488,6 @@ function updatePlatform(sprite) {
     sprite.physics.angle += sprite.physics.omega * globals.deltaTime
 
     setPlatformPosition(sprite)
-
-     
-
 }
 
 export function setPlatformPosition(sprite){

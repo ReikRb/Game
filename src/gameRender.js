@@ -340,6 +340,7 @@ function renderSprite(sprite){
     const xPos = Math.floor(sprite.xPos)
     const yPos = Math.floor(sprite.yPos)
 
+    //Sets where to draw the actual sprite
     let isHUD = !sprite.HUD ? globals.ctx : globals.ctxHUD
 
     //Draws new frame on proper position
