@@ -59,7 +59,6 @@ function drawGame(){
     //Draw HUD
     renderHUD();
 
-
 }
 
 function drawMenu() {
@@ -149,15 +148,6 @@ function drawHighScore() {
             globals.ctx.fillText("7", 135, 340);
             globals.ctx.fillText("JGF", 243, 340);
             globals.ctx.fillText("50389", 365, 340);
-
-
-
-
-
-
-
-
-
 
 }
 
@@ -281,7 +271,7 @@ function renderHUD() {
     
 
 
-    renderSpritesHUD()
+    renderSprites()
 }
 
 //Map Drawer Method
@@ -317,30 +307,25 @@ function renderMap() {
 
 
 function renderSprites() {
-    for (let i = globals.SpritesHUD; i < globals.sprites.length; i++) {
+    for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
         renderSprite(sprite)
     }
 }
 
-function renderSpritesHUD() {
-    for (let i = 0; i < globals.SpritesHUD; i++) {
-        const sprite = globals.sprites[i];
-        // drawSpriteRectangle(sprite)
-        renderSpriteHUD(sprite)
-    }
-}
 
-function drawSpriteRectangle(sprite) {
-    const x1 = Math.floor(sprite.xPos)
-    const y1 = Math.floor(sprite.yPos)
-    const w1 = sprite.imageSet.xSize
-    const h1 = sprite.imageSet.ySize
 
-    globals.ctx.fillStyle = "green"
-    globals.ctx.fillRect(x1, y1, w1, h1)
-}
+// function drawSpriteRectangle(sprite) {
+//     const x1 = Math.floor(sprite.xPos)
+//     const y1 = Math.floor(sprite.yPos)
+//     const w1 = sprite.imageSet.xSize
+//     const h1 = sprite.imageSet.ySize
+
+//     globals.ctx.fillStyle = "green"
+//     globals.ctx.fillRect(x1, y1, w1, h1)
+// }
+
 function renderSprite(sprite){
 
     //Sets initial tile position
@@ -355,8 +340,10 @@ function renderSprite(sprite){
     const xPos = Math.floor(sprite.xPos)
     const yPos = Math.floor(sprite.yPos)
 
+    let isHUD = !sprite.HUD ? globals.ctx : globals.ctxHUD
+
     //Draws new frame on proper position
-    globals.ctx.drawImage(
+    isHUD.drawImage(
         globals.tileSets[Tile.SIZE_64],                 //Img File
         xTile, yTile,                                   //X & Y Position Source
         sprite.imageSet.xSize, sprite.imageSet.ySize,   //Height & Width Source
@@ -365,27 +352,3 @@ function renderSprite(sprite){
     )
 }
 
-function renderSpriteHUD(sprite){
-
-    //Sets initial tile position
-    const xPosInit = sprite.imageSet.initCol * sprite.imageSet.gridSize;
-    const yPosInit = sprite.imageSet.initFil * sprite.imageSet.gridSize;
-
-    //Sets tilemap drawing position
-    const xTile = xPosInit + sprite.frames.frameCounter * sprite.imageSet.gridSize + sprite.imageSet.xOffset
-    const yTile = yPosInit + sprite.state * sprite.imageSet.gridSize + sprite.imageSet.yOffset
-
-    // Sprites position rounded down
-    const xPos = Math.floor(sprite.xPos)
-    const yPos = Math.floor(sprite.yPos)
-
-    //Draws new frame on proper position
-    // globals.ctxHUD.scale(2,2)
-    globals.ctxHUD.drawImage(
-        globals.tileSets[Tile.SIZE_64],                 //Img File
-        xTile, yTile,                                   //X & Y Position Source
-        sprite.imageSet.xSize, sprite.imageSet.ySize,   //Height & Width Source
-        xPos, yPos,                                     //Final X & Y Position
-        sprite.imageSet.xSize, sprite.imageSet.ySize    //Final Height & Width
-    )
-}
