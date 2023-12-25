@@ -5,8 +5,9 @@ import { initPlayerAttackVFX,initPlayerFireball } from "../initialize.js";
 
 
 export class Player extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
+        this.hitBox    = hitBox      //Sprite HitBox
         this.jumpEvent = false
         this.jumpCount = 0
     }

@@ -1,6 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
-import {State, SpriteId} from "../constants.js"
+import {State} from "../constants.js"
 
 export class Chair extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames){
@@ -10,13 +10,8 @@ export class Chair extends Sprite {
 
     update() {
         //Updates Chair's variables State
-        let player
-        for (let i = 0; i < globals.sprites.length; i++) {
-            const element = globals.sprites[i];
-            if (element.id === SpriteId.PLAYER) {
-                player = element
-            }
-        }
+        let player = globals.sprites[0]
+
         if (player.state === State.ATTACK_RIGHT ||
             player.state === State.RUN_RIGHT ||
             player.state === State.DAMAGED_RIGHT ||

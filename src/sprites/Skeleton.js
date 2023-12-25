@@ -2,10 +2,9 @@ import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import {State} from "../constants.js"
 export class Skeleton extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics, maxTimeToChangeDirection){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
-        this.directionChangeCounter     = 0;
-        this.maxTimeToChangeDirection   = maxTimeToChangeDirection;
+        this.hitBox         = hitBox      //Sprite HitBox
     }
     update(){
         switch (this.state) {
@@ -24,7 +23,7 @@ export class Skeleton extends Sprite {
         }
     
         //Updates Skeleton's variables State
-        this.yPos = 199;
+        
     
         //Calculates movement in X
         this.xPos += this.physics.vx * globals.deltaTime

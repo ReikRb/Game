@@ -9,7 +9,7 @@ export class Power extends Sprite {
     update(){
         
     this.xPos = 209;
-    this.yPos = 0;
+    this.yPos = 2;
 
     }
 }

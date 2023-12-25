@@ -1,6 +1,7 @@
 import globals from "./globals.js"
 import {Game} from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground} from "./initialize.js";
+import detectCollisions from "./collisions.js";
 
 export default function update(){
 
@@ -61,7 +62,10 @@ export default function update(){
 function playGame() {
     
     updateSprites();
+    detectCollisions();
     updateLevelTime();
+    updateLife()
+    updateMana()
 }
 
 function updateLevelTime() {
@@ -82,5 +86,27 @@ function updateSprites() {
         const sprite = globals.sprites[i];
         sprite.update()
         // updateSprite(sprite)
+    }
+}
+function updateLife(){
+    for (let i = 0; i < globals.sprites.length; i++) {
+        const sprite = globals.sprites[i];
+        
+        if (sprite.isCollidingWithPlayer) {
+            globals.life--
+            if (globals.life < 0) {
+                globals.life = 0
+            }
+        }
+    }
+}
+
+function updateMana() {
+    globals.mana = globals.levelTime.value
+    if (globals.mana < 0) {
+        globals.mana = 0
+    }
+    if (globals.mana === 0) {
+        globals.life--
     }
 }

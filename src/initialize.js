@@ -25,6 +25,7 @@ import { Door } from "./sprites/Door.js";
 import { Parchment } from "./sprites/Parchment.js";
 import { Platform } from "./sprites/Platform.js";
 import { Dummy } from "./sprites/Dummy.js";
+import HitBox  from "./HitBox.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -65,11 +66,12 @@ function initVars() {
         fire:       false,
         jump:       false
     }
+    globals.life = 400
 }
 
 function initTimers() {
     //Sets timer to 200 with changes/0,5s.
-    globals.levelTime = new Timer(200, 0.5)
+    globals.levelTime = new Timer(400, 1)
 }
 
 function loadAssets(){
@@ -119,7 +121,7 @@ function loadHandler() {
 }
 
 function initSprites() {
-
+    initPlayer();
     initEmptyCrystalLife();
     initLife();
     initEmptyCrystalMana();
@@ -128,7 +130,6 @@ function initSprites() {
     initKeyHUD();
     initCheckPoint();
     initKey();
-    initPlayer();
     initChair();
     initPlatform()
     initSkeleton();
@@ -161,7 +162,6 @@ function initEmptyCrystalLife(){
 
     //Adds Sprite to Array
     globals.sprites.push(EmptyCrystalLife)
-    globals.SpritesHUD++
 
 }
 
@@ -173,7 +173,7 @@ function initLife(){
     const frames = new Frames (1,2)
 
     //Sprite Creation
-    const life = new Life(SpriteId.LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+    const life = new Life(SpriteId.LIFE, State.IDLE_3, 100, 80, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(life)
@@ -278,8 +278,10 @@ function initPlayer(){
     //Creates Physic obj with vLimit 40
     const physics = new PlayerPhysics(150, 130, 0.7, -450);
 
+    const hitBox = new HitBox(40, 82, 55, 28)
+
     //Sprite Creation
-    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics,hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -342,10 +344,11 @@ function initSkeleton(){
     //Creates Physic obj with vLimit 40
     const physics = new UniformHorizontalMove(40);
 
-    const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
+    const hitBox = new HitBox(35, 66, 45, 25)
+    // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 300, 70, imageSet, frames, physics, initTimeToChangeDirection)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 300, 293, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)

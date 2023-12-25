@@ -48,4 +48,10 @@ export default {
 
     //Obj that saves pressed key state
     action:{},
+
+    //Life
+    life:400,
+
+    //Mana
+    mana:100,
 }

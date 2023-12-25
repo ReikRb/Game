@@ -253,7 +253,6 @@ function renderHUD() {
     //Raw Data
     const score     = 1154700;
     const highScore = 1200000;
-    const life      = 40;
     const time      = globals.levelTime.value;
 
     //Draw High Score
@@ -268,6 +267,8 @@ function renderHUD() {
     globals.ctxHUD.fillText("SCORE", 0, 31);
     globals.ctxHUD.fillStyle = "lightgray";
     globals.ctxHUD.fillText("" + score, 0, 41);
+
+    globals.ctxHUD.fillText(" " + globals.mana, 168, 16)
     
 
 
@@ -310,6 +311,7 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
+        // drawHitBox(sprite)
         renderSprite(sprite)
     }
 }
@@ -325,6 +327,16 @@ function renderSprites() {
 //     globals.ctx.fillStyle = "green"
 //     globals.ctx.fillRect(x1, y1, w1, h1)
 // }
+
+function drawHitBox(sprite){
+//Sprite DATA
+const x1 = Math.floor(sprite.xPos) + Math.floor(sprite.hitBox.xOffset)
+const y1 = Math.floor(sprite.yPos) + Math.floor(sprite.hitBox.yOffset)
+const w1 = sprite.hitBox.xSize
+const h1 = sprite.hitBox.ySize
+globals.ctx.strokeStyle = "red";
+globals.ctx.strokeRect(x1,y1,w1,h1)
+}
 
 function renderSprite(sprite){
 
