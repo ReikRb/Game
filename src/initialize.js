@@ -4,6 +4,7 @@ import Sprite from "./sprites/Sprite.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
+import { EmptyCrystal2 } from "./sprites/EmptyCrystal2.js";
 import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
 import ImageSet from "./ImageSet.js";
@@ -12,7 +13,6 @@ import { Level, level1, mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
 import { keydownHandler,keyupHandler } from "./events.js";
-import { setPlatformPosition } from "./gameLogic.js";
 import { Mana } from "./sprites/Mana.js";
 import { Power } from "./sprites/Power.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
@@ -120,19 +120,19 @@ function loadHandler() {
 
 function initSprites() {
 
-    // initEmptyCrystalLife();
-    // initLife();
-    // initEmptyCrystalMana();
-    // initMana();
-    // initPowerHUD();
-    // initKeyHUD();
-    // initCheckPoint();
-    // initKey();
+    initEmptyCrystalLife();
+    initLife();
+    initEmptyCrystalMana();
+    initMana();
+    initPowerHUD();
+    initKeyHUD();
+    initCheckPoint();
+    initKey();
     initPlayer();
     initChair();
-    // initPlatform()
-    // initSkeleton();
-    // initCrystal()
+    initPlatform()
+    initSkeleton();
+    initCrystal()
 
 }
 
@@ -189,7 +189,7 @@ function initEmptyCrystalMana(){
 
 
         //Sprite Creation
-        const EmptyCrystalMana = new EmptyCrystal(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames)
+        const EmptyCrystalMana = new EmptyCrystal2(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames)
 
         //Adds Sprite to Array
         globals.sprites.push(EmptyCrystalMana)
@@ -427,7 +427,7 @@ function initPlatform() {
         //Sprite Creation
         const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics)
 
-        setPlatformPosition(platform);
+        // setPlatformPosition(platform);
 
         //Adds Sprite to Array
         globals.sprites.push(platform)

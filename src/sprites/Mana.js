@@ -6,4 +6,10 @@ export class Mana extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames)
         this.HUD = true
     }
+    update(){
+            //Updates Key's variables State
+    this.xPos = 128;
+    this.yPos = 30 ;
+    this.imageSet.yOffset = 118
+    }
 }

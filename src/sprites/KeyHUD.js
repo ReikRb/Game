@@ -6,4 +6,11 @@ export class KeyHUD extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames)
         this.HUD = true
     }
+    update(){
+            //Updates Key's variables State
+    this.xPos = 159;
+    this.yPos = 0;
+
+    this.frames.frameCounter = 0;
+    }
 }

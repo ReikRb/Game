@@ -6,4 +6,10 @@ export class Power extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames)
         this.HUD = true
     }
+    update(){
+        
+    this.xPos = 209;
+    this.yPos = 0;
+
+    }
 }
