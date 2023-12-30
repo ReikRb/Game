@@ -337,7 +337,7 @@ function initPlayerFireball(xPos, yPos, STATE) {
 
 function initSkeleton(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(14,       0,      100,    90,     140,      20,      60)
+    const imageSet = new ImageSet(14,       0,      125,    90,     140,      20,      60)
 
     //Animation Data (7 Frames / State)
     const frames = new Frames (7,6)
@@ -345,11 +345,11 @@ function initSkeleton(){
     //Creates Physic obj with vLimit 40
     const physics = new UniformHorizontalMove(40);
 
-    const hitBox = new HitBox(35, 66, 45, 25)
+    const hitBox = new HitBox(35, 64, 45, 26)
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 300, 293, imageSet, frames, physics, hitBox)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 157, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)

@@ -8,6 +8,7 @@ export default function detectCollisions() {
         detectCollisionBetweenPlayerAndSprite(sprite)
     }
     detectCollisionBetweenPlayerAndMapObstacles()
+    detectCollisionBetweenSkeletonAndMapObstacles()
 }
 
 function detectCollisionBetweenPlayerAndSprite(sprite) {
@@ -33,7 +34,6 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
 
         const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
         if (isOverlap) {
-
             sprite.isCollidingWithPlayer = true
         }
     }
@@ -53,6 +53,182 @@ function rectIntersect(x1, y1, w1, h1,
         isOverlap = true
     }
     return isOverlap
+}
+function detectCollisionBetweenSkeletonAndMapObstacles() {
+    const skeleton = globals.sprites[1]
+    const isCollision = skeleton.calculateCollisionWithBorders()
+
+    let xPos
+    let yPos
+    let isCollidingOnPos1
+    let isCollidingOnPos2
+    let isCollidingOnPos3
+    let isCollidingOnPos4
+    let isCollidingOnPos5
+    let isCollidingOnPos6
+
+    let overlapX
+    let overlapY
+
+
+    // Collision  Checks
+    // 6---------1
+    // |---------|
+    // |---------|
+    // 5---------2
+    // |---------|
+    // |---------|
+    // 4---------3
+    const brickSize = globals.level.imageSet.gridSize
+    const direction = skeleton.state
+
+    if (skeleton.physics.vx > 0) {
+        // Punto 6
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset;
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos6) {
+            swapDirection(skeleton)
+
+        }
+
+        // Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+
+        if (isCollidingOnPos4) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.isCollidingWithObstacleOnBottom = true
+            skeleton.physics.vy = 0
+        }
+
+
+        // Punto 2
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize - Math.ceil(skeleton.hitBox.ySize / 2)
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos2) {
+            swapDirection(skeleton)
+
+        }
+
+        //Punto 1
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos)
+        if (isCollidingOnPos1) {
+            swapDirection(skeleton)
+        }
+
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+
+
+        if (isCollidingOnPos3) {
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+        }
+
+
+
+    } else if (skeleton.physics.vx < 0) {
+
+
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+
+        if (isCollidingOnPos3) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.physics.vy = 0
+        }
+
+
+        // Punto 5
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + Math.ceil(skeleton.hitBox.ySize / 2)
+        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos5) {
+            swapDirection(skeleton)
+        }
+
+        //Punto 6
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos6) {
+            swapDirection(skeleton)
+        }
+
+        //Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
+
+
+        if (isCollidingOnPos4) {
+            overlapX = Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+            if (skeleton.physics.vy > 0) {
+                skeleton.yPos -= overlapY
+            }
+
+        }
+
+
+
+    } else {
+        // Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+
+        if (isCollidingOnPos4) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.isCollidingWithObstacleOnBottom = true
+            skeleton.physics.vy = 0
+        }
+
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+
+
+        if (isCollidingOnPos3) {
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+        }
+    }
+    if (isCollision) {
+        swapDirection(skeleton)
+    }
+}
+function swapDirection(skeleton) {
+    skeleton.state = skeleton.state === State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
 }
 
 function detectCollisionBetweenPlayerAndMapObstacles() {
@@ -182,7 +358,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
             if (overlapX <= overlapY) {
                 player.xPos -= overlapX
-                
+
             } else {
                 if (player.physics.vy > 0) {
                     player.yPos -= overlapY
@@ -205,13 +381,13 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
             if (overlapX <= overlapY) {
                 player.xPos -= overlapX
-                
+
             }
             if (player.physics.vy > 0) {
                 player.yPos -= overlapY
 
             }
-        
+
         }
 
 
@@ -320,7 +496,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             player.isCollidingWithObstacleOnBottom = true
             if (overlapX <= overlapY) {
                 player.xPos += overlapX
-                
+
             }
             if (player.physics.vy > 0) {
                 player.yPos -= overlapY
@@ -382,18 +558,9 @@ function getMapTileId(xPos, yPos) {
     const brickSize = globals.level.imageSet.gridSize
     const levelData = globals.level.data
 
-    const fil = Math.floor((yPos) / brickSize)
+    const fil = Math.floor(yPos / brickSize)
     const col = Math.floor(xPos / brickSize)
 
-
-
-
-    if (levelData[fil][col] === undefined) {
-        return 0
-    } else {
-        return levelData[fil][col]
-    }
-
-    return id
+    return levelData[fil][col]
 
 }
