@@ -8,8 +8,7 @@ export class Life extends Sprite {
     }
     update(){
         let dif = Math.floor(50 - (globals.life / 8))
-        this.xPos = 95;
-        this.yPos = 2+dif;
-        this.imageSet.yOffset = 88 +dif
+        this.yPos = 4 + dif;
+        this.imageSet.yOffset = 90 + dif
     }
 }

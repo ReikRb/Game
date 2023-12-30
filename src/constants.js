@@ -144,9 +144,30 @@ const Block = {
     BOTH_SIDES_HORIZONTAL:  35,
     BOTH_SIDES_FINAL_RIGHT: 36,
     SPIKES:                 37,
-
-
-
-
 }
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision}
+const Obstacle = {
+    TOP_LEFT:               1,
+    TOP:                    2,
+    TOP_RIGHT:              3,
+    BOTH_SIDES_FINAL_UP:    5,
+    TOP_RIGHT_2:            6,
+    BOTH_SIDES_UP:          7,
+    TOP_LEFT_2:             8,
+    LEFT:                   15,
+    RIGHT:                  17,
+    BOTH_SIDES_VERTICAL:    19,
+    BOT_RIGHT_2:            20,
+    BOTH_SIDES_DOWN:        21,
+    BOT_LEFT_2:             22,
+    BOT_LEFT:               29,
+    BOT:                    30,
+    BOT_RIGHT:              31,
+    BOTH_SIDES_FINAL_DOWN:  33,
+    BOTH_SIDES_FINAL_LEFT:  34,
+    BOTH_SIDES_HORIZONTAL:  35,
+    BOTH_SIDES_FINAL_RIGHT: 36,
+}
+export const Prueba = {
+    X: 1
+ }
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle}

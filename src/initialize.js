@@ -66,12 +66,12 @@ function initVars() {
         fire:       false,
         jump:       false
     }
-    globals.life = 400
+    
 }
 
 function initTimers() {
     //Sets timer to 200 with changes/0,5s.
-    globals.levelTime = new Timer(400, 1)
+    globals.levelTime = new Timer(200, 1)
 }
 
 function loadAssets(){
@@ -122,18 +122,18 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
-    initEmptyCrystalLife();
-    initLife();
-    initEmptyCrystalMana();
-    initMana();
-    initPowerHUD();
-    initKeyHUD();
-    initCheckPoint();
-    initKey();
-    initChair();
-    initPlatform()
+    // initEmptyCrystalLife();
+    // initLife();
+    // initEmptyCrystalMana();
+    // initMana();
+    // initPowerHUD();
+    // initKeyHUD();
+    // initCheckPoint();
+    // initKey();
+    // initChair();
+    // initPlatform()
     initSkeleton();
-    initCrystal()
+    // initCrystal()
 
 }
 
@@ -173,7 +173,7 @@ function initLife(){
     const frames = new Frames (1,2)
 
     //Sprite Creation
-    const life = new Life(SpriteId.LIFE, State.IDLE_3, 100, 80, imageSet, frames)
+    const life = new Life(SpriteId.LIFE, State.IDLE_3, 95, 80, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(life)
@@ -205,7 +205,7 @@ function initMana(){
     const frames = new Frames (1,2)
 
     //Sprite Creation
-    const mana = new Mana(SpriteId.MANA, State.IDLE_3, 100, 70, imageSet, frames)
+    const mana = new Mana(SpriteId.MANA, State.IDLE_3, 128, 70, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(mana)
@@ -278,10 +278,10 @@ function initPlayer(){
     //Creates Physic obj with vLimit 40
     const physics = new PlayerPhysics(150, 130, 0.7, -450);
 
-    const hitBox = new HitBox(40, 82, 55, 28)
+    const hitBox = new HitBox(43, 81, 50, 28)
 
     //Sprite Creation
-    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 20, 274, imageSet, frames, physics,hitBox)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 0, 128, imageSet, frames, physics,hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(player)

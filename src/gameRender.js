@@ -311,22 +311,22 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
-        // drawHitBox(sprite)
+        drawHitBox(sprite)
         renderSprite(sprite)
     }
 }
 
 
 
-// function drawSpriteRectangle(sprite) {
-//     const x1 = Math.floor(sprite.xPos)
-//     const y1 = Math.floor(sprite.yPos)
-//     const w1 = sprite.imageSet.xSize
-//     const h1 = sprite.imageSet.ySize
+function drawSpriteRectangle(sprite) {
+    const x1 = Math.floor(sprite.xPos)
+    const y1 = Math.floor(sprite.yPos)
+    const w1 = sprite.imageSet.xSize
+    const h1 = sprite.imageSet.ySize
 
-//     globals.ctx.fillStyle = "green"
-//     globals.ctx.fillRect(x1, y1, w1, h1)
-// }
+    globals.ctx.fillStyle = "green"
+    globals.ctx.fillRect(x1, y1, w1, h1)
+}
 
 function drawHitBox(sprite){
 //Sprite DATA

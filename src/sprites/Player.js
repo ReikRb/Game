@@ -125,17 +125,15 @@ export class Player extends Sprite {
     
         
         this.physics.ay = GRAVITY;
-        
-        if (!this.physics.isOnGround) {
-            this.physics.vy += this.physics.ay * globals.deltaTime;
-        } else {
+        this.physics.vy += this.physics.ay * globals.deltaTime;
+        if (this.physics.isOnGround) {
             if (globals.action.jump) {
                 this.physics.isOnGround = false;
                 this.physics.vy += this.physics.jumpForce;
             } else if ( globals.action.jump != this.jumpEvent){
                 this.physics.vy += this.physics.jumpForce;
             }
-        }
+        } 
         
         this.yPos += this.physics.vy * globals.deltaTime;
         
@@ -150,6 +148,7 @@ export class Player extends Sprite {
         this.previousState = this.state
         this.jumpEvent = globals.action.jump
     }
+
 
     readKeyboardAndAssignState() {
     

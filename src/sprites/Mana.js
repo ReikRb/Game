@@ -8,9 +8,8 @@ export class Mana extends Sprite {
     }
     update(){
         //Updates Key's variables State
-        let dif = Math.floor(50 - (globals.mana / 8))
-        this.xPos = 128;
-        this.yPos = 2 + dif ;
-        this.imageSet.yOffset = 88 +dif
+        let dif = Math.floor(50 - (globals.mana / 4))
+        this.yPos = 4 + dif ;
+        this.imageSet.yOffset = 90 +dif
     }
 }

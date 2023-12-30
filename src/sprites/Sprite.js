@@ -5,30 +5,36 @@ import globals from "../globals.js"
 export default class Sprite{
 
     constructor(id, state, xPos, yPos, imageSet, frames, physics){
-        this.id             = id;         //Which Sprite
-        this.state          = state;      //Which Action
-        this.xPos           = xPos;       //X Position
-        this.yPos           = yPos;       //Y Position
-        this.imageSet       = imageSet;   //Sprite Image Data
-        this.frames         = frames;     //Frame Animation Data
-        this.physics        = physics     //Physics Data
-        this.previousState  = state       //Last state on previous cycle
-        this.isCollidingWithPlayer = false
+        this.id                              = id;         //Which Sprite
+        this.state                           = state;      //Which Action
+        this.xPos                            = xPos;       //X Position
+        this.yPos                            = yPos;       //Y Position
+        this.imageSet                        = imageSet;   //Sprite Image Data
+        this.frames                          = frames;     //Frame Animation Data
+        this.physics                         = physics     //Physics Data
+        this.previousState                   = state       //Last state on previous cycle
+        this.isCollidingWithPlayer           = false
+        this.isCollidingWithObstacleOnTop    = false
+        this.isCollidingWithObstacleOnLeft   = false
+        this.isCollidingWithObstacleOnBottom = false
+        this.isCollidingWithObstacleOnRight  = false
     }
+    
     calculateCollisionWithBorders() {
         let isCollision = false;
-    
+
         //Collision with right edge
-        if (this.xPos + this.imageSet.xSize > globals.canvas.width) {
+        if (this.xPos + this.hitBox.xOffset + this.hitBox.xSize > globals.canvas.width) {
             isCollision = true
     
         //Collision with left edge
-        } else if (this.xPos < 0) {
+        } else if (this.xPos + this.hitBox.xOffset < 0) {
             isCollision = true
         }
     
         return isCollision;
     }
+
     updateAnimationFrame() {
     
         //Increase time between frames
