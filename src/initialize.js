@@ -122,17 +122,18 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
-    // initEmptyCrystalLife();
-    // initLife();
-    // initEmptyCrystalMana();
-    // initMana();
-    // initPowerHUD();
-    // initKeyHUD();
+    initSkeleton();
+    initEmptyCrystalLife();
+    initLife();
+    initEmptyCrystalMana();
+    initMana();
+    initPowerHUD();
+    initKeyHUD();
     // initCheckPoint();
     // initKey();
     // initChair();
-    // initPlatform()
-    initSkeleton();
+    initPlatform()
+
     // initCrystal()
 
 }
@@ -426,9 +427,10 @@ function initPlatform() {
         const yRotCenter = globals.canvas.height /2;
 
         const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
+        const hitBox = new HitBox(100, 9, 0, 0)
 
         //Sprite Creation
-        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics)
+        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics,hitBox)
 
         // setPlatformPosition(platform);
 

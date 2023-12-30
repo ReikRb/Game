@@ -2,8 +2,9 @@ import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 
 export class Platform extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
+        this.hitBox    = hitBox      //Sprite HitBox
     }
     update(){
             //Updates Platform's variables State

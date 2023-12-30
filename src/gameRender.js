@@ -330,12 +330,15 @@ function drawSpriteRectangle(sprite) {
 
 function drawHitBox(sprite){
 //Sprite DATA
-const x1 = Math.floor(sprite.xPos) + Math.floor(sprite.hitBox.xOffset)
-const y1 = Math.floor(sprite.yPos) + Math.floor(sprite.hitBox.yOffset)
-const w1 = sprite.hitBox.xSize
-const h1 = sprite.hitBox.ySize
-globals.ctx.strokeStyle = "red";
-globals.ctx.strokeRect(x1,y1,w1,h1)
+if (sprite.hitBox) {
+    
+    const x1 = Math.floor(sprite.xPos) + Math.floor(sprite.hitBox.xOffset)
+    const y1 = Math.floor(sprite.yPos) + Math.floor(sprite.hitBox.yOffset)
+    const w1 = sprite.hitBox.xSize
+    const h1 = sprite.hitBox.ySize
+    globals.ctx.strokeStyle = "red";
+    globals.ctx.strokeRect(x1,y1,w1,h1)
+}
 }
 
 function renderSprite(sprite){

@@ -92,7 +92,7 @@ function updateLife(){
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         
-        if (sprite.isCollidingWithPlayer) {
+        if (sprite.isCollidingWithPlayer && sprite.id === 1) {
             globals.life--
             if (globals.life < 0) {
                 globals.life = 0

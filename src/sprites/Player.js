@@ -12,7 +12,9 @@ export class Player extends Sprite {
         this.jumpCount = 0
     }
      update() {
-        
+        if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
+            this.physics.isOnGround = true
+        }
         //Keyboard event reader
         this.readKeyboardAndAssignState();
         const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
@@ -143,6 +145,7 @@ export class Player extends Sprite {
             this.yPos = globals.canvas.height - this.imageSet.ySize;
             this.physics.vy = 0;
         }
+
         this.updateAnimationFrame()
     
         this.previousState = this.state
