@@ -3,8 +3,9 @@ import globals from "../globals.js"
 import {State} from "../constants.js"
 
 export class Fireball extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
+        this.hitBox = hitBox
     }
     update() {
         switch (this.state) {

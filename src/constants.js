@@ -37,7 +37,8 @@ const SpriteId = {
     PLATFORM:           15,
     //Background
     PARCHMENT:          16,
-    MANACRYSTAL: 17
+    MANACRYSTAL: 17,
+    POWER: 18,
 
 }
 

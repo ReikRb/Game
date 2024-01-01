@@ -85,7 +85,7 @@ function updateSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         sprite.update()
-        // updateSprite(sprite)
+        
     }
 }
 function updateLife(){
@@ -98,13 +98,21 @@ function updateLife(){
                 globals.life = 0
             }
         }
+        if (globals.life >400) {
+            globals.life = 400
+        }
+
     }
 }
 
 function updateMana() {
     globals.mana = globals.levelTime.value
-    if (globals.mana < 0) {
+    if (globals.levelTime.value < 0) {
+        globals.levelTime.value = 0
         globals.mana = 0
+    }else if(globals.levelTime.value > 200){
+        globals.levelTime.value = 200
+        globals.mana = 200
     }
     if (globals.mana === 0) {
         globals.life--

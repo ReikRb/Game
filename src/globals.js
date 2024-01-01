@@ -55,4 +55,7 @@ export default {
 
     //Mana
     mana:100,
+
+    key: false,
+    power:false
 }

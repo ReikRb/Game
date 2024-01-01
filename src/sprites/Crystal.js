@@ -3,9 +3,9 @@ import globals from "../globals.js"
 import { Collision } from "../constants.js";
 
 export class Crystal extends Sprite {
-    constructor(id, state, xPos, yPos, imageSet, frames, physics) {
+    constructor(id, state, xPos, yPos, imageSet, frames, physics, hitBox) {
         super(id, state, xPos, yPos, imageSet, frames, physics)
-
+        this.hitBox = hitBox
         this.collisionBorder = Collision.NO_COLLISION
     }
     update() {
@@ -34,6 +34,11 @@ export class Crystal extends Sprite {
         //Movimiento de rebote. Cambiamos velocidades según haya colisión con las paredes switch (this.collisionBorder)
         this.updateAnimationFrame();
         this.calculateCollisionWithFourBorders();
+
+        if (this.isCollidingWithPlayer) {
+            let index = globals.sprites.indexOf(this)
+            globals.sprites.splice(index,1)
+        }
     }
     calculateCollisionWithFourBorders() {
         if (this.xPos + this.imageSet.xSize > globals.canvas.width) {

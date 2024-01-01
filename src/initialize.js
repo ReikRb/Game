@@ -14,7 +14,7 @@ import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
 import { keydownHandler,keyupHandler } from "./events.js";
 import { Mana } from "./sprites/Mana.js";
-import { Power } from "./sprites/Power.js";
+import { PowerHUD } from "./sprites/PowerHUD.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
 import { Chair } from "./sprites/Chair.js";
 import { AttackVFX } from "./sprites/AttackVFX.js";
@@ -26,6 +26,7 @@ import { Parchment } from "./sprites/Parchment.js";
 import { Platform } from "./sprites/Platform.js";
 import { Dummy } from "./sprites/Dummy.js";
 import HitBox  from "./HitBox.js";
+import { Power } from "./sprites/Power.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -129,12 +130,14 @@ function initSprites() {
     initMana();
     initPowerHUD();
     initKeyHUD();
-    // initCheckPoint();
-    // initKey();
+    initCheckPoint();
+    initKey();
     initChair();
     initPlatformVertical()
     initPlatform()
-    // initCrystal()
+    initPower()
+    initCrystal()
+    initDoor()
 
 }
 
@@ -220,11 +223,12 @@ function initCrystal(){
     //Animation Data (8 Frames / State)
     const frames = new Frames (1,2)
 
-        //Creates Physic obj with vLimit 40
-        const physics = new Physics(70);
+    //Creates Physic obj with vLimit 40
+    const physics = new Physics(70);
+    const hitBox = new HitBox(30, 51, 0, 0)
 
     //Sprite Creation
-    const mana = new Crystal(SpriteId.MANACRYSTAL, State.IDLE_3, 100, 70, imageSet, frames, physics)
+    const mana = new Crystal(SpriteId.MANACRYSTAL, State.IDLE_3, 100, 70, imageSet, frames, physics, hitBox)
 
     mana.physics.vx = mana.physics.vLimit;
     mana.physics.vy = mana.physics.vLimit;
@@ -233,7 +237,22 @@ function initCrystal(){
     globals.sprites.push(mana)
 }
 
+function initPower(){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
 
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (2,6)
+    frames.frameCounter = 1
+    const hitBox = new HitBox(38, 43, 10, 3)
+    //Sprite Creation
+    const power = new Power(SpriteId.POWER, State.IDLE_3, 400, 190, imageSet, frames, hitBox)
+    
+    //Adds Sprite to Array
+    globals.sprites.push(power)
+    
+
+}
 function initPowerHUD(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
@@ -242,11 +261,11 @@ function initPowerHUD(){
     const frames = new Frames (2,6)
 
     //Sprite Creation
-    const powerHUD = new Power(SpriteId.POWERHUD, State.IDLE_3, 100, 70, imageSet, frames)
+    const powerHUD = new PowerHUD(SpriteId.POWERHUD, State.IDLE_3, 209, 2, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(powerHUD)
-    globals.SpritesHUD++
+    
 
 }
 
@@ -260,11 +279,11 @@ function initKeyHUD(){
 
 
     //Sprite Creation
-    const keyHUD = new KeyHUD(SpriteId.KEYHUD, State.IDLE_3, 100, 70, imageSet, frames)
+    const keyHUD = new KeyHUD(SpriteId.KEYHUD, State.IDLE_3, 159, 2, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(keyHUD)
-    globals.SpritesHUD++
+    
 
 }
 
@@ -310,7 +329,6 @@ function initPlayerAttackVFX(xPos, yPos, STATE) {
         //Animation Data (8 Frames / State)
         const frames = new Frames (8,3)
 
-
         //Sprite Creation
         const attack = new AttackVFX(SpriteId.ATTACK_VFX, STATE, xPos, yPos, imageSet, frames)
 
@@ -327,9 +345,9 @@ function initPlayerFireball(xPos, yPos, STATE) {
 
     //Creates Physic obj with vLimit 40
     const physics = new Physics(100);
-
+    const hitBox = new HitBox(43, 26, 30, 34)
     //Sprite Creation
-    const fireball = new Fireball(SpriteId.FIREBALL, STATE, xPos, yPos, imageSet, frames,physics)
+    const fireball = new Fireball(SpriteId.FIREBALL, STATE, xPos, yPos, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(fireball)
@@ -361,9 +379,9 @@ function initKey(){
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (8,11)
-
+    const hitBox = new HitBox(13, 31, 10, 5)
     //Sprite Creation
-    const key = new Key(SpriteId.KEY, State.IDLE_3, 100, 70, imageSet, frames)
+    const key = new Key(SpriteId.KEY, State.IDLE_3, 300, 220, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(key)
@@ -375,9 +393,9 @@ function initCheckPoint(){
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (5,8)
-
+    const hitBox = new HitBox(25, 38, 5, 3)
     //Sprite Creation
-    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, 100, 70, imageSet, frames)
+    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, 100, 230, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
@@ -389,10 +407,10 @@ function initDoor(){
     const imageSet = new ImageSet(17,       2,      11,    96,     140,     68,      54)
 
     //Animation Data (8 Frames / State)
-    const frames = new Frames (4)
-
+    const frames = new Frames (4,12)
+    const hitBox = new HitBox(12, 96, 0, 0)
     //Sprite Creation
-    const door = new Door(SpriteId.DOOR, State.IDLE_3, 100, 70, imageSet, frames)
+    const door = new Door(SpriteId.DOOR, State.IDLE_3, 290, 192, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(door)

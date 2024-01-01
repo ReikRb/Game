@@ -69,7 +69,44 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
 
                 break;
 
-            default:
+            case SpriteId.CHECKPOINT:
+                if (sprite.isCollidingWithPlayer && !sprite.used) {
+                    globals.life += 20
+                    globals.levelTime.value += 50
+                    sprite.used = true
+                }
+                break;
+            case SpriteId.KEY:
+                if (sprite.isCollidingWithPlayer) {
+                    globals.key = true
+                }
+                break;
+
+            case SpriteId.POWER:
+                if (sprite.isCollidingWithPlayer) {
+                    globals.power = true
+                }
+                break;
+
+            case SpriteId.MANACRYSTAL:
+                globals.levelTime.value += 30
+                break;
+
+            case SpriteId.DOOR:
+                let overlapX
+
+                if (sprite.isCollidingWithPlayer) {
+                    if (player.state === State.RUN_RIGHT) {
+                        let xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize
+                        overlapX = Math.floor(xPos) % sprite.hitBox.xSize + 1
+                        player.xPos -= overlapX
+
+                    } else if (player.state === State.RUN_LEFT) {
+                        let xPos = player.xPos + player.hitBox.xOffset - 1
+                        overlapX = sprite.hitBox.xSize - Math.floor(xPos) % sprite.hitBox.xSize + 2
+                        player.xPos += overlapX
+                    }
+                }
                 break;
         }
     }

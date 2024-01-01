@@ -1,13 +1,17 @@
 import Sprite from "./Sprite.js";
-
+import globals from "../globals.js"
 
 export class Key extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames){
+    constructor (id, state, xPos, yPos, imageSet, frames, hitBox){
         super (id, state, xPos, yPos, imageSet, frames)
+        this.hitBox = hitBox
     }
     update(){
-        this.xPos = 400;
-        this.yPos = 169;
+
+        if (globals.key) {
+            let index = globals.sprites.indexOf(this)
+            globals.sprites.splice(index,1)
+        }
     
         this.updateAnimationFrame()
     }

@@ -1,5 +1,5 @@
 import Sprite from "./Sprite.js";
-
+import globals from "../globals.js"
 
 export class KeyHUD extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames){
@@ -8,9 +8,12 @@ export class KeyHUD extends Sprite {
     }
     update(){
             //Updates Key's variables State
-    this.xPos = 159;
-    this.yPos = 2;
+            if (globals.key) {
+                this.frames.frameCounter = 1;
+            } else {
+                this.frames.frameCounter = 0;
+            }
 
-    this.frames.frameCounter = 0;
+
     }
 }
