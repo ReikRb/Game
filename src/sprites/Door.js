@@ -16,7 +16,6 @@ export class Door extends Sprite {
                 this.hitBox.xSize = 0
                 globals.key = false
             }else{
-
                 this.updateAnimationFrame()
             }
         }

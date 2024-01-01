@@ -10,6 +10,7 @@ export class Player extends Sprite {
         this.hitBox    = hitBox      //Sprite HitBox
         this.jumpEvent = false
         this.jumpCount = 0
+        this.jumpChangeCounter = 0
     }
      update() {
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
@@ -128,15 +129,29 @@ export class Player extends Sprite {
         
         this.physics.ay = GRAVITY;
         this.physics.vy += this.physics.ay * globals.deltaTime;
+        console.log(this.jumpChangeCounter);
+        if (this.jumpCount ===1) {
+            this.jumpChangeCounter++
+        }
         if (this.physics.isOnGround) {
+            this.jumpCount = 0
+            this.jumpChangeCounter = 0
             if (globals.action.jump) {
                 this.physics.isOnGround = false;
                 this.physics.isOnPlatform = false
                 this.physics.vy += this.physics.jumpForce;
+                this.jumpCount++
             } else if ( globals.action.jump != this.jumpEvent){
                 this.physics.vy += this.physics.jumpForce;
+                this.jumpCount++
             }
-        } 
+        } else if (!this.physics.isOnGround && globals.power) {
+            if (globals.action.jump && this.jumpChangeCounter ===20) {
+                this.physics.vy += this.physics.jumpForce*1.5;
+                this.jumpCount++
+                globals.power = false
+            }
+        }
         if (this.physics.vy >400) {
             this.physics.vy = 400
         }
@@ -146,6 +161,7 @@ export class Player extends Sprite {
             this.physics.isOnGround = true;
             this.yPos = globals.canvas.height - this.imageSet.ySize;
             this.physics.vy = 0;
+            this.jumpCount = 0
         }
 
         this.updateAnimationFrame()
