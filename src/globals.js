@@ -37,6 +37,7 @@ export default {
 
     //Sprites Data Array
     sprites: [],
+    platforms: [],
 
     SpritesHUD: 0,
 

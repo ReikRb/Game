@@ -311,7 +311,7 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
-        drawHitBox(sprite)
+        // drawHitBox(sprite)
         renderSprite(sprite)
     }
 }

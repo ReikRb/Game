@@ -25,6 +25,7 @@ export class PlayerPhysics extends Physics {
         this.ay         = 0;
         this.jumpForce  = jumpForce
         this.isOnGround = true
+        this.isOnPlatform = false
         this.isShooting = false
         this.hasShoot   = false
         this.shootingIntervalCounter = 0;

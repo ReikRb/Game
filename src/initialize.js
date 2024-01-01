@@ -131,9 +131,9 @@ function initSprites() {
     initKeyHUD();
     // initCheckPoint();
     // initKey();
-    // initChair();
+    initChair();
+    initPlatformVertical()
     initPlatform()
-
     // initCrystal()
 
 }
@@ -277,7 +277,7 @@ function initPlayer(){
     const frames = new Frames (8, 3)
 
     //Creates Physic obj with vLimit 40
-    const physics = new PlayerPhysics(150, 130, 0.7, -450);
+    const physics = new PlayerPhysics(130, 130, 0.1, -450);
 
     const hitBox = new HitBox(43, 81, 50, 28)
 
@@ -349,7 +349,7 @@ function initSkeleton(){
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 157, imageSet, frames, physics, hitBox)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 187, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
@@ -415,7 +415,7 @@ function initParchment() {
 
 function initPlatform() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      78)
+        const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
@@ -427,15 +427,61 @@ function initPlatform() {
         const yRotCenter = globals.canvas.height /2;
 
         const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
-        const hitBox = new HitBox(100, 9, 0, 0)
+        const hitBox = new HitBox(92, 9, 4,0)
 
         //Sprite Creation
-        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 70, imageSet, frames,physics,hitBox)
+        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 250, imageSet, frames,physics,hitBox,3)
 
         // setPlatformPosition(platform);
 
         //Adds Sprite to Array
         globals.sprites.push(platform)
+        globals.platforms.push(platform)
+
+}
+
+function initPlatformHorizontal() {
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Initial Physics values
+
+    const physics = new UniformHorizontalMove(40)
+    const hitBox = new HitBox(92, 9, 4, 0)
+
+    //Sprite Creation
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 180, imageSet, frames,physics,hitBox,2)
+
+    // setPlatformPosition(platform);
+
+    //Adds Sprite to Array
+    globals.sprites.push(platform)
+    globals.platforms.push(platform)
+}
+
+function initPlatformVertical() {
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Initial Physics values
+
+    const physics = new UniformHorizontalMove(40)
+    const hitBox = new HitBox(92, 9, 4, 0)
+
+    //Sprite Creation
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 180, imageSet, frames,physics,hitBox,1)
+
+    // setPlatformPosition(platform);
+
+    //Adds Sprite to Array
+    globals.sprites.push(platform)
+    globals.platforms.push(platform)
 }
 
 function initDummy() {

@@ -7,7 +7,6 @@ export class Skeleton extends Sprite {
         this.hitBox         = hitBox      //Sprite HitBox
     }
     update(){
-
         switch (this.state) {
             case State.RUN_RIGHT_2:
                 this.frames.framesPerState = 7
@@ -58,18 +57,18 @@ export class Skeleton extends Sprite {
     
         //Updates Skeleton's variables State
         const player = globals.sprites[0]
-        let range = player.xPos - this.xPos
+        let rangeX = player.xPos - this.xPos
+        let rangeY = player.yPos - this.yPos
  
 
-        if (range <= 0 && this.state === State.RUN_LEFT_2) {
-            range = range *-1
-            if (range <100) {
-                
+        if (rangeX <= 0 && this.state === State.RUN_LEFT_2) {
+            rangeX *= -1
+            rangeY *= -1
+            if (rangeX <100 && rangeY < 90) {
                 this.state = State.ATTACK_LEFT_2
             }
-        } else if (range > 0 && this.state === State.RUN_RIGHT_2) {
-            if (range <80) {
-                
+        } else if (rangeX > 0 && this.state === State.RUN_RIGHT_2) {
+            if (rangeX <80) {
                 this.state = State.ATTACK_RIGHT_2
             }
             

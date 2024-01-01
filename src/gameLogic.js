@@ -64,8 +64,8 @@ function playGame() {
     updateSprites();
     detectCollisions();
     updateLevelTime();
-    updateLife()
     updateMana()
+    updateLife()
 }
 
 function updateLevelTime() {

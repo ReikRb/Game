@@ -1,19 +1,22 @@
 import globals from "./globals.js"
-import { Block, State, Obstacle } from "./constants.js"
+import { Block, State, Obstacle, SpriteId } from "./constants.js"
 
 
 export default function detectCollisions() {
     for (let i = 1; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         detectCollisionBetweenPlayerAndSprite(sprite)
+        if (sprite.id === 1) {
+            detectCollisionBetweenSkeletonAndMapObstacles(sprite)
+        }
     }
     detectCollisionBetweenPlayerAndMapObstacles()
-    detectCollisionBetweenSkeletonAndMapObstacles()
 }
 
 function detectCollisionBetweenPlayerAndSprite(sprite) {
     //Reset collision state
     sprite.isCollidingWithPlayer = false;
+
 
     if (sprite.hitBox) {
 
@@ -36,8 +39,40 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
         if (isOverlap) {
             sprite.isCollidingWithPlayer = true
         }
-    }
+        switch (sprite.id) {
+            case SpriteId.PLATFORM:
+                const feet = Math.floor(player.yPos + player.hitBox.yOffset + player.hitBox.ySize - 5);
+                let top = Math.floor(sprite.yPos + sprite.hitBox.yOffset + 9)
+                if (isOverlap) {
+                    let result = false
+                    for (let i = 0; i < globals.platforms.length; i++) {
+                        if (feet <= top && player.physics.isOnPlatform) {
+                            result = true
+                            break;
+                        }
+                    }
+                    player.physics.isOnPlatform = result
+                    player.physics.isOnGround = result
 
+                    if (player.physics.vy > 0 && feet <= (top) || player.physics.isOnPlatform) {
+                        player.yPos = sprite.yPos - player.hitBox.yOffset - player.hitBox.ySize + 1
+                        player.physics.vy = 0
+                        player.physics.isOnGround = true
+                        player.physics.isOnPlatform = true
+                    }
+                }
+                if (!player.physics.isOnPlatform) {
+                    player.physics.isOnGround = false
+                }
+
+
+
+                break;
+
+            default:
+                break;
+        }
+    }
 }
 
 function rectIntersect(x1, y1, w1, h1,
@@ -54,7 +89,7 @@ function rectIntersect(x1, y1, w1, h1,
     }
     return isOverlap
 }
-function detectCollisionBetweenSkeletonAndMapObstacles() {
+function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
     const skeleton = globals.sprites[1]
     const isCollision = skeleton.calculateCollisionWithBorders()
 

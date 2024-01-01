@@ -31,6 +31,15 @@ export default class Sprite{
         } else if (this.xPos + this.hitBox.xOffset < 0) {
             isCollision = true
         }
+
+        //Collision with top edge
+        if (this.yPos + this.hitBox.yOffset + this.hitBox.ySize > globals.canvas.height) {
+            isCollision = true
+    
+        //Collision with bot edge
+        } else if (this.yPos + this.hitBox.yOffset < 0) {
+            isCollision = true
+        }
     
         return isCollision;
     }
