@@ -268,7 +268,7 @@ function renderHUD() {
     globals.ctxHUD.fillStyle = "lightgray";
     globals.ctxHUD.fillText("" + score, 0, 41);
 
-    globals.ctxHUD.fillText(" " + globals.mana, 168, 16)
+    // globals.ctxHUD.fillText(" " + globals.mana, 168, 16)
     
 
 
@@ -311,7 +311,7 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
-        drawHitBox(sprite)
+        // drawHitBox(sprite)
         renderSprite(sprite)
     }
 }

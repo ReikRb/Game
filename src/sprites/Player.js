@@ -1,7 +1,7 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import {State, GRAVITY} from "../constants.js"
-import { initPlayerAttackVFX,initPlayerFireball } from "../initialize.js";
+import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX } from "../initialize.js";
 
 
 export class Player extends Sprite {
@@ -129,7 +129,6 @@ export class Player extends Sprite {
         
         this.physics.ay = GRAVITY;
         this.physics.vy += this.physics.ay * globals.deltaTime;
-        console.log(this.jumpChangeCounter);
         if (this.jumpCount ===1) {
             this.jumpChangeCounter++
         }
@@ -146,10 +145,11 @@ export class Player extends Sprite {
                 this.jumpCount++
             }
         } else if (!this.physics.isOnGround && globals.power) {
-            if (globals.action.jump && this.jumpChangeCounter ===20) {
+            if (globals.action.jump && this.jumpChangeCounter >20) {
                 this.physics.vy += this.physics.jumpForce*1.5;
                 this.jumpCount++
                 globals.power = false
+                initJumpVFX(this.xPos, this.yPos)
             }
         }
         if (this.physics.vy >400) {

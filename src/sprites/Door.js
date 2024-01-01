@@ -8,12 +8,10 @@ export class Door extends Sprite {
     }
     update(){
         if (this.isCollidingWithPlayer && globals.key) {
-            console.log(this.frames.frameCounter);
             if (this.frames.frameCounter ===3) {
-                // let index = globals.sprites.indexOf(this)
-                // globals.sprites.splice(index,1)
-                this.hitBox.ySize = 0
-                this.hitBox.xSize = 0
+                let index = globals.sprites.indexOf(this)
+                globals.sprites.splice(index,1)
+                
                 globals.key = false
             }else{
                 this.updateAnimationFrame()

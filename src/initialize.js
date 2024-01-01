@@ -27,6 +27,7 @@ import { Platform } from "./sprites/Platform.js";
 import { Dummy } from "./sprites/Dummy.js";
 import HitBox  from "./HitBox.js";
 import { Power } from "./sprites/Power.js";
+import { JumpVFX } from "./sprites/JumpVFX.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -246,7 +247,7 @@ function initPower(){
     frames.frameCounter = 1
     const hitBox = new HitBox(38, 43, 10, 3)
     //Sprite Creation
-    const power = new Power(SpriteId.POWER, State.IDLE_3, 400, 190, imageSet, frames, hitBox)
+    const power = new Power(SpriteId.POWER, State.IDLE_3, 100, 70, imageSet, frames, hitBox)
     
     //Adds Sprite to Array
     globals.sprites.push(power)
@@ -301,7 +302,7 @@ function initPlayer(){
     const hitBox = new HitBox(43, 81, 50, 28)
 
     //Sprite Creation
-    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 0, 128, imageSet, frames, physics,hitBox)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 0, 188, imageSet, frames, physics,hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -367,7 +368,7 @@ function initSkeleton(){
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 187, imageSet, frames, physics, hitBox)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 127, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
@@ -395,7 +396,7 @@ function initCheckPoint(){
     const frames = new Frames (5,8)
     const hitBox = new HitBox(25, 38, 5, 3)
     //Sprite Creation
-    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, 100, 230, imageSet, frames, hitBox)
+    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, 167, 217, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
@@ -410,10 +411,25 @@ function initDoor(){
     const frames = new Frames (4,12)
     const hitBox = new HitBox(12, 96, 0, 0)
     //Sprite Creation
-    const door = new Door(SpriteId.DOOR, State.IDLE_3, 290, 192, imageSet, frames, hitBox)
+    const door = new Door(SpriteId.DOOR, State.IDLE_3, 420, 127, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(door)
+
+}
+function initJumpVFX(xPos, yPos){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(4  ,       3,      80,    40,     140,     40,      110)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (4,8)
+
+
+    //Sprite Creation
+    const jump = new JumpVFX(SpriteId.JUMPVFX, State.IDLE_3, (xPos+33), (yPos+60), imageSet, frames)
+
+    //Adds Sprite to Array
+    globals.sprites.push(jump)
 
 }
 
@@ -535,4 +551,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX, initJumpVFX }

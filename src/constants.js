@@ -39,6 +39,7 @@ const SpriteId = {
     PARCHMENT:          16,
     MANACRYSTAL: 17,
     POWER: 18,
+    JUMPVFX:19
 
 }
 
