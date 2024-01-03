@@ -1,6 +1,7 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import {State, GRAVITY} from "../constants.js"
+import { initCrystal } from "../initialize.js";
 export class Skeleton extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
@@ -12,6 +13,7 @@ export class Skeleton extends Sprite {
         if (this.life <= 0) {
             let index = globals.sprites.indexOf(this)
             globals.sprites.splice(index,1)
+            initCrystal(this.xPos, this.yPos)
         }
         switch (this.state) {
             case State.RUN_RIGHT_2:

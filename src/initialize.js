@@ -137,7 +137,6 @@ function initSprites() {
     initPlatformVertical()
     initPlatform()
     initPower()
-    initCrystal()
     initDoor()
 
 }
@@ -182,7 +181,7 @@ function initLife(){
 
     //Adds Sprite to Array
     globals.sprites.push(life)
-    globals.SpritesHUD++
+    
 }
 
 function initEmptyCrystalMana(){
@@ -198,7 +197,7 @@ function initEmptyCrystalMana(){
 
         //Adds Sprite to Array
         globals.sprites.push(EmptyCrystalMana)
-        globals.SpritesHUD++
+        
 
 }
 
@@ -214,10 +213,10 @@ function initMana(){
 
     //Adds Sprite to Array
     globals.sprites.push(mana)
-    globals.SpritesHUD++
+    
 }
 
-function initCrystal(){
+function initCrystal(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(9,       5,      28,    51,     140,     70,      88)
 
@@ -229,7 +228,7 @@ function initCrystal(){
     const hitBox = new HitBox(30, 51, 0, 0)
 
     //Sprite Creation
-    const mana = new Crystal(SpriteId.MANACRYSTAL, State.IDLE_3, 100, 70, imageSet, frames, physics, hitBox)
+    const mana = new Crystal(SpriteId.MANACRYSTAL, State.IDLE_3, (xPos+40), (yPos+10), imageSet, frames, physics, hitBox)
 
     mana.physics.vx = mana.physics.vLimit;
     mana.physics.vy = mana.physics.vLimit;
@@ -552,4 +551,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX, initJumpVFX }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal }

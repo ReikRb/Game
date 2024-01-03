@@ -113,223 +113,6 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
     }
 }
 
-function rectIntersect(x1, y1, w1, h1,
-    x2, y2, w2, h2) {
-    let isOverlap
-    if (x2 > w1 + x1 ||
-        x1 > w2 + x2 ||
-        y2 > h1 + y1 ||
-        y1 > h2 + y2
-    ) {
-        isOverlap = false
-    } else {
-        isOverlap = true
-    }
-    return isOverlap
-}
-function detectCollisionBetweenSkeletonAndSprite(sprite) {
-        //Skeleton DATA
-        const x1 = sprite.xPos + sprite.hitBox.xOffset
-        const y1 = sprite.yPos + sprite.hitBox.yOffset
-        const w1 = sprite.hitBox.xSize
-        const h1 = sprite.hitBox.ySize
-        //Compared Sprite DATA
-        for (let i = 0; i < globals.shoots.length; i++) {
-            const fireball = globals.shoots[i];
-            const x2 = fireball.xPos + fireball.hitBox.xOffset
-            const y2 = fireball.yPos + fireball.hitBox.yOffset
-            const w2 = fireball.hitBox.xSize
-            const h2 = fireball.hitBox.ySize
-            
-            const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
-            if (isOverlap) {
-                fireball.isCollidingWithSkeleton = true
-                sprite.life--
-                if (sprite.life < 0) {
-                    sprite.life = 0
-                }
-            }
-        }
-
-
-}
-function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
-    const skeleton = sprite
-    const isCollision = skeleton.calculateCollisionWithBorders()
-
-    let xPos
-    let yPos
-    let isCollidingOnPos1
-    let isCollidingOnPos2
-    let isCollidingOnPos3
-    let isCollidingOnPos4
-    let isCollidingOnPos5
-    let isCollidingOnPos6
-
-    let overlapX
-    let overlapY
-
-
-    // Collision  Checks
-    // 6---------1
-    // |---------|
-    // |---------|
-    // 5---------2
-    // |---------|
-    // |---------|
-    // 4---------3
-    const brickSize = globals.level.imageSet.gridSize
-    
-
-    if (skeleton.physics.vx > 0) {
-        // Punto 6
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset;
-        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
-
-        if (isCollidingOnPos6) {
-            swapDirection(skeleton)
-
-        }
-
-        // Punto 4
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
-
-        if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize + 1
-            skeleton.yPos -= overlapY
-            skeleton.isCollidingWithObstacleOnBottom = true
-            skeleton.physics.vy = 0
-        }
-
-
-        // Punto 2
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize - Math.ceil(skeleton.hitBox.ySize / 2)
-        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos)
-
-        if (isCollidingOnPos2) {
-            swapDirection(skeleton)
-
-        }
-
-        //Punto 1
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
-        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos)
-        if (isCollidingOnPos1) {
-            swapDirection(skeleton)
-        }
-
-        //Punto 3
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
-
-
-        if (isCollidingOnPos3) {
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize
-
-            if (overlapX <= overlapY) {
-                swapDirection(skeleton)
-            }
-        }
-
-
-
-    } else if (skeleton.physics.vx < 0) {
-
-
-        //Punto 3
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
-
-        if (isCollidingOnPos3) {
-            overlapY = Math.floor(yPos) % brickSize + 1
-            skeleton.yPos -= overlapY
-            skeleton.physics.vy = 0
-        }
-
-
-        // Punto 5
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + Math.ceil(skeleton.hitBox.ySize / 2)
-        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
-
-        if (isCollidingOnPos5) {
-            swapDirection(skeleton)
-        }
-
-        //Punto 6
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
-        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
-
-        if (isCollidingOnPos6) {
-            swapDirection(skeleton)
-        }
-
-        //Punto 4
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
-
-
-        if (isCollidingOnPos4) {
-            overlapX = Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize
-
-            if (overlapX <= overlapY) {
-                swapDirection(skeleton)
-            }
-            if (skeleton.physics.vy > 0) {
-                skeleton.yPos -= overlapY
-            }
-
-        }
-
-
-
-    } else {
-        // Punto 4
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
-
-        if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize + 1
-            skeleton.yPos -= overlapY
-            skeleton.isCollidingWithObstacleOnBottom = true
-            skeleton.physics.vy = 0
-        }
-
-        //Punto 3
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
-
-
-        if (isCollidingOnPos3) {
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize
-
-            if (overlapX <= overlapY) {
-                swapDirection(skeleton)
-            }
-        }
-    }
-    if (isCollision) {
-        swapDirection(skeleton)
-    }
-}
-function swapDirection(skeleton) {
-    skeleton.state = skeleton.state === State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
-}
-
 function detectCollisionBetweenPlayerAndMapObstacles() {
     const player = globals.sprites[0]
 
@@ -609,36 +392,225 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
     }
 }
 
+function detectCollisionBetweenSkeletonAndSprite(sprite) {
+        //Skeleton DATA
+        const x1 = sprite.xPos + sprite.hitBox.xOffset
+        const y1 = sprite.yPos + sprite.hitBox.yOffset
+        const w1 = sprite.hitBox.xSize
+        const h1 = sprite.hitBox.ySize
+        //Compared Sprite DATA
+        for (let i = 0; i < globals.shoots.length; i++) {
+            const fireball = globals.shoots[i];
+            const x2 = fireball.xPos + fireball.hitBox.xOffset
+            const y2 = fireball.yPos + fireball.hitBox.yOffset
+            const w2 = fireball.hitBox.xSize
+            const h2 = fireball.hitBox.ySize
+            
+            const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
+            if (isOverlap) {
+                fireball.isCollidingWithSkeleton = true
+                sprite.life--
+                if (sprite.life < 0) {
+                    sprite.life = 0
+                }
+            }
+        }
+
+
+}
+
+function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
+    const skeleton = sprite
+    const isCollision = skeleton.calculateCollisionWithBorders()
+
+    let xPos
+    let yPos
+    let isCollidingOnPos1
+    let isCollidingOnPos2
+    let isCollidingOnPos3
+    let isCollidingOnPos4
+    let isCollidingOnPos5
+    let isCollidingOnPos6
+
+    let overlapX
+    let overlapY
+
+
+    // Collision  Checks
+    // 6---------1
+    // |---------|
+    // |---------|
+    // 5---------2
+    // |---------|
+    // |---------|
+    // 4---------3
+    const brickSize = globals.level.imageSet.gridSize
+    
+
+    if (skeleton.physics.vx > 0) {
+        // Punto 6
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset;
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos6) {
+            swapDirection(skeleton)
+
+        }
+
+        // Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+
+        if (isCollidingOnPos4) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.isCollidingWithObstacleOnBottom = true
+            skeleton.physics.vy = 0
+        }
+
+
+        // Punto 2
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize - Math.ceil(skeleton.hitBox.ySize / 2)
+        isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos)
+
+        if (isCollidingOnPos2) {
+            swapDirection(skeleton)
+
+        }
+
+        //Punto 1
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
+        isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos)
+        if (isCollidingOnPos1) {
+            swapDirection(skeleton)
+        }
+
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+
+
+        if (isCollidingOnPos3) {
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+        }
 
 
 
+    } else if (skeleton.physics.vx < 0) {
 
-// switch (direction) {
-//     case State.RUN_RIGHT:
-//         xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize -1
-//         yPos = player.yPos + player.hitBox.yOffset
-//         isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos, )
 
-//         yPos = player.yPos + player.hitBox.yOffset + brickSize
-//         isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos, )
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
 
-//         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize - 1
-//         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos, )
+        if (isCollidingOnPos3) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.physics.vy = 0
+        }
 
-//         isColliding = isCollidingOnPos1 || isCollidingOnPos2 || isCollidingOnPos3
 
-//         if (isColliding) {
-//             player.isCollidingWithObstacleOnRight = true
-//             overlap = Math.floor(xPos) % brickSize + 1
-//             player.xPos -= overlap
-//         }
+        // Punto 5
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + Math.ceil(skeleton.hitBox.ySize / 2)
+        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
 
-//         break;
+        if (isCollidingOnPos5) {
+            swapDirection(skeleton)
+        }
 
-//     default:
-//         break;
-// }
+        //Punto 6
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
 
+        if (isCollidingOnPos6) {
+            swapDirection(skeleton)
+        }
+
+        //Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
+
+
+        if (isCollidingOnPos4) {
+            overlapX = Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+            if (skeleton.physics.vy > 0) {
+                skeleton.yPos -= overlapY
+            }
+
+        }
+
+
+
+    } else {
+        // Punto 4
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+
+        if (isCollidingOnPos4) {
+            overlapY = Math.floor(yPos) % brickSize + 1
+            skeleton.yPos -= overlapY
+            skeleton.isCollidingWithObstacleOnBottom = true
+            skeleton.physics.vy = 0
+        }
+
+        //Punto 3
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+
+
+        if (isCollidingOnPos3) {
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize
+
+            if (overlapX <= overlapY) {
+                swapDirection(skeleton)
+            }
+        }
+    }
+    if (isCollision) {
+        swapDirection(skeleton)
+    }
+}
+
+function swapDirection(skeleton) {
+    skeleton.state = skeleton.state === State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
+}
+
+function rectIntersect(x1, y1, w1, h1,
+    x2, y2, w2, h2) {
+    let isOverlap
+    if (x2 > w1 + x1 ||
+        x1 > w2 + x2 ||
+        y2 > h1 + y1 ||
+        y1 > h2 + y2
+    ) {
+        isOverlap = false
+    } else {
+        isOverlap = true
+    }
+    return isOverlap
+}
 
 function isCollidingWithObstacleAt(xPos, yPos) {
     let isColliding = false
