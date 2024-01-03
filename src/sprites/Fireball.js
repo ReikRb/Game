@@ -6,6 +6,7 @@ export class Fireball extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox = hitBox
+        this.isCollidingWithSkeleton = false
     }
     update() {
         switch (this.state) {
@@ -30,9 +31,11 @@ export class Fireball extends Sprite {
                 //Edges collision calculation
     
         const isCollision = this.calculateCollisionWithBorders()
-        if (isCollision) {
+        if (isCollision || this.isCollidingWithSkeleton) {
             let index = globals.sprites.indexOf(this)
             globals.sprites.splice(index,1)
+            index = globals.shoots.indexOf(this)
+            globals.shoots.splice(index,1)
         }
     
     }

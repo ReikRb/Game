@@ -5,8 +5,14 @@ export class Skeleton extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox         = hitBox      //Sprite HitBox
+        this.life           = 6
     }
     update(){
+        
+        if (this.life <= 0) {
+            let index = globals.sprites.indexOf(this)
+            globals.sprites.splice(index,1)
+        }
         switch (this.state) {
             case State.RUN_RIGHT_2:
                 this.frames.framesPerState = 7

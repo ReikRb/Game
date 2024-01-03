@@ -352,6 +352,7 @@ function initPlayerFireball(xPos, yPos, STATE) {
 
     //Adds Sprite to Array
     globals.sprites.push(fireball)
+    globals.shoots.push(fireball)
 }
 
 function initSkeleton(){

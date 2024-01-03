@@ -8,6 +8,7 @@ export default function detectCollisions() {
         detectCollisionBetweenPlayerAndSprite(sprite)
         if (sprite.id === 1) {
             detectCollisionBetweenSkeletonAndMapObstacles(sprite)
+            detectCollisionBetweenSkeletonAndSprite(sprite)
         }
     }
     detectCollisionBetweenPlayerAndMapObstacles()
@@ -126,8 +127,36 @@ function rectIntersect(x1, y1, w1, h1,
     }
     return isOverlap
 }
+function detectCollisionBetweenSkeletonAndSprite(sprite) {
+        //Skeleton DATA
+        const x1 = sprite.xPos + sprite.hitBox.xOffset
+        const y1 = sprite.yPos + sprite.hitBox.yOffset
+        const w1 = sprite.hitBox.xSize
+        const h1 = sprite.hitBox.ySize
+        console.log(sprite.life);
+        console.log(globals.shoots.length);
+        //Compared Sprite DATA
+        for (let i = 0; i < globals.shoots.length; i++) {
+            const fireball = globals.shoots[i];
+            const x2 = fireball.xPos + fireball.hitBox.xOffset
+            const y2 = fireball.yPos + fireball.hitBox.yOffset
+            const w2 = fireball.hitBox.xSize
+            const h2 = fireball.hitBox.ySize
+            
+            const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
+            if (isOverlap) {
+                fireball.isCollidingWithSkeleton = true
+                sprite.life--
+                if (sprite.life < 0) {
+                    sprite.life = 0
+                }
+            }
+        }
+
+
+}
 function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
-    const skeleton = globals.sprites[1]
+    const skeleton = sprite
     const isCollision = skeleton.calculateCollisionWithBorders()
 
     let xPos
@@ -152,7 +181,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
     // |---------|
     // 4---------3
     const brickSize = globals.level.imageSet.gridSize
-    const direction = skeleton.state
+    
 
     if (skeleton.physics.vx > 0) {
         // Punto 6
