@@ -133,8 +133,6 @@ function detectCollisionBetweenSkeletonAndSprite(sprite) {
         const y1 = sprite.yPos + sprite.hitBox.yOffset
         const w1 = sprite.hitBox.xSize
         const h1 = sprite.hitBox.ySize
-        console.log(sprite.life);
-        console.log(globals.shoots.length);
         //Compared Sprite DATA
         for (let i = 0; i < globals.shoots.length; i++) {
             const fireball = globals.shoots[i];
@@ -352,8 +350,8 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
     let isCollidingOnPos8
     let isCollidingOnPos9
     let isCollidingOnPos10
-    let isColliding
-    let overlap
+    // let isColliding
+    // let overlap
 
 
     // Collision  Checks
@@ -486,6 +484,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             }
             if (player.physics.vy > 0) {
                 player.yPos -= overlapY
+                player.physics.vy = 0
 
             }
 
@@ -601,6 +600,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             }
             if (player.physics.vy > 0) {
                 player.yPos -= overlapY
+                player.physics.vy = 0
             }
 
         }
