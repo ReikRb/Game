@@ -124,20 +124,20 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
-    initSkeleton();
-    initEmptyCrystalLife();
-    initLife();
-    initEmptyCrystalMana();
-    initMana();
-    initPowerHUD();
-    initKeyHUD();
-    initCheckPoint();
-    initKey();
-    initChair();
-    initPlatformVertical()
-    initPlatform()
-    initPower()
-    initDoor()
+    // initSkeleton();
+    // initEmptyCrystalLife();
+    // initLife();
+    // initEmptyCrystalMana();
+    // initMana();
+    // initPowerHUD();
+    // initKeyHUD();
+    // initCheckPoint();
+    // initKey();
+    // initChair();
+    // initPlatformVertical()
+    // initPlatform()
+    // initPower()
+    // initDoor()
 
 }
 
