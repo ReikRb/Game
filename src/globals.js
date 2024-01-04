@@ -50,7 +50,7 @@ export default {
     action:{},
 
     //Life
-    life:400,
+    life:20,
 
     //Mana
     mana:100,

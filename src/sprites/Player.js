@@ -1,6 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
-import {State, GRAVITY} from "../constants.js"
+import {State, GRAVITY, Game} from "../constants.js"
 import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX } from "../initialize.js";
 
 
@@ -16,6 +16,7 @@ export class Player extends Sprite {
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         }
+
         //Keyboard event reader
         this.readKeyboardAndAssignState();
         const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
@@ -98,6 +99,16 @@ export class Player extends Sprite {
                 this.frames.framesPerState = 2
                 this.frames.frameCounter = 0
                 break;
+            
+            case State.DEAD_RIGHT:
+            case State.DEAD_LEFT:
+                this.frames.framesPerState = 8
+                this.frames.speed = 5
+
+                if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
+                    globals.gameState = Game.GAMEOVER
+                }
+                break;
     
         }
     
@@ -171,8 +182,11 @@ export class Player extends Sprite {
 
 
     readKeyboardAndAssignState() {
-    
-        if (!this.physics.isOnGround) {
+        if (globals.life === 0) {
+                this.state =    this.previousState % 2 === 0     ? this.state = State.DEAD_RIGHT : this.state = State.DEAD_LEFT
+        }else  {
+
+            if (!this.physics.isOnGround) {
                 this.state =    this.physics.vy > 0             && this.physics.vx > 0                 ? State.FALL_RIGHT      :
                                 this.physics.vy > 0             && this.physics.vx < 0                 ? State.FALL_LEFT       :
                                 this.physics.vy < 0             && this.physics.vx > 0                 ? State.JUMP_RIGHT      :
@@ -180,8 +194,8 @@ export class Player extends Sprite {
                                 this.physics.vy < 0             && State.IDLE_RIGHT                    ? State.JUMP_RIGHT      :
                                 this.physics.vy < 0             && State.IDLE_LEFT                     ? State.JUMP_LEFT       :
                                 this.state          
-            
-        } else {
+                                
+                            } else {
             if (this.physics.isShooting) {
                 this.state =  globals.action.fire               && this.state  === State.IDLE_RIGHT    ? State.ATTACK_RIGHT    : 
                                 globals.action.fire             && this.state  === State.ATTACK_RIGHT  ? State.ATTACK_RIGHT    :
@@ -190,8 +204,8 @@ export class Player extends Sprite {
                                 this.state        === State.ATTACK_LEFT                                ? State.IDLE_LEFT       :
                                 this.state;
                 
-            } else {
-                this.state =    
+                            } else {
+                                this.state =    
                                 globals.action.moveRight                                               ? State.RUN_RIGHT       :    //Right key
                                 globals.action.moveLeft                                                ? State.RUN_LEFT        :    //Left key
                                 this.physics.vy   === 0       && this.state  === State.FALL_RIGHT      ? State.IDLE_RIGHT      :
@@ -201,18 +215,19 @@ export class Player extends Sprite {
                                 this.state % 2    === 0                                                ? State.IDLE_RIGHT      :
                                 this.state % 2    === 1                                                ? State.IDLE_LEFT       :
                                 this.state;
-    
-            }
-           
-        }
+                                
+                            }
+                            
+                        }
                         
-    }
+                    }
+                }
     calculateShoot() {
-        if (globals.action.fire) {
-            this.physics.isShooting = true
-        } else {
-            this.physics.isShooting = false
-        }
+    if (globals.action.fire) {
+        this.physics.isShooting = true
+    } else {
+        this.physics.isShooting = false
+    }
     }
 
 }
