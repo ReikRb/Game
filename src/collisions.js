@@ -9,13 +9,13 @@ export default function detectCollisions() {
         if (sprite.id === SpriteId.SKELETON) {
             detectCollisionBetweenSkeletonAndMapObstacles(sprite)
             detectCollisionBetweenSkeletonAndSprite(sprite)
-        } else if (sprite.id ===SpriteId.FIREBALL) {
+        } else if (sprite.id === SpriteId.FIREBALL) {
             detectCollisionBetweenFireballAndMapObstacles(sprite)
         }
     }
     detectCollisionBetweenPlayerAndMapObstacles()
 }
-function detectCollisionBetweenFireballAndMapObstacles(sprite){
+function detectCollisionBetweenFireballAndMapObstacles(sprite) {
     let xPos
     let yPos
     let isCollidingOnPos1
@@ -46,7 +46,7 @@ function detectCollisionBetweenFireballAndMapObstacles(sprite){
         if (isCollidingOnPos2) {
             sprite.isColliding = true
         }
-    }else{
+    } else {
         // Punto 4
         console.log("entro");
         xPos = sprite.xPos + sprite.hitBox.xOffset;
@@ -61,7 +61,7 @@ function detectCollisionBetweenFireballAndMapObstacles(sprite){
         xPos = sprite.xPos + sprite.hitBox.xOffset;
         yPos = sprite.yPos + sprite.hitBox.yOffset + sprite.hitBox.ySize;
         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
-        
+
         if (isCollidingOnPos3) {
             sprite.isColliding = true
         }
@@ -76,7 +76,6 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
 
 
     if (sprite.hitBox) {
-
         //Player Sprite
         const player = globals.sprites[0]
 
@@ -212,12 +211,12 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
     let overlapY
 
     if (player.physics.vx >= 0) {
-        // Punto 6
+        // Punto 9
         xPos = player.xPos + player.hitBox.xOffset;
         yPos = player.yPos + player.hitBox.yOffset;
-        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos9 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos6) {
+        if (isCollidingOnPos9) {
             overlapY = brickSize - Math.floor(yPos) % brickSize
             player.yPos += overlapY
             player.physics.vy = 0
@@ -225,34 +224,34 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
         }
 
-        // Punto 4
+        // Punto 6
         xPos = player.xPos + player.hitBox.xOffset;
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, (yPos))
 
-        if (isCollidingOnPos4) {
+        if (isCollidingOnPos6) {
             overlapY = Math.floor(yPos) % brickSize + 1
             player.yPos -= overlapY
             player.isCollidingWithObstacleOnBottom = true
             player.physics.vy = 0
         }
 
-        // Punto 8
+        // Punto 10
         xPos = player.xPos + player.hitBox.xOffset + (player.hitBox.xSize / 2);
         yPos = player.yPos + player.hitBox.yOffset - 1;
-        isCollidingOnPos8 = isCollidingWithObstacleAt(xPos, (yPos))
-        if (isCollidingOnPos8) {
+        isCollidingOnPos10 = isCollidingWithObstacleAt(xPos, (yPos))
+        if (isCollidingOnPos10) {
             overlapY = brickSize - Math.floor(yPos) % brickSize
             player.yPos += overlapY
             player.physics.vy = 0
             player.isCollidingWithObstacleOnTop = true
         }
 
-        // Punto 7
+        // Punto 5
         xPos = player.xPos + player.hitBox.xOffset + (player.hitBox.xSize / 2);
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos7 = isCollidingWithObstacleAt(xPos, yPos)
-        if (isCollidingOnPos7) {
+        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
+        if (isCollidingOnPos5) {
             overlapY = Math.floor(yPos) % brickSize
             player.yPos -= overlapY
             player.physics.vy = 0
@@ -273,12 +272,12 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
         }
 
-        // Punto 9
+        // Punto 3
         xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize + 1
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize - Math.ceil(player.hitBox.ySize / 3)
-        isCollidingOnPos9 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos9) {
+        if (isCollidingOnPos3) {
             overlapX = Math.floor(xPos) % brickSize + 1
             player.xPos -= overlapX
             player.isCollidingWithObstacleOnRight = true
@@ -307,12 +306,12 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             }
         }
 
-        //Punto 3
+        //Punto 4
         xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize + 1;
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
-        if (isCollidingOnPos3) {
+        if (isCollidingOnPos4) {
             overlapX = Math.floor(xPos) % brickSize + 1;
             overlapY = Math.floor(yPos) % brickSize
             player.isCollidingWithObstacleOnBottom = true
@@ -346,32 +345,32 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
         }
 
-        //Punto 3
+        //Punto 4
         xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
+        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
-        if (isCollidingOnPos3) {
+        if (isCollidingOnPos4) {
             overlapY = Math.floor(yPos) % brickSize + 1
             player.yPos -= overlapY
             player.isCollidingWithObstacleOnBottom = true
             player.physics.vy = 0
         }
-        // Punto 8
+        // Punto 10
         xPos = player.xPos + player.hitBox.xOffset + (player.hitBox.xSize / 2);
         yPos = player.yPos + player.hitBox.yOffset - 1;
-        isCollidingOnPos8 = isCollidingWithObstacleAt(xPos, (yPos))
-        if (isCollidingOnPos8) {
+        isCollidingOnPos10 = isCollidingWithObstacleAt(xPos, (yPos))
+        if (isCollidingOnPos10) {
             overlapY = brickSize - Math.floor(yPos) % brickSize
             player.yPos += overlapY
             player.physics.vy = 0
             player.isCollidingWithObstacleOnTop = true
         }
-        // Punto 7
+        // Punto 5
         xPos = player.xPos + player.hitBox.xOffset + (player.hitBox.xSize / 2);
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos7 = isCollidingWithObstacleAt(xPos, (yPos))
-        if (isCollidingOnPos7) {
+        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, (yPos))
+        if (isCollidingOnPos5) {
             overlapY = Math.floor(yPos) % brickSize
             player.yPos -= overlapY
             player.physics.vy = 0
@@ -379,34 +378,34 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
         }
 
 
-        // Punto 5
+        // Punto 8
         xPos = player.xPos + player.hitBox.xOffset - 1
         yPos = player.yPos + player.hitBox.yOffset + Math.ceil(player.hitBox.ySize / 3)
-        isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos8 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos5) {
+        if (isCollidingOnPos8) {
             overlapX = brickSize - Math.floor(xPos) % brickSize + 1
             player.xPos += overlapX
             player.isCollidingWithObstacleOnLeft = true
         }
 
-        // Punto 10
+        // Punto 7
         xPos = player.xPos + player.hitBox.xOffset - 1
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize - Math.ceil(player.hitBox.ySize / 3)
-        isCollidingOnPos10 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos7 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos10) {
+        if (isCollidingOnPos7) {
             overlapX = brickSize - Math.floor(xPos) % brickSize + 1
             player.xPos += overlapX
             player.isCollidingWithObstacleOnLeft = true
         }
 
-        //Punto 6
+        //Punto 9
         xPos = player.xPos + player.hitBox.xOffset - 1
         yPos = player.yPos + player.hitBox.yOffset - 1
-        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos9 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos6) {
+        if (isCollidingOnPos9) {
             overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
             overlapY = brickSize - Math.floor(yPos) % brickSize
             player.isCollidingWithObstacleOnTop = true
@@ -424,12 +423,12 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             }
         }
 
-        //Punto 4
+        //Punto 6
         xPos = player.xPos + player.hitBox.xOffset - 1;
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
+        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
 
-        if (isCollidingOnPos4) {
+        if (isCollidingOnPos6) {
             overlapX = brickSize - (Math.floor(xPos) % brickSize + 1);
             overlapY = Math.floor(yPos) % brickSize
             player.isCollidingWithObstacleOnBottom = true
@@ -450,28 +449,28 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 }
 
 function detectCollisionBetweenSkeletonAndSprite(sprite) {
-        //Skeleton DATA
-        const x1 = sprite.xPos + sprite.hitBox.xOffset
-        const y1 = sprite.yPos + sprite.hitBox.yOffset
-        const w1 = sprite.hitBox.xSize
-        const h1 = sprite.hitBox.ySize
-        //Compared Sprite DATA
-        for (let i = 0; i < globals.shoots.length; i++) {
-            const fireball = globals.shoots[i];
-            const x2 = fireball.xPos + fireball.hitBox.xOffset
-            const y2 = fireball.yPos + fireball.hitBox.yOffset
-            const w2 = fireball.hitBox.xSize
-            const h2 = fireball.hitBox.ySize
-            
-            const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
-            if (isOverlap) {
-                fireball.isColliding = true
-                sprite.life--
-                if (sprite.life < 0) {
-                    sprite.life = 0
-                }
+    //Skeleton DATA
+    const x1 = sprite.xPos + sprite.hitBox.xOffset
+    const y1 = sprite.yPos + sprite.hitBox.yOffset
+    const w1 = sprite.hitBox.xSize
+    const h1 = sprite.hitBox.ySize
+    //Compared Sprite DATA
+    for (let i = 0; i < globals.shoots.length; i++) {
+        const fireball = globals.shoots[i];
+        const x2 = fireball.xPos + fireball.hitBox.xOffset
+        const y2 = fireball.yPos + fireball.hitBox.yOffset
+        const w2 = fireball.hitBox.xSize
+        const h2 = fireball.hitBox.ySize
+
+        const isOverlap = rectIntersect(x1, y1, w1, h1, x2, y2, w2, h2)
+        if (isOverlap) {
+            fireball.isColliding = true
+            sprite.life--
+            if (sprite.life < 0) {
+                sprite.life = 0
             }
         }
+    }
 
 
 }
@@ -502,7 +501,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
     // |---------|
     // 4---------3
     const brickSize = globals.level.imageSet.gridSize
-    
+
 
     if (skeleton.physics.vx > 0) {
         // Punto 6
