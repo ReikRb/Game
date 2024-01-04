@@ -50,7 +50,6 @@ export default class Sprite{
     if (this.previousState != this.state){
     this.frames.frameCounter = 0
     this.frames.frameChangeCounter = 0
-    this.physics.shootingIntervalCounter = 0
     }
     this.frames.frameChangeCounter++;
         //changes frame once the counter equals the speed

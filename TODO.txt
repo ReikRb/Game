@@ -1,4 +1,4 @@
-1.- 
+1.- Pasar los Tiles de Spikes a Sprites
 2.- Introducir multiples capas de tiles a la imprimación (para evitar esquinas blancas)
 3.-
 4.-

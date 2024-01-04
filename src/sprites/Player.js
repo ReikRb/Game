@@ -54,7 +54,6 @@ export class Player extends Sprite {
             case State.IDLE_LEFT:
             case State.IDLE_RIGHT:
                 this.frames.framesPerState = 6
-                
                 this.physics.ax = 0
                 break
     

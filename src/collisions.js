@@ -390,6 +390,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
 
 
     }
+
 }
 
 function detectCollisionBetweenSkeletonAndSprite(sprite) {
@@ -624,7 +625,6 @@ function isCollidingWithObstacleAt(xPos, yPos) {
     }
 
     return isColliding
-
 }
 
 function getMapTileId(xPos, yPos) {
