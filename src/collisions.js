@@ -132,6 +132,7 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
                     sprite.used = true
                 }
                 break;
+            
             case SpriteId.KEY:
                 if (sprite.isCollidingWithPlayer) {
                     globals.key = true
@@ -323,7 +324,6 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
             if (player.physics.vy > 0) {
                 player.yPos -= overlapY
                 player.physics.vy = 0
-
             }
 
         }
@@ -557,6 +557,14 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
             if (overlapX <= overlapY) {
                 swapDirection(skeleton)
+            } else {
+                if (skeleton.physics.vy>0) {
+                    overlapY = Math.floor(yPos) % brickSize + 1
+                    skeleton.yPos -= overlapY
+                    skeleton.isCollidingWithObstacleOnBottom = true
+                    skeleton.physics.vy = 0
+                    
+                }
             }
         }
 

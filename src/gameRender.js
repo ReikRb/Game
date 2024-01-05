@@ -279,7 +279,7 @@ function renderHUD() {
 function renderMap() {
     const brickSize     = globals.level.imageSet.gridSize;
     const levelData     = globals.level.data;
-    const tileSetColNum = 14;
+    const tileSetColNum = 10;
     //Draws Map
     const num_fil = levelData.length;
     const num_col = levelData[0].length;

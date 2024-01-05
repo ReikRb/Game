@@ -124,7 +124,7 @@ function loadHandler() {
 
 function initSprites() {
     initPlayer();
-    // initSkeleton();
+    initSkeleton();
     // initEmptyCrystalLife();
     // initLife();
     // initEmptyCrystalMana();
