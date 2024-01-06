@@ -19,7 +19,7 @@ export class Chair extends Sprite {
             player.state == State.FALL_RIGHT ||
             player.state == State.IDLE_RIGHT
             ) {
-                this.xPos  = player.xPos -50;
+                this.xPos  = player.xPos -67;
         } else{
                 this.xPos = player.xPos + 50
         }

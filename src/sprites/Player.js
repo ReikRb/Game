@@ -104,7 +104,7 @@ export class Player extends Sprite {
             case State.DEAD_LEFT:
                 this.frames.framesPerState = 8
                 this.frames.speed = 5
-
+                this.physics.vx = 0
                 if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
                     globals.gameState = Game.GAMEOVER
                 }

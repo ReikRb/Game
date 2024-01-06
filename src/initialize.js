@@ -28,6 +28,7 @@ import { Dummy } from "./sprites/Dummy.js";
 import HitBox  from "./HitBox.js";
 import { Power } from "./sprites/Power.js";
 import { JumpVFX } from "./sprites/JumpVFX.js";
+import { Spike } from "./sprites/Spike.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -125,19 +126,20 @@ function loadHandler() {
 function initSprites() {
     initPlayer();
     initSkeleton();
-    // initEmptyCrystalLife();
-    // initLife();
-    // initEmptyCrystalMana();
-    // initMana();
-    // initPowerHUD();
-    // initKeyHUD();
-    // initCheckPoint();
-    // initKey();
-    // initChair();
-    // initPlatformVertical()
-    // initPlatform()
-    // initPower()
-    // initDoor()
+    initEmptyCrystalLife();
+    initLife();
+    initEmptyCrystalMana();
+    initMana();
+    initPowerHUD();
+    initKeyHUD();
+    initCheckPoint();
+    initKey();
+    initChair();
+    initPlatformVertical()
+    initPlatform()
+    initPower()
+    initDoor()
+    initSpike(200,96,3)
 
 }
 
@@ -253,6 +255,46 @@ function initPower(){
     
 
 }
+function initSpike(xPos,yPos, type){
+    let imageSet
+    let hitBox
+
+
+    switch (type) {
+        case 0:    
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        imageSet = new ImageSet(7,       (4 + type),      32,    16,     140,     10,      134)
+        hitBox = new HitBox(32, 16, 0, 0)    
+            break;
+        case 1:    
+        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+        imageSet = new ImageSet(7,       (4 + type),      16,    32,     140,     10,      118)
+        hitBox = new HitBox(16, 32, 0, 0)    
+            break;
+        case 2:    
+            //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+            imageSet = new ImageSet(7,       (4 + type),      16,    32,     140,     10,      118)
+            hitBox = new HitBox(16, 32, 0, 0)    
+                break;
+        case 3:    
+            //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+            imageSet = new ImageSet(7,       (4 + type),      32,    16,     140,     10,      134)
+            hitBox = new HitBox(32, 16, 0, 0)    
+                break;
+        default:
+            break;
+    }
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
+
+    //Sprite Creation
+    const spike = new Spike(SpriteId.SPIKE, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
+    
+    //Adds Sprite to Array
+    globals.sprites.push(spike)
+    
+
+}
 function initPowerHUD(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
@@ -298,10 +340,10 @@ function initPlayer(){
     //Creates Physic obj with vLimit 40
     const physics = new PlayerPhysics(130, 130, 0.1, -450);
 
-    const hitBox = new HitBox(43, 81, 50, 28)
+    const hitBox = new HitBox(34, 81, 48, 28)
 
     //Sprite Creation
-    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 0, 188, imageSet, frames, physics,hitBox)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 100, 188, imageSet, frames, physics,hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -449,7 +491,7 @@ function initParchment() {
 
 function initPlatform() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
+        const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
@@ -461,7 +503,7 @@ function initPlatform() {
         const yRotCenter = globals.canvas.height /2;
 
         const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
-        const hitBox = new HitBox(92, 9, 4,0)
+        const hitBox = new HitBox(92, 15, 4,0)
 
         //Sprite Creation
         const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 250, imageSet, frames,physics,hitBox,3)
@@ -498,7 +540,7 @@ function initPlatformHorizontal() {
 
 function initPlatformVertical() {
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
+    const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (1)
@@ -506,7 +548,7 @@ function initPlatformVertical() {
     //Initial Physics values
 
     const physics = new UniformHorizontalMove(40)
-    const hitBox = new HitBox(92, 9, 4, 0)
+    const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation
     const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 180, imageSet, frames,physics,hitBox,1)

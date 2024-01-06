@@ -39,7 +39,8 @@ const SpriteId = {
     PARCHMENT:          16,
     MANACRYSTAL: 17,
     POWER: 18,
-    JUMPVFX:19
+    JUMPVFX:19,
+    SPIKE: 20
 
 }
 
@@ -118,7 +119,7 @@ const Block = {
     BOTH_SIDES_UP:          7,
     TOP_LEFT_2:             8,
     STAR_1:                 9,
-    STAR_2:                 10,
+    BLOCK:                 10,
     LEFT:                   11,
     DARK:                   12,
     RIGHT:                  13,

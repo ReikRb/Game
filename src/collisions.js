@@ -97,21 +97,20 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
         }
         switch (sprite.id) {
             case SpriteId.PLATFORM:
-                const feet = Math.floor(player.yPos + player.hitBox.yOffset + player.hitBox.ySize - 5);
-                let top = Math.floor(sprite.yPos + sprite.hitBox.yOffset + 9)
+                const feet = Math.floor(player.yPos + player.hitBox.yOffset + player.hitBox.ySize );
+                let bot = Math.floor(sprite.yPos + sprite.hitBox.yOffset + sprite.hitBox.ySize)
                 if (isOverlap) {
                     let result = false
-                    for (let i = 0; i < globals.platforms.length; i++) {
-                        if (feet <= top && player.physics.isOnPlatform) {
+                    
+                        if (feet <= bot && player.physics.isOnPlatform) {
                             result = true
-                            break;
                         }
-                    }
+                    
                     player.physics.isOnPlatform = result
                     player.physics.isOnGround = result
 
-                    if (player.physics.vy > 0 && feet <= (top) || player.physics.isOnPlatform) {
-                        player.yPos = sprite.yPos - player.hitBox.yOffset - player.hitBox.ySize + 1
+                    if (player.physics.vy > 0 && feet <= (bot) || player.physics.isOnPlatform) {
+                        player.yPos = sprite.yPos - player.hitBox.yOffset - player.hitBox.ySize -1
                         player.physics.vy = 0
                         player.physics.isOnGround = true
                         player.physics.isOnPlatform = true
@@ -153,16 +152,23 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
                 let overlapX
 
                 if (sprite.isCollidingWithPlayer) {
-                    if (player.state === State.RUN_RIGHT) {
+                    if (player.physics.vx >0) {
                         let xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize
                         overlapX = Math.floor(xPos) % sprite.hitBox.xSize + 1
                         player.xPos -= overlapX
 
-                    } else if (player.state === State.RUN_LEFT) {
+                    } else if (player.physics.vx < 0) {
                         let xPos = player.xPos + player.hitBox.xOffset - 1
                         overlapX = sprite.hitBox.xSize - Math.floor(xPos) % sprite.hitBox.xSize + 1
                         player.xPos += overlapX
                     }
+                }
+                break;
+        
+            case SpriteId.SPIKE:
+                
+                if (isOverlap) {
+                    globals.life = 0 
                 }
                 break;
         }
@@ -231,7 +237,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
         isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos6) {
-            overlapY = Math.floor(yPos) % brickSize + 1
+            overlapY = Math.floor(yPos) % brickSize
             player.yPos -= overlapY
             player.isCollidingWithObstacleOnBottom = true
             player.physics.vy = 0
@@ -351,7 +357,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize + 1
+            overlapY = Math.floor(yPos) % brickSize
             player.yPos -= overlapY
             player.isCollidingWithObstacleOnBottom = true
             player.physics.vy = 0

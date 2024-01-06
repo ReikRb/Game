@@ -72,11 +72,11 @@ export class Skeleton extends Sprite {
         if (rangeX <= 0 && this.state === State.RUN_LEFT_2) {
             rangeX *= -1
             rangeY *= -1
-            if (rangeX <100 && rangeY < 90) {
+            if (rangeX <80 && rangeY < 90) {
                 this.state = State.ATTACK_LEFT_2
             }
         } else if (rangeX > 0 && this.state === State.RUN_RIGHT_2) {
-            if (rangeX <80) {
+            if (rangeX <75) {
                 this.state = State.ATTACK_RIGHT_2
             }
             
