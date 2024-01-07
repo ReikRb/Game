@@ -2,10 +2,13 @@ import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 
 export class Platform extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox,type){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox,type, maxRange=100){
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox    = hitBox      //Sprite HitBox
         this.type      = type
+        this.maxRange  = maxRange
+        this.initX     = xPos
+        this.initY     = yPos
     }
     update(){
             //Updates Platform's variables State
@@ -19,14 +22,14 @@ export class Platform extends Sprite {
         setPlatformPosition(){
        // x = xCenter + Acos(angle)
        // y = yCenter + Asin(angle)
-       const isCollision = this.calculateCollisionWithBorders()
 
        switch (this.type) {
            case 1:
             if (this.physics.vy >= 0) {
                 this.physics.vy = this.physics.vLimit; 
             }
-            if (isCollision) {
+            if (this.yPos > (this.initY +this.maxRange)||
+                 this.yPos < (this.initY -this.maxRange)) {
                 this.physics.vy *= -1
         } 
             this.yPos += this.physics.vy * globals.deltaTime
@@ -36,10 +39,10 @@ export class Platform extends Sprite {
                 if (this.physics.vx >= 0) {
                     this.physics.vx = this.physics.vLimit; 
                 }
-                if (isCollision) {
-                    this.physics.vx *= -1
-                    
-            } 
+                if (this.xPos > (this.initX +this.maxRange)||
+                this.xPos < (this.initX -this.maxRange)) {
+               this.physics.vx *= -1
+       } 
                 this.xPos += this.physics.vx * globals.deltaTime
                 break;    
                    

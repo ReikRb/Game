@@ -149,6 +149,7 @@ const Obstacle = {
     TOP_RIGHT_2:            6,
     BOTH_SIDES_UP:          7,
     TOP_LEFT_2:             8,
+    BLOCK:                  10,
     LEFT:                   11,
     DARK:                   12,
     RIGHT:                  13,

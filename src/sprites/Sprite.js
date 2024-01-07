@@ -24,7 +24,7 @@ export default class Sprite{
         let isCollision = false;
 
         //Collision with right edge
-        if (this.xPos + this.hitBox.xOffset + this.hitBox.xSize > globals.canvas.width) {
+        if (this.xPos + this.hitBox.xOffset + this.hitBox.xSize > (globals.level.data[0].length*32)) {
             isCollision = true
     
         //Collision with left edge
@@ -33,7 +33,7 @@ export default class Sprite{
         }
 
         //Collision with top edge
-        if (this.yPos + this.hitBox.yOffset + this.hitBox.ySize > globals.canvas.height) {
+        if (this.yPos + this.hitBox.yOffset + this.hitBox.ySize > (globals.level.data[0][0].length*32)) {
             isCollision = true
     
         //Collision with bot edge

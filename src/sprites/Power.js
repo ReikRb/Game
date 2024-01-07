@@ -7,9 +7,11 @@ export class Power extends Sprite {
         this.hitBox = hitBox
     }
     update(){
-        if (globals.power) {
+        if (globals.power && this.isCollidingWithPlayer ) {
             let index = globals.sprites.indexOf(this)
             globals.sprites.splice(index,1)
+            globals.powerX = this.xPos
+            globals.powerY = this.yPos
         }
 
     }

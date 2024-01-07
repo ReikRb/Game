@@ -46,6 +46,8 @@ function drawGame(){
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
 
+    // //Camera movement
+    moveCamera()
 
     // //Draws FPS in Screen
     // globals.ctx.fillText("FPS: " + (1 / globals.deltaTime), 30, 30)
@@ -53,8 +55,11 @@ function drawGame(){
     //Draws Map (Level)
     renderMap();
 
-    //Draw Elements
+    // //Draw Elements
     renderSprites();
+
+    // //Restore Camera
+    restoreCamera()
 
     //Draw HUD
     renderHUD();
@@ -248,6 +253,16 @@ function drawHistory() {
     globals.ctx.fillText(`the humans of the resting souls.`, 70, 290)
 }
 
+function moveCamera(){
+    // globals.ctx.translate(50, 50)
+    const xTranslation = -globals.camera.x
+    const yTranslation = -globals.camera.y
+
+    globals.ctx.translate(xTranslation, yTranslation)
+}
+function restoreCamera() {
+    globals.ctx.setTransform(1,0,0,1,0,0)
+}
 
 function renderHUD() {
     //Raw Data
@@ -269,10 +284,6 @@ function renderHUD() {
     globals.ctxHUD.fillText("" + score, 0, 41);
 
     // globals.ctxHUD.fillText(" " + globals.mana, 168, 16)
-    
-
-
-    renderSprites()
 }
 
 //Map Drawer Method
@@ -359,6 +370,7 @@ function renderSprite(sprite){
     let isHUD = !sprite.HUD ? globals.ctx : globals.ctxHUD
 
     //Draws new frame on proper position
+
     isHUD.drawImage(
         globals.tileSets[Tile.SIZE_64],                 //Img File
         xTile, yTile,                                   //X & Y Position Source

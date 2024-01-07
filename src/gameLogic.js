@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground} from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower} from "./initialize.js";
 import detectCollisions from "./collisions.js";
 
 export default function update(){
@@ -60,12 +60,13 @@ export default function update(){
 }
 
 function playGame() {
-    
     updateSprites();
     detectCollisions();
+    updateCamera()
     updateLevelTime();
     updateMana()
     updateLife()
+    updatePower()
 }
 
 function updateLevelTime() {
@@ -80,13 +81,25 @@ function updateLevelTime() {
         globals.levelTime.timeChangeCounter = 0;
     }
 }
+function updateCamera() {
+    const player = globals.sprites[0]
+    globals.camera.x = Math.floor(player.xPos) + Math.floor((player.imageSet.xSize - globals.canvas.width)/2)
+    globals.camera.y = Math.floor(player.yPos) + Math.floor((player.imageSet.ySize - globals.canvas.height)/2)
 
+}
 function updateSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         sprite.update()
         
     }
+}
+function updatePower() {
+
+    if (globals.powerPreviousState && !globals.power) {
+        initPower(globals.powerX, globals.powerY)
+    }
+    globals.powerPreviousState = globals.power
 }
 function updateLife(){
     for (let i = 0; i < globals.sprites.length; i++) {

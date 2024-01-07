@@ -41,16 +41,18 @@ export class Crystal extends Sprite {
         }
     }
     calculateCollisionWithFourBorders() {
-        if (this.xPos + this.imageSet.xSize > globals.canvas.width) {
+        console.log(globals.canvas.height);
+        const player = globals.sprites[0]
+        if (this.xPos   > (player.xPos+player.imageSet.xOffset+ this.imageSet.xSize + globals.canvas.width/2)) {
             this.collisionBorder = Collision.RIGHT;
-        } else if (this.xPos < 0) {
+        } else if (this.xPos- this.imageSet.xSize < (player.xPos +player.imageSet.xOffset +this.imageSet.xSize  -globals.canvas.width/2)) {
             this.collisionBorder = Collision.LEFT;
         }
 
-        else if (this.yPos < 0) {
+        else if (this.yPos < (player.yPos - globals.canvas.height/2)+ this.imageSet.ySize) {
             this.collisionBorder = Collision.UP;
         }
-        else if (this.yPos + this.imageSet.ySize > globals.canvas.height) {
+        else if (this.yPos + this.imageSet.ySize > (player.yPos + globals.canvas.height/2)+ this.imageSet.ySize) {
             this.collisionBorder = Collision.DOWN;
         }
         else {

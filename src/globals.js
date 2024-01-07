@@ -56,5 +56,9 @@ export default {
     mana:100,
 
     key: false,
-    power:false
+    power:false,
+    powerPreviousState:false,
+    powerX:0,
+    powerY:0,
+    prueba:0,
 }

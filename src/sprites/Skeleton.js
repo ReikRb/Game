@@ -18,12 +18,16 @@ export class Skeleton extends Sprite {
         switch (this.state) {
             case State.RUN_RIGHT_2:
                 this.frames.framesPerState = 7
+                this.hitBox.xSize = 35
+                this.hitBox.xOffset = 45
                 //If character moves right X is positive
                 this.physics.vx = this.physics.vLimit;
                 break;
     
             case State.RUN_LEFT_2:
                 this.frames.framesPerState = 7
+                this.hitBox.xSize = 35
+                this.hitBox.xOffset = 45
                 //If character moves left X is negative
                 this.physics.vx = -this.physics.vLimit;
             break;
@@ -49,12 +53,13 @@ export class Skeleton extends Sprite {
                 this.physics.vx = 0;
                 if (this.frames.frameCounter === 1) {
                     this.hitBox.xSize = 80
+                    this.hitBox.xOffset = 45
 
                     
-                }
-                if (this.frames.frameCounter === 3) {
+                }else if (this.frames.frameCounter === 3) {
                     this.state = State.RUN_RIGHT_2
                     this.hitBox.xSize = 35
+                    this.hitBox.xOffset = 45
 
                     }
             break;
@@ -65,20 +70,19 @@ export class Skeleton extends Sprite {
     
         //Updates Skeleton's variables State
         const player = globals.sprites[0]
-        let rangeX = player.xPos - this.xPos
-        let rangeY = player.yPos - this.yPos
- 
+        let rangeX = Math.floor(player.xPos - this.xPos)
+        let rangeY = Math.floor(player.yPos - this.yPos)
+        rangeX *= rangeX <0 ? -1 : 1
+        rangeY *=  rangeY <0 ? -1: 1
 
-        if (rangeX <= 0 && this.state === State.RUN_LEFT_2) {
-            rangeX *= -1
-            rangeY *= -1
+        if (this.xPos > player.xPos) {
             if (rangeX <80 && rangeY < 90) {
                 this.state = State.ATTACK_LEFT_2
-            }
-        } else if (rangeX > 0 && this.state === State.RUN_RIGHT_2) {
-            if (rangeX <75) {
+            } 
+        } else if ( this.xPos < player.xPos ) {
+            if (rangeX <75 && rangeY < 90) {
                 this.state = State.ATTACK_RIGHT_2
-            }
+            } 
             
         }
     

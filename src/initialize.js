@@ -1,6 +1,5 @@
 import globals from "./globals.js"
 import {Game, FPS, SpriteId, State} from "./constants.js"
-import Sprite from "./sprites/Sprite.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
@@ -9,7 +8,7 @@ import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
-import { Level, level1, mainMenu } from "./Level.js";
+import { Level, level1, monster1,  mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
 import { keydownHandler,keyupHandler } from "./events.js";
@@ -29,6 +28,7 @@ import HitBox  from "./HitBox.js";
 import { Power } from "./sprites/Power.js";
 import { JumpVFX } from "./sprites/JumpVFX.js";
 import { Spike } from "./sprites/Spike.js";
+import Camera from "./Camera.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -123,28 +123,110 @@ function loadHandler() {
     }
 }
 
-function initSprites() {
-    initPlayer();
-    initSkeleton();
-    initEmptyCrystalLife();
-    initLife();
-    initEmptyCrystalMana();
-    initMana();
-    initPowerHUD();
-    initKeyHUD();
-    initCheckPoint();
-    initKey();
-    initChair();
-    initPlatformVertical()
-    initPlatform()
-    initPower()
-    initDoor()
-    initSpike(200,96,3)
-
+function initCamera() {
+    globals.camera = new Camera(0, 0)
 }
+function initSprites() {
+    initPlayer(230, 800);
+    initChair();
+    for (let i = 0; i < monster1.length; i++) {
+        
+        for (let j = 0; j < monster1[i].length; j++) {
+            let ID = monster1[i][j]
+            let xPos = j*32
+            let yPos = i*32
+            switch (ID) {
+                case 1:
+                    initCheckPoint(xPos, yPos);
+                    break;
+                case 2:
+                    initSkeleton(xPos, yPos);
+                    break;
+                
+                case 3:
+                    initPower(xPos, yPos)
+                    break;
+                case 4:
+                    initKey(xPos, yPos);
+                    break;
+                case 5:
+                    initDoor(xPos, yPos);
+                    break;
+
+                case 6:
+                    initSpike(xPos,(yPos+16),0)
+                    break;
+                case 7:
+                    initSpike(xPos,yPos,1)
+                    break;
+                case 8:
+                    initSpike((xPos+16),yPos,2)
+                    break;
+                case 9:
+                    initSpike(xPos,yPos,3)
+                    break;
+                case 10:
+                    initPlatformVertical(xPos,yPos, 100)
+                    break;
+                case 11:
+                    initPlatformVertical(xPos,yPos, 350)
+                    break;
+                    
+                case 12:
+                    initPlatformVertical(xPos,yPos, 200)
+                    break;
+
+                case 13:
+                    initPlatformHorizontal(xPos,yPos,200)
+                    break;
+
+                case 14:
+                    initPlatform(xPos,yPos)
+                    break;
+                case 15:
+                    initPlatform(xPos,yPos,1.7)
+                    break;
+
+                default:
+                    break;
+                }
+            }
+        }
+        initEmptyCrystalLife();
+        initLife();
+        initEmptyCrystalMana();
+        initMana();
+        initPowerHUD();
+        initKeyHUD();
+     
+
+
+    // initPlatform()
+
+   
+}
+// function initSprites() {
+//     initPlayer();
+//     initSkeleton();
+//     initEmptyCrystalLife();
+//     initLife();
+//     initEmptyCrystalMana();
+//     initMana();
+//     initPowerHUD();
+//     initKeyHUD();
+//     initCheckPoint();
+//     initKey();
+//     initChair();
+//     initPlatformVertical()
+//     initPlatform()
+//     initPower()
+//     initDoor()
+//     initSpike(200,96,3)
+
+// }
 
 function initMainMenuSprites() {
-    initPlayer();
+    initPlayer(0,0);
     initPlayerFireball();
     initPlayerAttackVFX();
     initChair();
@@ -239,7 +321,7 @@ function initCrystal(xPos, yPos){
     globals.sprites.push(mana)
 }
 
-function initPower(){
+function initPower(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
 
@@ -248,7 +330,7 @@ function initPower(){
     frames.frameCounter = 1
     const hitBox = new HitBox(38, 43, 10, 3)
     //Sprite Creation
-    const power = new Power(SpriteId.POWER, State.IDLE_3, 100, 70, imageSet, frames, hitBox)
+    const power = new Power(SpriteId.POWER, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
     
     //Adds Sprite to Array
     globals.sprites.push(power)
@@ -258,7 +340,9 @@ function initPower(){
 function initSpike(xPos,yPos, type){
     let imageSet
     let hitBox
-
+    
+        //Animation Data (8 Frames / State)
+        const frames = new Frames (1)
 
     switch (type) {
         case 0:    
@@ -284,8 +368,7 @@ function initSpike(xPos,yPos, type){
         default:
             break;
     }
-        //Animation Data (8 Frames / State)
-        const frames = new Frames (1)
+
 
     //Sprite Creation
     const spike = new Spike(SpriteId.SPIKE, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
@@ -330,7 +413,7 @@ function initKeyHUD(){
 }
 
 //In-Game inits
-function initPlayer(){
+function initPlayer(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
 
@@ -343,7 +426,7 @@ function initPlayer(){
     const hitBox = new HitBox(34, 81, 48, 28)
 
     //Sprite Creation
-    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, 100, 188, imageSet, frames, physics,hitBox)
+    const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, xPos, yPos, imageSet, frames, physics,hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(player)
@@ -396,7 +479,7 @@ function initPlayerFireball(xPos, yPos, STATE) {
     globals.shoots.push(fireball)
 }
 
-function initSkeleton(){
+function initSkeleton(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(14,       0,      125,    90,     140,      20,      60)
 
@@ -410,13 +493,13 @@ function initSkeleton(){
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, 400, 127, imageSet, frames, physics, hitBox)
+    const skeleton = new Skeleton(SpriteId.SKELETON, State.RUN_LEFT_2, xPos, yPos, imageSet, frames, physics, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
 }
 
-function initKey(){
+function initKey(xPos,yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(22,       0,      30,    35,     140,      60,      43)
 
@@ -424,13 +507,13 @@ function initKey(){
     const frames = new Frames (8,11)
     const hitBox = new HitBox(13, 31, 10, 5)
     //Sprite Creation
-    const key = new Key(SpriteId.KEY, State.IDLE_3, 300, 220, imageSet, frames, hitBox)
+    const key = new Key(SpriteId.KEY, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(key)
 }
 
-function initCheckPoint(){
+function initCheckPoint(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
 
@@ -438,14 +521,14 @@ function initCheckPoint(){
     const frames = new Frames (5,8)
     const hitBox = new HitBox(25, 38, 5, 3)
     //Sprite Creation
-    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, 167, 217, imageSet, frames, hitBox)
+    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, xPos, (yPos+25), imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
 
 }
 
-function initDoor(){
+function initDoor(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(17,       2,      11,    96,     140,     68,      54)
 
@@ -453,7 +536,7 @@ function initDoor(){
     const frames = new Frames (4,12)
     const hitBox = new HitBox(12, 96, 0, 0)
     //Sprite Creation
-    const door = new Door(SpriteId.DOOR, State.IDLE_3, 420, 127, imageSet, frames, hitBox)
+    const door = new Door(SpriteId.DOOR, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(door)
@@ -468,7 +551,7 @@ function initJumpVFX(xPos, yPos){
 
 
     //Sprite Creation
-    const jump = new JumpVFX(SpriteId.JUMPVFX, State.IDLE_3, (xPos+33), (yPos+60), imageSet, frames)
+    const jump = new JumpVFX(SpriteId.JUMPVFX, State.IDLE_3, (xPos+20), (yPos+60), imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(jump)
@@ -489,7 +572,7 @@ function initParchment() {
         globals.sprites.push(parchment)
 }
 
-function initPlatform() {
+function initPlatform(xPos, yPos, speed=0.7) {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
 
@@ -498,15 +581,15 @@ function initPlatform() {
 
         //Initial Physics values
         const initAngle = 90 * Math.PI / 180;
-        const omega = 0.7;
-        const xRotCenter = globals.canvas.width /2;
-        const yRotCenter = globals.canvas.height /2;
+        const omega = speed;
+        const xRotCenter = xPos;
+        const yRotCenter = yPos;
 
         const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
         const hitBox = new HitBox(92, 15, 4,0)
 
         //Sprite Creation
-        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 250, imageSet, frames,physics,hitBox,3)
+        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos, yPos, imageSet, frames,physics,hitBox,3)
 
         // setPlatformPosition(platform);
 
@@ -516,29 +599,7 @@ function initPlatform() {
 
 }
 
-function initPlatformHorizontal() {
-    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(18,       4,      100,    9,     140,     32,      142)
-
-    //Animation Data (8 Frames / State)
-    const frames = new Frames (1)
-
-    //Initial Physics values
-
-    const physics = new UniformHorizontalMove(40)
-    const hitBox = new HitBox(92, 9, 4, 0)
-
-    //Sprite Creation
-    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 180, imageSet, frames,physics,hitBox,2)
-
-    // setPlatformPosition(platform);
-
-    //Adds Sprite to Array
-    globals.sprites.push(platform)
-    globals.platforms.push(platform)
-}
-
-function initPlatformVertical() {
+function initPlatformHorizontal(xPos,yPos,maxRange=100) {
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
 
@@ -551,7 +612,29 @@ function initPlatformVertical() {
     const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation
-    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, 100, 180, imageSet, frames,physics,hitBox,1)
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos, yPos, imageSet, frames,physics,hitBox,2, maxRange)
+
+    // setPlatformPosition(platform);
+
+    //Adds Sprite to Array
+    globals.sprites.push(platform)
+    globals.platforms.push(platform)
+}
+
+function initPlatformVertical(xPos, yPos, maxRange) {
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (1)
+
+    //Initial Physics values
+
+    const physics = new UniformHorizontalMove(40)
+    const hitBox = new HitBox(92, 15, 4, 0)
+
+    //Sprite Creation
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos+15, yPos, imageSet, frames,physics,hitBox,1, maxRange)
 
     // setPlatformPosition(platform);
 
@@ -593,4 +676,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents,initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }

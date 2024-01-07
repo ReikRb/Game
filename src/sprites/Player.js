@@ -1,7 +1,7 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import {State, GRAVITY, Game} from "../constants.js"
-import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX } from "../initialize.js";
+import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX, initPower } from "../initialize.js";
 
 
 export class Player extends Sprite {
@@ -13,6 +13,9 @@ export class Player extends Sprite {
         this.jumpChangeCounter = 0
     }
      update() {
+        
+        // console.log(this.xPos + " " + this.yPos)
+
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         }
@@ -60,6 +63,7 @@ export class Player extends Sprite {
     
             case State.ATTACK_RIGHT:
                 this.frames.framesPerState = 8
+                this.physics.vx=0
                 if (this.previousState != State.ATTACK_RIGHT) {
                     this.physics.shootingIntervalCounter = 0
                 }
@@ -77,6 +81,7 @@ export class Player extends Sprite {
     
             case State.ATTACK_LEFT:
                 this.frames.framesPerState = 8
+                this.physics.vx=0
                 if (this.previousState != State.ATTACK_LEFT) {
                     this.physics.shootingIntervalCounter = 0
                 }
@@ -127,15 +132,19 @@ export class Player extends Sprite {
             this.physics.vx =- this.physics.vLimit;
         }
     
+        
         //Calculates movement in X
         this.xPos += this.physics.vx * globals.deltaTime
-    
+       
+
         this.calculateShoot()
         const isCollision = this.calculateCollisionWithBorders()
         if (isCollision) {
             this.xPos -= this.physics.vx * globals.deltaTime
         }
-    
+        // if (this.xPos < 0) {
+        //      this.xPos = 0
+        // }
         
         this.physics.ay = GRAVITY;
         this.physics.vy += this.physics.ay * globals.deltaTime;
@@ -156,7 +165,8 @@ export class Player extends Sprite {
             }
         } else if (!this.physics.isOnGround && globals.power) {
             if (globals.action.jump && this.jumpChangeCounter >20) {
-                this.physics.vy += this.physics.jumpForce*1.5;
+                
+                this.physics.vy = this.physics.jumpForce;
                 this.jumpCount++
                 globals.power = false
                 initJumpVFX(this.xPos, this.yPos)
@@ -166,13 +176,17 @@ export class Player extends Sprite {
             this.physics.vy = 400
         }
         this.yPos += this.physics.vy * globals.deltaTime;
-        
-        if (this.yPos > globals.canvas.height - this.imageSet.ySize) {
-            this.physics.isOnGround = true;
-            this.yPos = globals.canvas.height - this.imageSet.ySize;
+        if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
+            this.physics.isOnGround = true
             this.physics.vy = 0;
             this.jumpCount = 0
         }
+        // if (this.yPos > (globals.level.data[0].length*32) - this.imageSet.ySize) {
+        //     this.physics.isOnGround = true;
+        //     this.yPos = 900
+        //     this.physics.vy = 0;
+        //     this.jumpCount = 0
+        // }
 
         this.updateAnimationFrame()
     
@@ -182,7 +196,7 @@ export class Player extends Sprite {
 
 
     readKeyboardAndAssignState() {
-        if (globals.life === 0) {
+        if (globals.life <= 0) {
                 this.state =    this.previousState % 2 === 0     ? this.state = State.DEAD_RIGHT : this.state = State.DEAD_LEFT
         }else  {
 

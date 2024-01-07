@@ -2,10 +2,9 @@
 
 
 import globals from "./globals.js";
-import { initHTMLelements, initVars, loadAssets, initTimers } from "./initialize.js";
+import { initHTMLelements, initVars, loadAssets, initTimers, initEvents, initCamera } from "./initialize.js";
 import update from "./gameLogic.js"
 import render from "./gameRender.js"
-import { initEvents } from "./initialize.js";
 
 
 /////////////////////////// GAME INIT //////////////////////////
@@ -28,6 +27,9 @@ function init() {
 
     // //Inits Game Map
     // initLevel();
+
+    // init Camera
+    initCamera();
 
     //Inits gameTimer
     initTimers();

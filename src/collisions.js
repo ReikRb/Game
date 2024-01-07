@@ -48,7 +48,6 @@ function detectCollisionBetweenFireballAndMapObstacles(sprite) {
         }
     } else {
         // Punto 4
-        console.log("entro");
         xPos = sprite.xPos + sprite.hitBox.xOffset;
         yPos = sprite.yPos + sprite.hitBox.yOffset;
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
@@ -139,7 +138,7 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
                 break;
 
             case SpriteId.POWER:
-                if (sprite.isCollidingWithPlayer) {
+                if (isOverlap) {
                     globals.power = true
                 }
                 break;
@@ -485,6 +484,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
     const skeleton = sprite
     const isCollision = skeleton.calculateCollisionWithBorders()
 
+
     let xPos
     let yPos
     let isCollidingOnPos1
@@ -509,16 +509,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
     const brickSize = globals.level.imageSet.gridSize
 
 
-    if (skeleton.physics.vx > 0) {
-        // Punto 6
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset;
-        isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
-
-        if (isCollidingOnPos6) {
-            swapDirection(skeleton)
-
-        }
+    if (skeleton.physics.vx >= 0) {
 
         // Punto 4
         xPos = skeleton.xPos + skeleton.hitBox.xOffset;
@@ -526,7 +517,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize + 1
+            overlapY = Math.floor(yPos) % brickSize
             skeleton.yPos -= overlapY
             skeleton.isCollidingWithObstacleOnBottom = true
             skeleton.physics.vy = 0
@@ -534,7 +525,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
 
         // Punto 2
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1
+        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 2
         yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize - Math.ceil(skeleton.hitBox.ySize / 2)
         isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos)
 
@@ -556,16 +547,16 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
 
-
         if (isCollidingOnPos3) {
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapX = Math.floor(xPos) % brickSize;
             overlapY = Math.floor(yPos) % brickSize
 
-            if (overlapX <= overlapY) {
+            if (overlapX < overlapY) {
+                skeleton.xPos -= overlapX
                 swapDirection(skeleton)
             } else {
                 if (skeleton.physics.vy>0) {
-                    overlapY = Math.floor(yPos) % brickSize + 1
+                    overlapY = Math.floor(yPos) % brickSize
                     skeleton.yPos -= overlapY
                     skeleton.isCollidingWithObstacleOnBottom = true
                     skeleton.physics.vy = 0
@@ -577,15 +568,13 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
 
     } else if (skeleton.physics.vx < 0) {
-
-
         //Punto 3
         xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize
         yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos3) {
-            overlapY = Math.floor(yPos) % brickSize + 1
+            overlapY = Math.floor(yPos) % brickSize+1
             skeleton.yPos -= overlapY
             skeleton.physics.vy = 0
         }
@@ -615,12 +604,15 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
 
 
+
         if (isCollidingOnPos4) {
-            overlapX = Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize
+            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
+            overlapY = Math.floor(yPos) % brickSize + 1
 
             if (overlapX <= overlapY) {
-                swapDirection(skeleton)
+                skeleton.xPos += overlapX
+                 swapDirection(skeleton)
+                 
             }
             if (skeleton.physics.vy > 0) {
                 skeleton.yPos -= overlapY
@@ -630,41 +622,13 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
 
 
-    } else {
-        // Punto 4
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
+    } 
 
-        if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize + 1
-            skeleton.yPos -= overlapY
-            skeleton.isCollidingWithObstacleOnBottom = true
-            skeleton.physics.vy = 0
-        }
-
-        //Punto 3
-        xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize + 1;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
-        isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
-
-
-        if (isCollidingOnPos3) {
-            overlapX = brickSize - Math.floor(xPos) % brickSize + 1;
-            overlapY = Math.floor(yPos) % brickSize
-
-            if (overlapX <= overlapY) {
-                swapDirection(skeleton)
-            }
-        }
-    }
-    if (isCollision) {
-        swapDirection(skeleton)
-    }
 }
 
 function swapDirection(skeleton) {
     skeleton.state = skeleton.state === State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
+    skeleton.physics.vx*=-1
 }
 
 function rectIntersect(x1, y1, w1, h1,
@@ -701,6 +665,9 @@ function getMapTileId(xPos, yPos) {
     const levelData = globals.level.data
 
     const fil = Math.floor(yPos / brickSize)
+    if (levelData[fil] === undefined) {
+        return 1
+    }
     const col = Math.floor(xPos / brickSize)
 
     return levelData[fil][col]
