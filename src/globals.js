@@ -57,6 +57,7 @@ export default {
     //Mana
     mana:100,
 
+    score: 0,
     //Obtained Key
     key: false,
 

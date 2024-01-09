@@ -551,7 +551,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos3) {
-            overlapX = Math.floor(xPos) % brickSize;
+            overlapX = Math.floor(xPos) % brickSize+1;
             overlapY = Math.floor(yPos) % brickSize
 
             if (overlapX < overlapY) {

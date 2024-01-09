@@ -14,14 +14,11 @@ export class Player extends Sprite {
         this.previousLife = 0
     }
      update() {
-        
-        console.log(this.physics.isCollidingWithObstacleOnBottom + " " + this.physics.isOnGround + " " + this.physics.isOnPlatform)
-
+        console.log(globals.score);
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         } 
 
-        console.log(this.physics.ay);
         //Keyboard event reader
         this.readKeyboardAndAssignState();
         const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
@@ -84,7 +81,7 @@ export class Player extends Sprite {
             case State.IDLE_RIGHT:
                 this.frames.framesPerState = 6
                 this.physics.ax = 0
-                this.frames.speed = 5
+                this.frames.speed = 3
                 break
     
             case State.ATTACK_RIGHT:

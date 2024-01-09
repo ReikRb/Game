@@ -6,7 +6,8 @@ export class Skeleton extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox         = hitBox      //Sprite HitBox
-        this.life           = 6
+        this.life           = 4
+        this.score          = 300
         
     }
     update(){
@@ -69,6 +70,7 @@ export class Skeleton extends Sprite {
                 if (this.frames.frameCounter ===3) {
                     let index = globals.sprites.indexOf(this)
                     globals.sprites.splice(index,1)
+                    globals.score += this.score
                     initCrystal(this.xPos, this.yPos)
                     
                 }

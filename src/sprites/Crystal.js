@@ -41,7 +41,6 @@ export class Crystal extends Sprite {
         }
     }
     calculateCollisionWithFourBorders() {
-        console.log(globals.canvas.height);
         const player = globals.sprites[0]
         if (this.xPos   > (player.xPos+player.imageSet.xOffset+ this.imageSet.xSize + globals.canvas.width/2)) {
             this.collisionBorder = Collision.RIGHT;

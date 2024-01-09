@@ -281,7 +281,7 @@ function renderHUD() {
     globals.ctxHUD.fillStyle = "red";
     globals.ctxHUD.fillText("SCORE", 0, 31);
     globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText("" + score, 0, 41);
+    globals.ctxHUD.fillText("" + globals.score, 0, 41);
 
     // globals.ctxHUD.fillText(" " + globals.mana, 168, 16)
 }
