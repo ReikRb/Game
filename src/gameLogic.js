@@ -102,20 +102,34 @@ function updatePower() {
     globals.powerPreviousState = globals.power
 }
 function updateLife(){
+    if (globals.damagedCounter != 0) {
+        globals.damagedCounter++
+        if (globals.damagedCounter === 80) {
+            globals.damagedCounter=0
+            globals.inmune = false
+        }
+    }
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         
         if (sprite.isCollidingWithPlayer && sprite.id === 1) {
-            globals.life--
+            if (globals.damagedCounter===0) {
+                globals.life-= 25
+                globals.damagedCounter++
+                
+            }
+
             if (globals.life < 0) {
                 globals.life = 0
             }
+
         }
         if (globals.life >400) {
             globals.life = 400
         }
 
     }
+
 }
 
 function updateMana() {

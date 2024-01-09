@@ -11,15 +11,17 @@ export class Player extends Sprite {
         this.jumpEvent = false
         this.jumpCount = 0
         this.jumpChangeCounter = 0
+        this.previousLife = 0
     }
      update() {
         
-        // console.log(this.xPos + " " + this.yPos)
+        console.log(this.physics.isCollidingWithObstacleOnBottom + " " + this.physics.isOnGround + " " + this.physics.isOnPlatform)
 
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
-        }
+        } 
 
+        console.log(this.physics.ay);
         //Keyboard event reader
         this.readKeyboardAndAssignState();
         const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
@@ -37,8 +39,31 @@ export class Player extends Sprite {
             this.frames.frameCounter = 0
             this.frames.frameChangeCounter = 0
             this.physics.shootingIntervalCounter = 0
+        } else if (this.previousState === State.DAMAGED_RIGHT && !globals.inmune){
+            this.state = State.DAMAGED_RIGHT
+        } else if (this.previousState === State.DAMAGED_LEFT && !globals.inmune){
+            this.state = State.DAMAGED_LEFT
         }
-        
+            if (!globals.inmune) {
+                for (let i = 0; i < globals.sprites.length; i++) {
+                    const skeleton = globals.sprites[i];
+                    
+                    if (skeleton.isCollidingWithPlayer && skeleton.id === 1) {
+                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              > 
+                            (skeleton.xPos+skeleton.hitBox.xOffset + (skeleton.hitBox.xSize/2)) ) {
+                            
+                            this.state = State.DAMAGED_LEFT
+                        } else if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              < 
+                                   (skeleton.xPos+skeleton.hitBox.xOffset + (skeleton.hitBox.xSize/2))) {
+                            this.state = State.DAMAGED_RIGHT
+                        }
+                            
+                        
+                    }
+                }
+                
+            }
+
         //Updates Player's variables State
         switch (this.state) {
             case State.RUN_RIGHT:
@@ -59,6 +84,7 @@ export class Player extends Sprite {
             case State.IDLE_RIGHT:
                 this.frames.framesPerState = 6
                 this.physics.ax = 0
+                this.frames.speed = 5
                 break
     
             case State.ATTACK_RIGHT:
@@ -114,23 +140,55 @@ export class Player extends Sprite {
                     globals.gameState = Game.GAMEOVER
                 }
                 break;
-    
+            
+            case State.DAMAGED_RIGHT:
+                this.frames.framesPerState = 4
+                this.frames.speed = 5
+                
+                if (globals.damagedCounter ===1 && !globals.inmune) {
+                    this.physics.vy +=this.physics.jumpForce/2
+                }
+
+                if (this.physics.vy != 0 && !globals.inmune) {
+                    this.physics.vx = -1000
+                }  else {
+                    globals.inmune = true
+                }
+                    
+                
+            
+
+                break;
+            case State.DAMAGED_LEFT:
+                this.frames.framesPerState = 4
+                this.frames.speed = 5
+                if (globals.damagedCounter ===1 && !globals.inmune) {
+                    this.physics.vy +=this.physics.jumpForce/2
+                }
+
+                if (this.physics.vy != 0 && !globals.inmune) {
+                    this.physics.vx = 1000
+                }  else {
+                    globals.inmune = true
+                }
+                    break;
         }
     
         //XY Speed Calculation
         this.physics.vx += this.physics.ax * globals.deltaTime;
-    
+
         if ((this.state === State.RUN_LEFT && this.physics.vx  > 0) ||
             (this.state === State.RUN_RIGHT && this.physics.vx < 0) ||
             (!isLeftOrRightPressed)) {
             this.physics.vx *= this.physics.friction;
         }
-    
-        if (this.physics.vx > this.physics.vLimit) {
-            this.physics.vx = this.physics.vLimit
-        } else if (this.physics.vx < -this.physics.vLimit) {
-            this.physics.vx =- this.physics.vLimit;
-        }
+
+            if (this.physics.vx > this.physics.vLimit) {
+                this.physics.vx = this.physics.vLimit
+            } else if (this.physics.vx < -this.physics.vLimit) {
+                this.physics.vx =- this.physics.vLimit;
+            }    
+        
     
         
         //Calculates movement in X
@@ -172,8 +230,8 @@ export class Player extends Sprite {
                 initJumpVFX(this.xPos, this.yPos)
             }
         }
-        if (this.physics.vy >400) {
-            this.physics.vy = 400
+        if (this.physics.vy >350) {
+            this.physics.vy = 350
         }
         this.yPos += this.physics.vy * globals.deltaTime;
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {

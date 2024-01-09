@@ -144,7 +144,10 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
                 break;
 
             case SpriteId.MANACRYSTAL:
-                globals.levelTime.value += 30
+                if (isOverlap) {
+                    globals.levelTime.value += 30
+   
+                }
                 break;
 
             case SpriteId.DOOR:

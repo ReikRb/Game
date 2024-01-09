@@ -7,13 +7,12 @@ export class Skeleton extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox         = hitBox      //Sprite HitBox
         this.life           = 6
+        
     }
     update(){
         
-        if (this.life <= 0) {
-            let index = globals.sprites.indexOf(this)
-            globals.sprites.splice(index,1)
-            initCrystal(this.xPos, this.yPos)
+        if (this.life <= 0 ) {
+            this.state = this.state % 2 === 0 ? State.DEAD_RIGHT_2 : State.DEAD_LEFT_2
         }
         switch (this.state) {
             case State.RUN_RIGHT_2:
@@ -63,7 +62,17 @@ export class Skeleton extends Sprite {
 
                     }
             break;
-            
+            case State.DEAD_RIGHT_2:
+            case State.DEAD_LEFT_2:
+                this.frames.framesPerState = 4
+                this.physics.vx = 0
+                if (this.frames.frameCounter ===3) {
+                    let index = globals.sprites.indexOf(this)
+                    globals.sprites.splice(index,1)
+                    initCrystal(this.xPos, this.yPos)
+                    
+                }
+                break;
             default:
                 console.error("Error: State invalid");
         }

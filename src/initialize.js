@@ -127,7 +127,7 @@ function initCamera() {
     globals.camera = new Camera(0, 0)
 }
 function initSprites() {
-    initPlayer(230, 800);
+    initPlayer(230, 914);
     initChair();
     for (let i = 0; i < monster1.length; i++) {
         
@@ -421,13 +421,13 @@ function initPlayer(xPos, yPos){
     const frames = new Frames (8, 3)
 
     //Creates Physic obj with vLimit 40
-    const physics = new PlayerPhysics(130, 130, 0.1, -450);
+    const physics = new PlayerPhysics(130, 130, 0.1, -500);
 
     const hitBox = new HitBox(34, 81, 48, 28)
 
     //Sprite Creation
     const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, xPos, yPos, imageSet, frames, physics,hitBox)
-
+    player.previousLife = globals.life
     //Adds Sprite to Array
     globals.sprites.push(player)
 }

@@ -51,14 +51,23 @@ export default {
 
     //Life
     life:400,
+    damagedCounter: 0,
+    inmune: false,
 
     //Mana
     mana:100,
 
+    //Obtained Key
     key: false,
+
+    //Power DATA
     power:false,
     powerPreviousState:false,
     powerX:0,
     powerY:0,
+
+    //Particles
+    particles: [],
+
     prueba:0,
 }

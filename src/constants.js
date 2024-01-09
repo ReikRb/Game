@@ -51,6 +51,8 @@ const Key = {
     JUMP: 32,
     FIRE: 90,
 }
+
+
 //Sprite State Identifier (Direction)
 const State = {
 
@@ -101,6 +103,7 @@ const Tile = {
     SIZE_64: 0, //Sprites 64x64
     SIZE_32: 1, //Tiles de mapa 32x32
 }
+
 const Collision = {
     NO_COLLISION: 0,
     UP: 1,
@@ -108,6 +111,7 @@ const Collision = {
     LEFT:3,
     RIGHT:4
 }
+
 const Block = {
     EMPTY:                  0,
     TOP_LEFT:               1,
@@ -167,7 +171,19 @@ const Obstacle = {
     BOTH_SIDES_HORIZONTAL:  27,
     BOTH_SIDES_FINAL_RIGHT: 28,
 }
+
+const ParticleID = {
+    EXPLOSION: 0
+}
+
+const ParticleState = {
+    ON:    0,
+    FADE:  1,
+    OFF:  -1
+}
+
 export const Prueba = {
     X: 1
  }
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle}
+ 
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState}
