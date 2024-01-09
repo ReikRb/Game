@@ -184,7 +184,7 @@ function initSprites() {
                     initPlatform(xPos,yPos)
                     break;
                 case 15:
-                    initPlatform(xPos,yPos,1.7)
+                    initPlatform(xPos,yPos,1.6)
                     break;
 
                 default:

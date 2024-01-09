@@ -143,7 +143,7 @@ export class Player extends Sprite {
                 this.frames.speed = 5
                 
                 if (globals.damagedCounter ===1 && !globals.inmune) {
-                    this.physics.vy +=this.physics.jumpForce/2
+                    this.physics.vy +=this.physics.jumpForce/1.4
                 }
 
                 if (this.physics.vy != 0 && !globals.inmune) {
@@ -160,7 +160,7 @@ export class Player extends Sprite {
                 this.frames.framesPerState = 4
                 this.frames.speed = 5
                 if (globals.damagedCounter ===1 && !globals.inmune) {
-                    this.physics.vy +=this.physics.jumpForce/2
+                    this.physics.vy +=this.physics.jumpForce/1.4
                 }
 
                 if (this.physics.vy != 0 && !globals.inmune) {
@@ -219,7 +219,7 @@ export class Player extends Sprite {
                 this.jumpCount++
             }
         } else if (!this.physics.isOnGround && globals.power) {
-            if (globals.action.jump && this.jumpChangeCounter >20) {
+            if (globals.action.jump && this.jumpChangeCounter >17) {
                 
                 this.physics.vy = this.physics.jumpForce;
                 this.jumpCount++
