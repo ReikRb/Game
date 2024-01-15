@@ -7,14 +7,24 @@ export class Checkpoint extends Sprite {
         super (id, state, xPos, yPos, imageSet, frames)
         this.hitBox = hitBox
         this.used = false
-        this.previousState = false
+        this.timer = 0
         this.fireworkDone = false
     }
     update(){
+        
         if (!this.fireworkDone) {
             if (this.used && globals.fireworkCounter < 3) {
-                globals.particles.length === 0 ? initExplosion(this.xPos , this.yPos)  :
+                
+                this.timer === 0 ? initExplosion(this.xPos , this.yPos)  :
                 false
+
+                if (this.timer === 50) {
+                    this.timer = 0
+                } else{
+                    this.timer++
+
+                }
+                
             } else if (this.used && globals.fireworkCounter===3){
                 this.fireworkDone = true
                 globals.fireworkCounter = 0
@@ -22,6 +32,6 @@ export class Checkpoint extends Sprite {
         }   
         
         this.updateAnimationFrame() 
-        this.previousState = this.used
+
     }
 }
