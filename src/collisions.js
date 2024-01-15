@@ -316,12 +316,12 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
         }
 
         //Punto 4
-        xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize + 1;
+        xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize;
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos4) {
-            overlapX = Math.floor(xPos) % brickSize + 1;
+            overlapX = Math.floor(xPos) % brickSize;
             overlapY = Math.floor(yPos) % brickSize
             player.isCollidingWithObstacleOnBottom = true
 
@@ -354,7 +354,7 @@ function detectCollisionBetweenPlayerAndMapObstacles() {
         }
 
         //Punto 4
-        xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize
+        xPos = player.xPos + player.hitBox.xOffset + player.hitBox.xSize -1
         yPos = player.yPos + player.hitBox.yOffset + player.hitBox.ySize + 1;
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
@@ -516,11 +516,11 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
         // Punto 4
         xPos = skeleton.xPos + skeleton.hitBox.xOffset;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize -1;
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos4) {
-            overlapY = Math.floor(yPos) % brickSize
+            overlapY = Math.floor(yPos) % brickSize +1
             skeleton.yPos -= overlapY
             skeleton.isCollidingWithObstacleOnBottom = true
             skeleton.physics.vy = 0
@@ -533,7 +533,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos2 = isCollidingWithObstacleAt(xPos, yPos)
 
         if (isCollidingOnPos2) {
-            swapDirection(skeleton)
+           sprite.isCollidingWithObstacleOnRight = true
 
         }
 
@@ -542,7 +542,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         yPos = skeleton.yPos + skeleton.hitBox.yOffset - 1
         isCollidingOnPos1 = isCollidingWithObstacleAt(xPos, yPos)
         if (isCollidingOnPos1) {
-            swapDirection(skeleton)
+           sprite.isCollidingWithObstacleOnRight = true
         }
 
         //Punto 3
@@ -556,7 +556,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
             if (overlapX < overlapY) {
                 skeleton.xPos -= overlapX
-                swapDirection(skeleton)
+               sprite.isCollidingWithObstacleOnRight = true
             } else {
                 if (skeleton.physics.vy>0) {
                     overlapY = Math.floor(yPos) % brickSize
@@ -568,12 +568,15 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
             }
         }
 
+        if (sprite.isCollidingWithObstacleOnRight) {
+            swapDirection(skeleton)
+        }
 
 
     } else if (skeleton.physics.vx < 0) {
         //Punto 3
         xPos = skeleton.xPos + skeleton.hitBox.xOffset + skeleton.hitBox.xSize
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize -1;
         isCollidingOnPos3 = isCollidingWithObstacleAt(xPos, (yPos))
 
         if (isCollidingOnPos3) {
@@ -589,7 +592,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos5 = isCollidingWithObstacleAt(xPos, yPos)
 
         if (isCollidingOnPos5) {
-            swapDirection(skeleton)
+            skeleton.isCollidingWithObstacleOnLeft = true
         }
 
         //Punto 6
@@ -598,12 +601,12 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
         isCollidingOnPos6 = isCollidingWithObstacleAt(xPos, yPos)
 
         if (isCollidingOnPos6) {
-            swapDirection(skeleton)
+            skeleton.isCollidingWithObstacleOnLeft = true
         }
 
         //Punto 4
         xPos = skeleton.xPos + skeleton.hitBox.xOffset - 1;
-        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize + 1;
+        yPos = skeleton.yPos + skeleton.hitBox.yOffset + skeleton.hitBox.ySize -1;
         isCollidingOnPos4 = isCollidingWithObstacleAt(xPos, yPos)
 
 
@@ -614,7 +617,7 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
             if (overlapX <= overlapY) {
                 skeleton.xPos += overlapX
-                 swapDirection(skeleton)
+                 skeleton.isCollidingWithObstacleOnLeft = true
                  
             }
             if (skeleton.physics.vy > 0) {
@@ -623,7 +626,9 @@ function detectCollisionBetweenSkeletonAndMapObstacles(sprite) {
 
         }
 
-
+        if (skeleton.isCollidingWithObstacleOnLeft) {
+            swapDirection(skeleton)
+        }
 
     } 
 

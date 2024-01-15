@@ -14,7 +14,6 @@ export class Player extends Sprite {
         this.previousLife = 0
     }
      update() {
-        console.log(globals.score);
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         } 
@@ -143,6 +142,7 @@ export class Player extends Sprite {
                 this.frames.speed = 5
                 
                 if (globals.damagedCounter ===1 && !globals.inmune) {
+                    this.physics.vy = 0
                     this.physics.vy +=this.physics.jumpForce/1.4
                 }
 
@@ -160,6 +160,7 @@ export class Player extends Sprite {
                 this.frames.framesPerState = 4
                 this.frames.speed = 5
                 if (globals.damagedCounter ===1 && !globals.inmune) {
+                    this.physics.vy = 0
                     this.physics.vy +=this.physics.jumpForce/1.4
                 }
 

@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, FPS, SpriteId, State} from "./constants.js"
+import {Game, FPS, SpriteId, State, ParticleID, ParticleState} from "./constants.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
@@ -29,6 +29,7 @@ import { Power } from "./sprites/Power.js";
 import { JumpVFX } from "./sprites/JumpVFX.js";
 import { Spike } from "./sprites/Spike.js";
 import Camera from "./Camera.js";
+import  ExplosionParticle  from "./particles/Explosion.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -126,6 +127,66 @@ function loadHandler() {
 function initCamera() {
     globals.camera = new Camera(0, 0)
 }
+function initParticles() {
+    // initExplosion()
+}
+function initExplosion(xPos, yPos) {
+    const numParticles  = 300
+    const radius        = 0.7
+    const timeToFadeMax = 0.2
+    const alpha         = 1.0
+    let colour
+    const randomX       = Math.floor(Math.random()*50)-10
+    const randomY       = Math.floor(Math.random()*30)
+
+
+
+    for (let i = 0; i < numParticles; i++) {
+        const randomValue   = Math.floor(Math.random() * 6)
+        switch (randomValue) {
+            case 0:
+                colour = '#CE2029'
+                break;
+    
+            case 1:
+                colour = '#FF664B'
+                break;
+            
+            case 2:
+                colour = "#d1e231"
+                break;
+                
+            case 3:
+                colour = "#4cc050"
+                break;
+    
+            case 4:
+                colour = "#x0d9eff"
+                break;
+    
+            case 5:
+                colour = "#a846c6"
+                break;
+    
+            default:
+                
+                break;
+        }
+        const velocity      = Math.random() * 25 + 5
+        const physics       = new Physics(velocity)
+        
+        const timeToFade    = timeToFadeMax * Math.random() + 1
+        const particle      = new ExplosionParticle(ParticleID.EXPLOSION, ParticleState.ON, (xPos+randomX), (yPos - randomY), radius, alpha, physics, timeToFade,colour)
+    
+        const randomAngle   = Math.random()* 2 * Math.PI
+        particle.physics.vx = particle.physics.vLimit * Math.cos(randomAngle)
+        particle.physics.vy = particle.physics.vLimit * Math.sin(randomAngle)
+
+        globals.particles.push(particle)
+    }
+    globals.fireworkCounter++
+}
+
 function initSprites() {
     initPlayer(230, 914);
     initChair();
@@ -205,25 +266,6 @@ function initSprites() {
 
    
 }
-// function initSprites() {
-//     initPlayer();
-//     initSkeleton();
-//     initEmptyCrystalLife();
-//     initLife();
-//     initEmptyCrystalMana();
-//     initMana();
-//     initPowerHUD();
-//     initKeyHUD();
-//     initCheckPoint();
-//     initKey();
-//     initChair();
-//     initPlatformVertical()
-//     initPlatform()
-//     initPower()
-//     initDoor()
-//     initSpike(200,96,3)
-
-// }
 
 function initMainMenuSprites() {
     initPlayer(0,0);
@@ -676,4 +718,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }

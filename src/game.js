@@ -2,7 +2,7 @@
 
 
 import globals from "./globals.js";
-import { initHTMLelements, initVars, loadAssets, initTimers, initEvents, initCamera } from "./initialize.js";
+import { initHTMLelements, initVars, loadAssets, initTimers, initEvents, initCamera, initParticles } from "./initialize.js";
 import update from "./gameLogic.js"
 import render from "./gameRender.js"
 
@@ -25,6 +25,7 @@ function init() {
     //Inits game variables
     initVars();
 
+    initParticles()
     // //Inits Game Map
     // initLevel();
 

@@ -8,7 +8,7 @@ export class Key extends Sprite {
     }
     update(){
 
-        if (globals.key) {
+        if (globals.key && this.isCollidingWithPlayer) {
             let index = globals.sprites.indexOf(this)
             globals.sprites.splice(index,1)
         }

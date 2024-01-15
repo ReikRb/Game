@@ -69,6 +69,7 @@ export default {
 
     //Particles
     particles: [],
+    fireworkCounter: 0,
 
     prueba:0,
 }

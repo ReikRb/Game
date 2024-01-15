@@ -61,12 +61,13 @@ export default function update(){
 
 function playGame() {
     updateSprites();
+    updateParticles();
     detectCollisions();
-    updateCamera()
+    updateCamera();
     updateLevelTime();
-    updateMana()
-    updateLife()
-    updatePower()
+    updateMana();
+    updateLife();
+    updatePower();
 }
 
 function updateLevelTime() {
@@ -143,5 +144,13 @@ function updateMana() {
     }
     if (globals.mana === 0) {
         globals.life--
+    }
+}
+
+
+function updateParticles() {
+    for (let i = 0; i < globals.particles.length; i++) {
+        const particle = globals.particles[i];
+        particle.update()
     }
 }

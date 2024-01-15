@@ -11,7 +11,8 @@ export class Skeleton extends Sprite {
         
     }
     update(){
-        
+        this.isCollidingWithObstacleOnRight = false
+        this.isCollidingWithObstacleOnLeft  = false
         if (this.life <= 0 ) {
             this.state = this.state % 2 === 0 ? State.DEAD_RIGHT_2 : State.DEAD_LEFT_2
         }

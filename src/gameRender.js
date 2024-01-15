@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game} from "./constants.js"
+import {Game, ParticleID, ParticleState} from "./constants.js"
 import { Tile } from "./constants.js";
 //Graphic Renderer Method
 export default function render(){
@@ -55,9 +55,12 @@ function drawGame(){
     //Draws Map (Level)
     renderMap();
 
+    renderParticles()
+
     // //Draw Elements
     renderSprites();
 
+    
     // //Restore Camera
     restoreCamera()
 
@@ -322,7 +325,7 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
-        drawHitBox(sprite)
+        // drawHitBox(sprite)
         renderSprite(sprite)
     }
 }
@@ -380,3 +383,33 @@ function renderSprite(sprite){
     )
 }
 
+function renderParticles() {
+    for (let i = 0; i < globals.particles.length; i++) {
+        const particle = globals.particles[i];
+        renderParticle(particle)    
+    }
+}
+
+function renderParticle(particle) {
+    const type = particle.id
+    switch (type) {
+        case ParticleID.EXPLOSION:
+            renderExplosionParticle(particle)
+            break;
+    
+        default:
+            break;
+    }
+}
+
+function renderExplosionParticle(particle) {
+    if (particle.state != ParticleState.OFF) {
+        globals.ctx.fillStyle = particle.colour
+        globals.ctx.globalAlpha = particle.alpha
+        globals.ctx.beginPath()
+        //Creates curve: (    xPos   ,      yPos    ,   arc radius   , sAngle,    eAngle   ) OPTIONAL: boolean for counterclock = TRUE
+        globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,      0,  2 * Math.PI)
+        globals.ctx.fill()
+        globals.ctx.globalAlpha = 1.0
+    }
+}
