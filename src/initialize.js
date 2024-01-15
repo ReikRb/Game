@@ -30,6 +30,7 @@ import { JumpVFX } from "./sprites/JumpVFX.js";
 import { Spike } from "./sprites/Spike.js";
 import Camera from "./Camera.js";
 import  ExplosionParticle  from "./particles/Explosion.js";
+import FireParticle from "./particles/Fire.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -129,6 +130,33 @@ function initCamera() {
 }
 function initParticles() {
     // initExplosion()
+    // initFire()
+}
+
+function initFire(xPos, yPos) {
+    const numParticles = 20
+    for (let i = 0; i < numParticles; i++) {
+        createFireParticle(xPos,yPos)
+        
+    }
+}
+function createFireParticle(xPos, yPos) {
+    const alpha     = 1.0
+    const velocity  = Math.random() * 20 
+    const physics   = new Physics(velocity)
+
+    const xInit     = Math.random()  + xPos
+    const yInit     = yPos
+    const radius    = 3 * Math.random() +1
+
+    const particle  = new FireParticle(ParticleID.FIRE, ParticleState.ON, xInit, yInit, radius, alpha, physics)
+
+    const rngAngle  = Math.random() * Math.PI / 3 + 3 * Math.PI/2
+    
+    // particle.physics.vx = particle.physics.vLimit * Math.cos(rngAngle)
+    particle.physics.vy = particle.physics.vLimit * Math.sin(rngAngle)
+
+    globals.particles.push(particle)
 }
 function initExplosion(xPos, yPos) {
     const numParticles  = 300
@@ -718,4 +746,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }

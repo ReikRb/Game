@@ -7,9 +7,11 @@ export class Crystal extends Sprite {
         super(id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox = hitBox
         this.collisionBorder = Collision.NO_COLLISION
+        this.fadeCounter    = 0
+        this.score          = 150
     }
     update() {
-
+        this.fadeCounter++
         switch (this.collisionBorder) {
 
             case Collision.RIGHT:
@@ -35,9 +37,14 @@ export class Crystal extends Sprite {
         this.updateAnimationFrame();
         this.calculateCollisionWithFourBorders();
 
-        if (this.isCollidingWithPlayer) {
-            let index = globals.sprites.indexOf(this)
+        let index = globals.sprites.indexOf(this)
+        if (this.fadeCounter>300) {
             globals.sprites.splice(index,1)
+        }
+        
+        if (this.isCollidingWithPlayer) {
+            globals.sprites.splice(index,1)
+            globals.score += this.score
         }
     }
     calculateCollisionWithFourBorders() {

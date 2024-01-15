@@ -269,7 +269,7 @@ function restoreCamera() {
 
 function renderHUD() {
     //Raw Data
-    const score     = 1154700;
+
     const highScore = 1200000;
     const time      = globals.levelTime.value;
 
@@ -393,12 +393,18 @@ function renderParticles() {
 function renderParticle(particle) {
     const type = particle.id
     switch (type) {
+
         case ParticleID.EXPLOSION:
             renderExplosionParticle(particle)
             break;
-    
+
+        case ParticleID.FIRE:
+            renderFireParticle(particle)
+            break;
+
         default:
             break;
+
     }
 }
 
@@ -411,5 +417,20 @@ function renderExplosionParticle(particle) {
         globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,      0,  2 * Math.PI)
         globals.ctx.fill()
         globals.ctx.globalAlpha = 1.0
+    }
+}
+
+function renderFireParticle(particle) {
+    if (particle.state != ParticleState.OFF) {
+        globals.ctx.save()
+        globals.ctx.fillStyle   = "white"
+        globals.ctx.filter      = "blur(2px) saturate(500%)"
+
+        globals.ctx.globalsAlpha = particle.alpha
+        globals.ctx.beginPath()
+        globals.ctx.arc(particle.xPos, particle.yPos, particle.radius, 0, 2 * Math.PI)
+
+        globals.ctx.fill()
+        globals.ctx.restore()
     }
 }

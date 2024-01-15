@@ -1,7 +1,7 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import {State, GRAVITY, Game} from "../constants.js"
-import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX, initPower } from "../initialize.js";
+import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX, initPower, initFire } from "../initialize.js";
 
 
 export class Player extends Sprite {
@@ -77,11 +77,27 @@ export class Player extends Sprite {
             break;
     
             case State.IDLE_LEFT:
+                this.frames.framesPerState = 6
+                this.physics.ax = 0
+                this.frames.speed = 3
+
+                if (this.previousState != this.state) {
+                    const xFirePos = this.xPos+this.hitBox.xOffset - 5
+                    const yFirePos = this.yPos+this.hitBox.yOffset + 10
+                    initFire(xFirePos, yFirePos)
+                }
+                break;
             case State.IDLE_RIGHT:
                 this.frames.framesPerState = 6
                 this.physics.ax = 0
                 this.frames.speed = 3
-                break
+
+                if (this.previousState != this.state) {
+                    const xFirePos = this.xPos+this.hitBox.xOffset + 36
+                    const yFirePos = this.yPos+this.hitBox.yOffset + 10
+                    initFire(xFirePos, yFirePos)
+                }
+                break;
     
             case State.ATTACK_RIGHT:
                 this.frames.framesPerState = 8
