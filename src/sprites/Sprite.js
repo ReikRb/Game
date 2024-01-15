@@ -22,7 +22,7 @@ export default class Sprite{
     
     calculateCollisionWithBorders() {
         let isCollision = false;
-
+        
         //Collision with right edge
         if (this.xPos + this.hitBox.xOffset + this.hitBox.xSize > (globals.level.data[0].length*32)) {
             isCollision = true
@@ -59,13 +59,6 @@ export default class Sprite{
     this.frames.frameChangeCounter = 0;
     }
         
-            // //Once the max frames are reached it resets (Animation loop)
-            // if (sprite.frames.frameCounter === sprite.frames.framesPerState) {
-            //     if (sprite.id === SpriteId.ATTACK_VFX) {
-            //         let index = globals.sprites.indexOf(sprite)
-            //         globals.sprites.splice(index,1)
-            //     }
-            // }
     }
 }
 

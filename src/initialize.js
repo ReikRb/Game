@@ -31,6 +31,7 @@ import { Spike } from "./sprites/Spike.js";
 import Camera from "./Camera.js";
 import  ExplosionParticle  from "./particles/Explosion.js";
 import FireParticle from "./particles/Fire.js";
+import { LobbyPlayer } from "./sprites/LobbyPlayer.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -501,6 +502,15 @@ function initPlayer(xPos, yPos){
     //Adds Sprite to Array
     globals.sprites.push(player)
 }
+function initLobbyPlayer(xPos, yPos){
+    const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
+    
+    const frames = new Frames (7, 5)
+
+    const player = new LobbyPlayer(SpriteId.PLAYER, State.DEAD_RIGHT, xPos, yPos, imageSet,frames)
+
+    globals.sprites.push(player)
+}
 
 function initChair() {
 
@@ -746,4 +756,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer }

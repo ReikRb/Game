@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import {Game} from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower} from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initLobbyPlayer} from "./initialize.js";
 import detectCollisions from "./collisions.js";
 
 export default function update(){
@@ -40,7 +40,14 @@ export default function update(){
 
         case Game.GAMEOVER:
             globals.sprites = []
+            initLobbyPlayer(200,250)
+            globals.gameState = Game.GAMEOVER2
             break;
+
+        case Game.GAMEOVER2:
+            updateSprites()
+            break;
+        
 
         case Game.CONTROLS:
             globals.sprites = []

@@ -9,8 +9,9 @@ const Game = {
     LOAD_LEVEL:      4,
     PLAYING:         5,
     GAMEOVER:        6,
-    CONTROLS:        7,
-    HISTORY :        8,
+    GAMEOVER2:       7,
+    CONTROLS:        8,
+    HISTORY :        9,
 }
 
 //Frames Per Second

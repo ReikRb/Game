@@ -81,7 +81,7 @@ export class Player extends Sprite {
                 this.physics.ax = 0
                 this.frames.speed = 3
 
-                if (this.previousState != this.state) {
+                if (this.previousState != this.state ) {
                     const xFirePos = this.xPos+this.hitBox.xOffset - 5
                     const yFirePos = this.yPos+this.hitBox.yOffset + 10
                     initFire(xFirePos, yFirePos)
@@ -92,7 +92,7 @@ export class Player extends Sprite {
                 this.physics.ax = 0
                 this.frames.speed = 3
 
-                if (this.previousState != this.state) {
+                if (this.previousState != this.state ) {
                     const xFirePos = this.xPos+this.hitBox.xOffset + 36
                     const yFirePos = this.yPos+this.hitBox.yOffset + 10
                     initFire(xFirePos, yFirePos)

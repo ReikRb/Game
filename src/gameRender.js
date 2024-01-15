@@ -22,7 +22,7 @@ export default function render(){
             drawGame();
             break;
 
-        case Game.GAMEOVER:
+        case Game.GAMEOVER2:
             drawGameOver()
             break;
 
@@ -168,8 +168,16 @@ function drawGameOver() {
     document.getElementById("gameScreen").style.backgroundColor = "black"
     globals.ctx.font = "30px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
-    globals.ctx.fillText("GAME OVER", 188, 194);
+    globals.ctx.fillText("GAME OVER", 188, 94);
 
+    globals.ctx.font = "20px Medieval Scroll of Wisdom";
+    globals.ctx.fillText("YOUR SCORE", 108, 164);
+    globals.ctx.fillText(globals.score, 400, 164)
+    globals.ctx.fillText("HIGHSCORE", 108, 220);
+    globals.ctx.fillText(globals.highScore, 400, 220)
+
+
+    renderSprites();
 }
 
 function drawControls() {

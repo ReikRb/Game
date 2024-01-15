@@ -88,11 +88,11 @@ export class Skeleton extends Sprite {
         rangeY *=  rangeY <0 ? -1: 1
 
         if (this.xPos > player.xPos) {
-            if (rangeX <80 && rangeY < 90) {
+            if (rangeX <80 && rangeY < 90 && this.life >0) {
                 this.state = State.ATTACK_LEFT_2
             } 
         } else if ( this.xPos < player.xPos ) {
-            if (rangeX <75 && rangeY < 90) {
+            if (rangeX <75 && rangeY < 90 && this.life >0) {
                 this.state = State.ATTACK_RIGHT_2
             } 
             
@@ -106,17 +106,9 @@ export class Skeleton extends Sprite {
         this.yPos += this.physics.vy * globals.deltaTime;
 
         this.updateAnimationFrame()
-        // updateDirectionRandom(this)
-    
-        // //Edges collision calculation
-        // const isCollision = this.calculateCollisionWithBorders()
-        // if (isCollision) {
-        //     this.swapDirection()
-        // }
+
         this.previousState = this.state
         
     }
-    // swapDirection() {
-    //     this.state = this.state ===  State.RUN_RIGHT_2 ? State.RUN_LEFT_2 : State.RUN_RIGHT_2
-    // }
+
 }
