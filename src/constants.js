@@ -176,6 +176,8 @@ const Obstacle = {
 const ParticleID = {
     EXPLOSION:  0,
     FIRE:       1,
+    GRAVITYEXPLOSION:2,
+    BUBBLE: 3,
 }
 
 const ParticleState = {

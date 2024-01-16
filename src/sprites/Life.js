@@ -7,7 +7,7 @@ export class Life extends Sprite {
         this.HUD = true
     }
     update(){
-        let dif = Math.floor(50 - (globals.life / 8))
+        let dif = Math.floor(50 - (globals.life / 4))
         this.yPos = 4 + dif;
         this.imageSet.yOffset = 90 + dif
     }

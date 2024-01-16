@@ -50,7 +50,7 @@ export default {
     action:{},
 
     //Life
-    life:400,
+    life:200,
     damagedCounter: 0,
     inmune: false,
 
@@ -63,7 +63,7 @@ export default {
     key: false,
 
     //Power DATA
-    power:false,
+    power:true,
     powerPreviousState:false,
     powerX:0,
     powerY:0,

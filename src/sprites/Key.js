@@ -1,6 +1,5 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
-
 export class Key extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, hitBox){
         super (id, state, xPos, yPos, imageSet, frames)

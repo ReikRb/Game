@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, FPS, SpriteId, State, ParticleID, ParticleState} from "./constants.js"
+import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY} from "./constants.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
@@ -32,6 +32,8 @@ import Camera from "./Camera.js";
 import  ExplosionParticle  from "./particles/Explosion.js";
 import FireParticle from "./particles/Fire.js";
 import { LobbyPlayer } from "./sprites/LobbyPlayer.js";
+import GravityParticle from "./particles/Gravity.js";
+import BubbleParticle from "./particles/Bubble.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -122,7 +124,7 @@ function loadHandler() {
         console.log("Assets loaded")
 
         //Starts Game
-        globals.gameState = Game.LOAD_LEVEL;
+        globals.gameState = Game.LOAD_MAIN_MENU;
     }
 }
 
@@ -215,6 +217,57 @@ function initExplosion(xPos, yPos) {
     }
     globals.fireworkCounter++
 }
+function initGravityExplosion(xPos, yPos) {
+    const numParticles  = 200
+    const radius        = 0.9
+
+    const alpha         = 1.0
+
+    for (let i = 0; i < numParticles; i++) {
+    const velocity      = Math.random() * 25 + 5
+    const acceleration = 20
+    const physics       = new Physics(velocity, acceleration)
+        
+    const timeToFade    = 1.5
+    const particle      = new GravityParticle(ParticleID.GRAVITYEXPLOSION, ParticleState.ON, xPos, yPos, radius, alpha, physics, timeToFade)
+    
+    const randomAngle   = Math.random()* 2 * Math.PI
+    particle.physics.vx = particle.physics.vLimit * Math.cos(randomAngle)
+    particle.physics.vy = particle.physics.vLimit * Math.sin(randomAngle)
+
+    particle.physics.ax = -particle.physics.vLimit * Math.cos(randomAngle)
+    particle.physics.ay = -particle.physics.vLimit * Math.sin(randomAngle)
+
+    globals.particles.push(particle)
+    }
+}
+
+function initBubbleParticle(xPos, yPos) {
+    const numParticles  = 5
+    const radius        = 3
+
+    const alpha         = 1.0
+
+    for (let i = 0; i < numParticles; i++) {
+    const velocity      = 150
+    const acceleration = 5
+    const physics       = new Physics(velocity, acceleration)
+    
+    const randomX       = Math.random()*40
+    const randomY       = Math.random()*40
+    const timeToFade    = Math.random()*1+0.5
+    const particle      = new BubbleParticle(ParticleID.BUBBLE, ParticleState.ON, (xPos+randomX), (yPos + randomY), radius, alpha, physics, timeToFade)
+    
+    const randomAngle   = Math.random()* 2 * Math.PI
+    // particle.physics.vx = particle.physics.vLimit * Math.cos(randomAngle)
+    particle.physics.vy = 20
+
+    // particle.physics.ax = -particle.physics.vLimit * Math.cos(randomAngle)
+
+
+    globals.particles.push(particle)
+    }
+}
 
 function initSprites() {
     initPlayer(230, 914);
@@ -288,7 +341,8 @@ function initSprites() {
         initMana();
         initPowerHUD();
         initKeyHUD();
-     
+        
+        initBubbleParticle(2200,400)
 
 
     // initPlatform()
@@ -297,9 +351,7 @@ function initSprites() {
 }
 
 function initMainMenuSprites() {
-    initPlayer(0,0);
-    initPlayerFireball();
-    initPlayerAttackVFX();
+    initLobbyPlayer(50, 180, State.ATTACK_RIGHT)
     initChair();
     initDummy()
 }
@@ -499,16 +551,18 @@ function initPlayer(xPos, yPos){
     //Sprite Creation
     const player = new Player(SpriteId.PLAYER, State.IDLE_RIGHT, xPos, yPos, imageSet, frames, physics,hitBox)
     player.previousLife = globals.life
+    player.previousState = -1
     //Adds Sprite to Array
     globals.sprites.push(player)
 }
-function initLobbyPlayer(xPos, yPos){
+
+function initLobbyPlayer(xPos, yPos,state){
     const imageSet = new ImageSet(0,       0,      140,    110,     140,     10,      40)
     
-    const frames = new Frames (7, 5)
+    const frames = new Frames (7, 6)
 
-    const player = new LobbyPlayer(SpriteId.PLAYER, State.DEAD_RIGHT, xPos, yPos, imageSet,frames)
-
+    const player = new LobbyPlayer(SpriteId.PLAYER, state, xPos, yPos, imageSet,frames)
+    
     globals.sprites.push(player)
 }
 
@@ -756,4 +810,4 @@ function initLevel() {
 }
 
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer }
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer }

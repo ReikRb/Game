@@ -1,6 +1,7 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
 import { Collision } from "../constants.js";
+import { initGravityExplosion } from "../initialize.js";
 
 export class Crystal extends Sprite {
     constructor(id, state, xPos, yPos, imageSet, frames, physics, hitBox) {
@@ -40,8 +41,11 @@ export class Crystal extends Sprite {
         let index = globals.sprites.indexOf(this)
         if (this.fadeCounter>300) {
             globals.sprites.splice(index,1)
+            let xCenter = this.xPos + this.hitBox.xOffset + this.hitBox.xSize/2
+            let yCenter = this.yPos + this.hitBox.yOffset + this.hitBox.ySize/2
+            initGravityExplosion(xCenter, yCenter)
         }
-        
+
         if (this.isCollidingWithPlayer) {
             globals.sprites.splice(index,1)
             globals.score += this.score

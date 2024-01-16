@@ -86,7 +86,7 @@ function drawMenu() {
             //Draw Return Button
     globals.ctx.font = "25px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
-    globals.ctx.fillText("> NEW GAME", 190, 40);
+    globals.ctx.fillText("NEW GAME", 190, 40);
 
     globals.ctx.fillText("HISTORY", 190, 80);
 
@@ -166,18 +166,21 @@ function drawGameOver() {
     
     //Draw Return Button
     document.getElementById("gameScreen").style.backgroundColor = "black"
-    globals.ctx.font = "30px Medieval Scroll of Wisdom";
-    globals.ctx.fillStyle = "white";
-    globals.ctx.fillText("GAME OVER", 188, 94);
+    globals.ctxHUD.font = "30px Medieval Scroll of Wisdom";
+    globals.ctxHUD.fillStyle = "white";
+    globals.ctxHUD.fillText("GAME OVER", 18, 44);
 
     globals.ctx.font = "20px Medieval Scroll of Wisdom";
-    globals.ctx.fillText("YOUR SCORE", 108, 164);
-    globals.ctx.fillText(globals.score, 400, 164)
-    globals.ctx.fillText("HIGHSCORE", 108, 220);
-    globals.ctx.fillText(globals.highScore, 400, 220)
+    globals.ctx.fillStyle = "white";
+    globals.ctx.fillText("YOUR SCORE", 108, 64);
+    globals.ctx.fillText(globals.score, 400, 64)
+    globals.ctx.fillText("HIGHSCORE", 108, 120);
+    globals.ctx.fillText(globals.highScore, 400, 120)
+    globals.ctx.fillText("NAME", 108, 180);
+    globals.ctx.fillText("AAA", 400, 180)
 
-
-    renderSprites();
+    const sprite = globals.sprites[0]
+    renderSpriteScaled(sprite)
 }
 
 function drawControls() {
@@ -334,7 +337,7 @@ function renderSprites() {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
         // drawHitBox(sprite)
-        renderSprite(sprite)
+         renderSprite(sprite)
     }
 }
 
@@ -391,6 +394,45 @@ function renderSprite(sprite){
     )
 }
 
+function renderSpriteScaled(sprite) {
+
+    //Sets initial tile position
+    const xPosInit = sprite.imageSet.initCol * sprite.imageSet.gridSize;
+    const yPosInit = sprite.imageSet.initFil * sprite.imageSet.gridSize;
+
+    //Sets tilemap drawing position
+    const xTile = xPosInit + sprite.frames.frameCounter * sprite.imageSet.gridSize + sprite.imageSet.xOffset
+    const yTile = yPosInit + sprite.state * sprite.imageSet.gridSize + sprite.imageSet.yOffset
+
+    // Sprites position rounded down
+    const xPos = Math.floor(sprite.xPos)
+    const yPos = Math.floor(sprite.yPos)
+
+    //Center of Sprite
+    globals.ctx.translate((xPos + sprite.imageSet.xSize / 2),  (yPos + sprite.imageSet.ySize / 2))
+
+    globals.ctx.scale(2.5,2.5)
+
+    globals.ctx.translate(-(xPos + sprite.imageSet.xSize / 2), - (yPos + sprite.imageSet.ySize / 2))
+
+    
+
+    //Sets where to draw the actual sprite
+    let isHUD = !sprite.HUD ? globals.ctx : globals.ctxHUD
+
+    //Draws new frame on proper position
+
+    isHUD.drawImage(
+        globals.tileSets[Tile.SIZE_64],                 //Img File
+        xTile, yTile,                                   //X & Y Position Source
+        sprite.imageSet.xSize, sprite.imageSet.ySize,   //Height & Width Source
+        xPos, yPos,                                     //Final X & Y Position
+        sprite.imageSet.xSize, sprite.imageSet.ySize    //Final Height & Width
+    )
+    globals.ctx.setTransform(1, 0, 0, 1, 0, 0)
+    
+}
+
 function renderParticles() {
     for (let i = 0; i < globals.particles.length; i++) {
         const particle = globals.particles[i];
@@ -410,6 +452,13 @@ function renderParticle(particle) {
             renderFireParticle(particle)
             break;
 
+        case ParticleID.GRAVITYEXPLOSION:
+            renderGravityParticle(particle)
+            break;
+
+        case ParticleID.BUBBLE:
+            renderBubbleParticle(particle)
+            break;
         default:
             break;
 
@@ -440,5 +489,29 @@ function renderFireParticle(particle) {
 
         globals.ctx.fill()
         globals.ctx.restore()
+    }
+}
+
+function renderGravityParticle(particle) {
+    if (particle.state != ParticleState.OFF) {
+        globals.ctx.fillStyle = particle.colour
+        globals.ctx.globalAlpha = particle.alpha
+        globals.ctx.beginPath()
+        //Creates curve: (    xPos   ,      yPos    ,   arc radius   , sAngle,    eAngle   ) OPTIONAL: boolean for counterclock = TRUE
+        globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,      0,  2 * Math.PI)
+        globals.ctx.fill()
+        globals.ctx.globalAlpha = 1.0
+    }
+}
+
+function renderBubbleParticle(particle) {
+    if (particle.state != ParticleState.OFF) {
+        globals.ctx.fillStyle = particle.colour
+        globals.ctx.globalAlpha = particle.alpha
+        globals.ctx.beginPath()
+        //Creates curve: (    xPos   ,      yPos    ,   arc radius   , sAngle,    eAngle   ) OPTIONAL: boolean for counterclock = TRUE
+        globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,      200,  2 * Math.PI)
+        globals.ctx.fill()
+        globals.ctx.globalAlpha = 1.0
     }
 }
