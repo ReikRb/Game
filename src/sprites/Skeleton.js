@@ -3,10 +3,10 @@ import globals from "../globals.js"
 import {State, GRAVITY} from "../constants.js"
 import { initCrystal } from "../initialize.js";
 export class Skeleton extends Sprite {
-    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox){
+    constructor (id, state, xPos, yPos, imageSet, frames, physics, hitBox, hp){
         super (id, state, xPos, yPos, imageSet, frames, physics)
         this.hitBox         = hitBox      //Sprite HitBox
-        this.life           = 4
+        this.life           = hp
         this.score          = 300
         
     }

@@ -272,14 +272,13 @@ function restoreCamera() {
 function renderHUD() {
     //Raw Data
 
-    const highScore = 1200000;
     const time      = globals.levelTime.value;
 
     //Draw High Score
     globals.ctxHUD.fillStyle = "red";
     globals.ctxHUD.fillText("HIGHSCORE", 0, 8);
     globals.ctxHUD.fillStyle = "lightgray";
-    globals.ctxHUD.fillText("" + highScore, 0, 18);
+    globals.ctxHUD.fillText("" + globals.highScore, 0, 18);
 
     //Draw Score
     globals.ctxHUD.font = "8px emulogic";

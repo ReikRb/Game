@@ -60,7 +60,7 @@ export default {
     mana: 100,
 
     score: 0,
-    highScore: 12000,
+    highScore: 1000,
     //Obtained Key
     key: false,
 

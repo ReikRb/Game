@@ -158,6 +158,7 @@ function playGame() {
     updateMana();
     updateLife();
     updatePower();
+    updateScore();
 }
 function updateLevelTimePrueba() {
     //Adds the value modifier counter
@@ -251,6 +252,9 @@ function updateMana() {
     }
 }
 
+function updateScore(){
+    globals.highScore = globals.score > globals.highScore ? globals.score : globals.highScore
+}
 
 function updateParticles() {
     for (let i = 0; i < globals.particles.length; i++) {

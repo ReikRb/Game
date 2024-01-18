@@ -7,7 +7,7 @@ export default class MenuParticle extends Particle {
     constructor(id, state, xPos, yPos, radius, alpha, physics, timeToFade) {
         super  (id, state, xPos, yPos, radius, alpha, physics)
 
-        this.colour         = 'lightblue'
+        this.colour         = 'white'
         this.fadeCounter    = 0
         this.timeToFade     = timeToFade
         this.initX     = xPos
