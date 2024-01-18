@@ -36,6 +36,7 @@ import GravityParticle from "./particles/Gravity.js";
 import BubbleParticle from "./particles/Bubble.js";
 import StarParticle from "./particles/Star.js";
 import Line from "./Line.js";
+import MenuParticle from "./particles/Menu.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -82,6 +83,11 @@ function initVars() {
 function initTimers() {
     //Sets timer to 200 with changes/0,5s.
     globals.levelTime = new Timer(200, 1)
+}
+
+function initTimersTemporal() {
+    //Sets timer to 200 with changes/0,5s.
+    globals.PruebaTime = new Timer(180, 1.24)
 }
 
 function loadAssets(){
@@ -287,6 +293,25 @@ function initStarParticle() {
     particle.physics.vx = -50
     
     particle.physics.vy = -200
+
+
+    globals.particles.push(particle)
+}
+
+function initMenuParticle() {
+
+    const initAngle = 90 * Math.PI / 180;
+    const omega = 3;
+    const xRotCenter = 400;
+    const yRotCenter = 30;
+    const radius        = 3
+    const alpha         = 1.0
+
+    const physics = new Eliptic(60, 0, 1, omega, initAngle, xRotCenter, yRotCenter);
+    
+    const timeToFade    = 1.5
+
+    const particle      = new MenuParticle(ParticleID.MENUPARTICLE, ParticleState.ON, 0,  90, radius, alpha, physics, timeToFade)
 
 
     globals.particles.push(particle)
@@ -589,7 +614,7 @@ function initLobbyPlayer(xPos, yPos,state){
     
     const frames = new Frames (7, 6)
 
-    const player = new LobbyPlayer(SpriteId.PLAYER, state, xPos, yPos, imageSet,frames)
+    const player = new LobbyPlayer(SpriteId.LOBBYPLAYER, state, xPos, yPos, imageSet,frames)
     
     globals.sprites.push(player)
 }
@@ -854,4 +879,4 @@ function initText(text, lettersQuantity) {
     }
 }
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText }
+export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText }

@@ -41,7 +41,8 @@ const SpriteId = {
     MANACRYSTAL: 17,
     POWER: 18,
     JUMPVFX:19,
-    SPIKE: 20
+    SPIKE: 20,
+    LOBBYPLAYER: 21
 
 }
 
@@ -181,7 +182,8 @@ const ParticleID = {
     FIRE:       1,
     GRAVITYEXPLOSION:2,
     BUBBLE: 3,
-    STAR: 4
+    STAR: 4,
+    MENUPARTICLE: 5
 }
 
 const ParticleState = {

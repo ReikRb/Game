@@ -23,6 +23,8 @@ export default {
     //Temporizador nivel
     levelTime: {},
 
+    PruebaTime: {},
+
     //Debugger Text Box
     txtPruebas: {},
 

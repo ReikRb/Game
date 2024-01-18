@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import { Game, State } from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 
@@ -16,17 +16,19 @@ export default function update() {
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
+            initMenuParticle()
             globals.gameState = Game.MAIN_MENU
             break;
 
         case Game.MAIN_MENU:
             updateSprites()
             updateSelection()
+            updateParticles()
             break;
 
         case Game.LOAD_LEVEL:
             globals.sprites = []
-            globals.typing = ''
+            initTimersTemporal()
             initLevel()
             initSprites()
             globals.gameState = Game.PLAYING
@@ -116,6 +118,7 @@ function updateSelection() {
                 switch (globals.position) {
                     case 1:
                         globals.gameState = Game.LOAD_LEVEL;
+                        globals.sprites = []
                         break;
 
                     case 2:
@@ -151,11 +154,27 @@ function playGame() {
     detectCollisions();
     updateCamera();
     updateLevelTime();
+    updateLevelTimePrueba()
     updateMana();
     updateLife();
     updatePower();
 }
+function updateLevelTimePrueba() {
+    //Adds the value modifier counter
+    globals.PruebaTime.timeChangeCounter += globals.deltaTime;
 
+    //Once enough time has passed, modifies the timer value
+    if (globals.PruebaTime.timeChangeCounter > globals.PruebaTime.timeChangeValue) {
+        globals.PruebaTime.value--;
+
+        //Then resets the timeChangeCounter
+        globals.PruebaTime.timeChangeCounter = 0;
+    }
+
+    if (globals.PruebaTime.value <= 0) {
+        globals.gameState = Game.GAMEOVER
+    }
+}
 function updateLevelTime() {
     //Adds the value modifier counter
     globals.levelTime.timeChangeCounter += globals.deltaTime;
@@ -243,7 +262,7 @@ function updateParticles() {
 function restoreDefaultValues() {
     globals.levelTime.value     = 200
     globals.levelTime.timeChangeCounter = 0
-               
+
     globals.sprites             = []
     globals.platforms           = []
     globals.shoots              = []
