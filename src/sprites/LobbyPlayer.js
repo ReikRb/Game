@@ -9,15 +9,16 @@ export class LobbyPlayer extends Sprite {
         this.shootingInterval = 20
     }
      update() {
-        console.log(this.frames.frameCounter);
         switch (this.state) {
             case State.ATTACK_RIGHT:
                 this.frames.framesPerState = 8
                 this.frames.speed = 3
-                    if (this.frames.frameCounter / (this.frames.framesPerState) != 1 && this.shootingIntervalCounter === 0) {
+                    if ( this.shootingIntervalCounter === 0) {
                         initPlayerAttackVFX((this.xPos+78), this.yPos, State.RIGHT);
-                        setTimeout(() => { initPlayerFireball((this.xPos + 78), this.yPos, State.RIGHT); }, 400);
                         
+                    }
+                    if (this.shootingIntervalCounter === 18) {
+                        initPlayerFireball((this.xPos + 78), this.yPos, State.RIGHT)
                     }
                     if (this.shootingIntervalCounter === this.shootingInterval) {
                         this.shootingIntervalCounter = 0

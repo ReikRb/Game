@@ -11,13 +11,24 @@ export function keydownHandler(event) {
             globals.action.moveRight = true;
             break;
 
-            
+        case Key.UP:
+            globals.action.moveUp = true;
+            break;
+    
+        case Key.DOWN:
+            globals.action.moveDown = true;
+            break;
+
         case Key.FIRE:
             globals.action.fire = true;
             break;
         
         case Key.JUMP:
             globals.action.jump = true;
+            break;
+
+        case Key.RETURN:
+            globals.action.return = true;
             break;
 
     }
@@ -33,12 +44,24 @@ export function keyupHandler(event) {
             globals.action.moveRight = false;
             break;
 
+            case Key.UP:
+                globals.action.moveUp = false;
+                break;
+    
+            case Key.DOWN:
+                globals.action.moveDown = false;
+                break;
+
         case Key.FIRE:
             globals.action.fire = false;
             break;
 
         case Key.JUMP:
             globals.action.jump = false;
+            break;
+
+        case Key.RETURN:
+            globals.action.return = false;
             break;
     }
 }

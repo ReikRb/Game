@@ -48,9 +48,12 @@ const SpriteId = {
 //Keyboard key codes
 const Key = {
     LEFT: 37,
+    UP:   38,
     RIGHT:39,
+    DOWN: 40,
     JUMP: 32,
     FIRE: 90,
+    RETURN: 88
 }
 
 
@@ -178,6 +181,7 @@ const ParticleID = {
     FIRE:       1,
     GRAVITYEXPLOSION:2,
     BUBBLE: 3,
+    STAR: 4
 }
 
 const ParticleState = {

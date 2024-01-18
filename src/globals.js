@@ -27,7 +27,7 @@ export default {
     txtPruebas: {},
 
     //Img Data(TILESET)
-    tileSet:{},
+    tileSet: {},
 
     //Stores elements to load(IMG/Sounds)
     assetsToLoad: [],
@@ -47,15 +47,15 @@ export default {
     level: {},
 
     //Obj that saves pressed key state
-    action:{},
+    action: {},
 
     //Life
-    life:200,
+    life: 200,
     damagedCounter: 0,
     inmune: false,
 
     //Mana
-    mana:100,
+    mana: 100,
 
     score: 0,
     highScore: 12000,
@@ -63,14 +63,19 @@ export default {
     key: false,
 
     //Power DATA
-    power:true,
-    powerPreviousState:false,
-    powerX:0,
-    powerY:0,
+    power: false,
+    powerPreviousState: false,
+    powerX: 0,
+    powerY: 0,
 
     //Particles
     particles: [],
     fireworkCounter: 0,
 
-    prueba:0,
+    position: 1,
+    positionCD: 0,
+
+    lines:[],
+    lineCounter: 0,
+    typingCounter: 0,
 }

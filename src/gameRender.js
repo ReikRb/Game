@@ -86,9 +86,11 @@ function drawMenu() {
             //Draw Return Button
     globals.ctx.font = "25px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
+
+    globals.ctx.fillText("> ", 140, (globals.position*40))
     globals.ctx.fillText("NEW GAME", 190, 40);
 
-    globals.ctx.fillText("HISTORY", 190, 80);
+    globals.ctx.fillText("STORY", 190, 80);
 
     globals.ctx.fillText("CONTROLS", 190, 120);
 
@@ -243,28 +245,35 @@ function drawHistory() {
 
     //Draw History
     globals.ctx.font = "10px Medieval Scroll of Wisdom";
-    globals.ctx.fillText(`With the chair restored and its magic renewed, Joseph was granted, `, 70, 80)
-    globals.ctx.fillText(`thanks to the chair, a magical staff and a spellbook. He then decided `, 70, 90)
-    globals.ctx.fillText(`to embark towards the Twilight Inn, a magical refuge where he `, 70, 100)
-    globals.ctx.fillText(`hoped to find a new purpose for his life torn apart by madness and `, 70, 110)
-    globals.ctx.fillText(`obsession. Without the company of the villagers, who still held their `, 70, 120)
-    globals.ctx.fillText(`distrust towards him, Joseph ventured alone, guiding the chair in `, 70, 130)
-    globals.ctx.fillText(`a magic bubble so he didn't have to carry it through the Lowlands.`, 70, 140)
 
-    globals.ctx.fillText(`On a stormy night, he dreamt of visions from the past, revealing the true `, 70, 160)
-    globals.ctx.fillText(`nature of the chair, and his own internal struggles. The chair's magic, `, 70, 170)
-    globals.ctx.fillText(`though restored, still toyed with his sanity, but Joseph was determined.`, 70, 180)
+    for (let i = 0; i < globals.lines.length; i++) {
+        const line = globals.lines[i];
+        globals.ctx.fillText(line.typing, line.xPos, line.yPos)
+        
+    }
 
-    globals.ctx.fillText(`The journey continued through endless challenges. Joseph, with the`, 70, 200)
-    globals.ctx.fillText(`chair as his sole companion, rediscovered the inner strength he had `, 70, 210)
-    globals.ctx.fillText(`lost in his previous madness. The chair, now more than a mere object,`, 70, 220)
-    globals.ctx.fillText(`became an ally in his journey of self-affirmation.`, 70, 230)
+    // globals.ctx.fillText(`With the chair restored and its magic renewed, Joseph was granted, `, 70, 80)
+    // globals.ctx.fillText(`thanks to the chair, a magical staff and a spellbook. He then decided `, 70, 90)
+    // globals.ctx.fillText(`to embark towards the Twilight Inn, a magical refuge where he `, 70, 100)
+    // globals.ctx.fillText(`hoped to find a new purpose for his life torn apart by madness and `, 70, 110)
+    // globals.ctx.fillText(`obsession. Without the company of the villagers, who still held their `, 70, 120)
+    // globals.ctx.fillText(`distrust towards him, Joseph ventured alone, guiding the chair in `, 70, 130)
+    // globals.ctx.fillText(`a magic bubble so he didn't have to carry it through the Lowlands.`, 70, 140)
+
+    // globals.ctx.fillText(`On a stormy night, he dreamt of visions from the past, revealing the true `, 70, 160)
+    // globals.ctx.fillText(`nature of the chair, and his own internal struggles. The chair's magic, `, 70, 170)
+    // globals.ctx.fillText(`though restored, still toyed with his sanity, but Joseph was determined.`, 70, 180)
+
+    // globals.ctx.fillText(`The journey continued through endless challenges. Joseph, with the`, 70, 200)
+    // globals.ctx.fillText(`chair as his sole companion, rediscovered the inner strength he had `, 70, 210)
+    // globals.ctx.fillText(`lost in his previous madness. The chair, now more than a mere object,`, 70, 220)
+    // globals.ctx.fillText(`became an ally in his journey of self-affirmation.`, 70, 230)
     
-    globals.ctx.fillText(`Finally, after days of travel, Joseph arrived at the last challenge `, 70, 250)
-    globals.ctx.fillText(`he had to face, the catacombs. Horrible things awaited him if he `, 70, 260)
-    globals.ctx.fillText(`wanted to achieve his destiny. Horrible creatures, bandits and the `, 70, 270)
-    globals.ctx.fillText(`catacomb itself which had really difficult trials to keep away`, 70, 280) 
-    globals.ctx.fillText(`the humans of the resting souls.`, 70, 290)
+    // globals.ctx.fillText(`Finally, after days of travel, Joseph arrived at the last challenge `, 70, 250)
+    // globals.ctx.fillText(`he had to face, the catacombs. Horrible things awaited him if he `, 70, 260)
+    // globals.ctx.fillText(`wanted to achieve his destiny. Horrible creatures, bandits and the `, 70, 270)
+    // globals.ctx.fillText(`catacomb itself which had really difficult trials to keep away`, 70, 280) 
+    // globals.ctx.fillText(`the humans of the resting souls.`, 70, 290)
 }
 
 function moveCamera(){
@@ -459,6 +468,9 @@ function renderParticle(particle) {
         case ParticleID.BUBBLE:
             renderBubbleParticle(particle)
             break;
+
+        case ParticleID.STAR:
+            renderStarParticle(particle)
         default:
             break;
 
@@ -511,6 +523,18 @@ function renderBubbleParticle(particle) {
         globals.ctx.beginPath()
         //Creates curve: (    xPos   ,      yPos    ,   arc radius   , sAngle,    eAngle   ) OPTIONAL: boolean for counterclock = TRUE
         globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,      200,  2 * Math.PI)
+        globals.ctx.fill()
+        globals.ctx.globalAlpha = 1.0
+    }
+}
+
+function renderStarParticle(particle) {
+    if (particle.state != ParticleState.OFF) {
+        globals.ctx.fillStyle = particle.colour
+        globals.ctx.globalAlpha = particle.alpha
+        globals.ctx.beginPath()
+        //Creates curve: (    xPos   ,      yPos    ,   arc radius   , sAngle,    eAngle   ) OPTIONAL: boolean for counterclock = TRUE
+        globals.ctx.arc(particle.xPos, particle.yPos, particle.radius,     200,  2 * Math.PI)
         globals.ctx.fill()
         globals.ctx.globalAlpha = 1.0
     }

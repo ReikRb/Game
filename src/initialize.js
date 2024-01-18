@@ -34,6 +34,8 @@ import FireParticle from "./particles/Fire.js";
 import { LobbyPlayer } from "./sprites/LobbyPlayer.js";
 import GravityParticle from "./particles/Gravity.js";
 import BubbleParticle from "./particles/Bubble.js";
+import StarParticle from "./particles/Star.js";
+import Line from "./Line.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -263,11 +265,33 @@ function initBubbleParticle(xPos, yPos) {
     particle.physics.vy = 20
 
     // particle.physics.ax = -particle.physics.vLimit * Math.cos(randomAngle)
-
+    particle.physics.ay = GRAVITY
 
     globals.particles.push(particle)
     }
 }
+
+function initStarParticle() {
+    const randomX = Math.random()* level1[0].length *32 
+    const radius        = 3
+    const alpha         = 1.0
+
+    const velocity      = 150
+    const acceleration = 5
+    const physics       = new Physics(velocity, acceleration)
+    
+    const randomY       = Math.random()*400
+    const timeToFade    = 1.5
+    const particle      = new StarParticle(ParticleID.STAR, ParticleState.ON, randomX,  randomY, radius, alpha, physics, timeToFade)
+    
+    particle.physics.vx = -50
+    
+    particle.physics.vy = -200
+
+
+    globals.particles.push(particle)
+}
+
 
 function initSprites() {
     initPlayer(230, 914);
@@ -342,7 +366,11 @@ function initSprites() {
         initPowerHUD();
         initKeyHUD();
         
-        initBubbleParticle(2200,400)
+
+        for (let i = 0; i < 200; i++) {
+            initStarParticle()  
+        }
+
 
 
     // initPlatform()
@@ -694,7 +722,7 @@ function initJumpVFX(xPos, yPos){
 
 function initParchment() {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(19,       4,      576,    445,     140,     0,      45)
+        const imageSet = new ImageSet(19,       4,      596,    445,     140,     10,      10)
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
@@ -708,7 +736,7 @@ function initParchment() {
 
 function initPlatform(xPos, yPos, speed=0.7) {
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
+        const imageSet = new ImageSet(18,       4,      100,    15,     140,     32,      135)
 
         //Animation Data (8 Frames / State)
         const frames = new Frames (1)
@@ -735,7 +763,7 @@ function initPlatform(xPos, yPos, speed=0.7) {
 
 function initPlatformHorizontal(xPos,yPos,maxRange=100) {
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
+    const imageSet = new ImageSet(18,       4,      100,    15,     140,     32,      135)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (1)
@@ -757,7 +785,7 @@ function initPlatformHorizontal(xPos,yPos,maxRange=100) {
 
 function initPlatformVertical(xPos, yPos, maxRange) {
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-    const imageSet = new ImageSet(18,       4,      100,    19,     140,     32,      135)
+    const imageSet = new ImageSet(18,       4,      100,    15,     140,     32,      135)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (1)
@@ -809,5 +837,21 @@ function initLevel() {
     globals.level = new Level(level1, imageSet)
 }
 
+function initText(text, lettersQuantity) {
+    const lines = Math.ceil(text.length / lettersQuantity)
 
-export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer }
+    
+    for (let i = 0; i < lines; i++) {
+        const start     =  i * lettersQuantity
+        const lineText  = text.substr( start, lettersQuantity)
+
+        const xPos      = 60
+        const yPos      = 80 + 17 * i
+        const line      = new Line(xPos, yPos, lineText)
+
+        globals.lines.push(line)
+        
+    }
+}
+
+export {initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText }
