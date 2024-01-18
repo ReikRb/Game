@@ -786,7 +786,7 @@ function initPlatformHorizontal(xPos,yPos,maxRange=100) {
 
     //Initial Physics values
 
-    const physics = new UniformHorizontalMove(40)
+    const physics = new UniformHorizontalMove(60)
     const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation
@@ -854,15 +854,31 @@ function initLevel() {
 }
 
 function initText(text, lettersQuantity) {
-    const lines = Math.ceil(text.length / lettersQuantity)
+    // const lines = Math.ceil(text.length / lettersQuantity)
+    const words = text.split(" ")
+    let lines = []
+    let line = ""
+    for (let i = 0; i < words.length; i++) {
+        const word = words[i];
+        if ((line + word ).length < lettersQuantity) {
+            line += (word + " ")
+            if ((i+1) === words.length) {
+                lines.push(line)
+                break;
+            }
+        } else {
+            lines.push(line)
+            line = ""
+            line += word + " "
+            
+        }   
+    }
 
-    
-    for (let i = 0; i < lines; i++) {
-        const start     =  i * lettersQuantity
-        const lineText  = text.substr( start, lettersQuantity)
-
+    for (let i = 0; i < lines.length; i++) {
+        const lineText  = lines[i]
         const xPos      = 60
         const yPos      = 80 + 17 * i
+
         const line      = new Line(xPos, yPos, lineText)
 
         globals.lines.push(line)

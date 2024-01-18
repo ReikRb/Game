@@ -85,18 +85,21 @@ export default function update() {
 }
 
 function updateText() {
-    const line = globals.lines[globals.lineCounter];
-    globals.story = line.text
-    if (globals.typingCounter === 0) {
-        if (line.typing.length < globals.story.length) {
-            line.typing += globals.story[line.typing.length];
-        } else{
-            globals.lineCounter++
-            globals.typingCounter = 0
-        }
-        globals.typingCounter++
-    }else{
-        globals.typingCounter === 1 ? globals.typingCounter = 0 : globals.typingCounter++
+
+    if (globals.lineCounter < globals.lines.length) {
+        const line = globals.lines[globals.lineCounter];
+        globals.story = line.text
+        if (globals.typingCounter === 0) {
+            if (line.typing.length < globals.story.length) {
+                line.typing += globals.story[line.typing.length];
+            } else{
+                globals.lineCounter++
+                globals.typingCounter = 0
+            }
+            // globals.typingCounter++
+        }else{
+            globals.typingCounter === 1 ? globals.typingCounter = 0 : globals.typingCounter++
+        }  
     }
     
 
