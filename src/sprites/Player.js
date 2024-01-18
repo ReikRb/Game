@@ -244,8 +244,8 @@ export class Player extends Sprite {
                 initJumpVFX(this.xPos, this.yPos)
             }
         }
-        if (this.physics.vy >350) {
-            this.physics.vy = 350
+        if (this.physics.vy > 300) {
+            this.physics.vy = 300
         }
         this.yPos += this.physics.vy * globals.deltaTime;
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {

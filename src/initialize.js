@@ -318,7 +318,7 @@ function initMenuParticle() {
 
 
 function initSprites() {
-    initPlayer(330, 1114);
+    initPlayer(230, 914);
     initChair();
     for (let i = 0; i < monster1.length; i++) {
         
@@ -380,11 +380,11 @@ function initSprites() {
                     break;
 
                 case 16:
-                    initSkeleton(xPos, yPos, 0, 2, State.ATTACK_RIGHT_2)
+                    initSkeleton(xPos-30, yPos, 0, 1, State.ATTACK_RIGHT_2, 400)
                     break;
                 
                 case 17:
-                    initSkeleton(xPos, yPos, 0, 2, State.ATTACK_LEFT_2)
+                    initSkeleton(xPos-40, yPos, 0, 1, State.ATTACK_LEFT_2, 400)
                     break;
 
                 default:
@@ -657,7 +657,7 @@ function initPlayerFireball(xPos, yPos, STATE) {
     globals.shoots.push(fireball)
 }
 
-function initSkeleton(xPos, yPos, speed = 40, hp = 3, state = State.RUN_LEFT_2){
+function initSkeleton(xPos, yPos, speed = 40, hp = 3, state = State.RUN_LEFT_2, score = 300){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(14,       0,      125,    90,     140,      20,      60)
 
@@ -671,7 +671,7 @@ function initSkeleton(xPos, yPos, speed = 40, hp = 3, state = State.RUN_LEFT_2){
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, state, (xPos-15), yPos, imageSet, frames, physics, hitBox,hp)
+    const skeleton = new Skeleton(SpriteId.SKELETON, state, (xPos-15), yPos, imageSet, frames, physics, hitBox,hp,score)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
@@ -808,7 +808,7 @@ function initPlatformVertical(xPos, yPos, maxRange) {
 
     //Initial Physics values
 
-    const physics = new UniformHorizontalMove(40)
+    const physics = new UniformHorizontalMove(50)
     const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation

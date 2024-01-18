@@ -126,8 +126,8 @@ const Block = {
     TOP_RIGHT_2:            6,
     BOTH_SIDES_UP:          7,
     TOP_LEFT_2:             8,
-    STAR_1:                 9,
-    BLOCK:                 10,
+    BLOCK:                  9,
+    STAR_1:                 10,
     LEFT:                   11,
     DARK:                   12,
     RIGHT:                  13,
@@ -137,7 +137,7 @@ const Block = {
     BOTH_SIDES_DOWN:        17,
     BOT_LEFT_2:             18,
     BOTH_SIDES_LEFT:        19,
-    BOTH_SIDES_RIGHT:       20,
+    SPIKES:                 20,
     BOT_LEFT:               21,
     BOT:                    22,
     BOT_RIGHT:              23,
@@ -146,7 +146,7 @@ const Block = {
     BOTH_SIDES_FINAL_LEFT:  26,
     BOTH_SIDES_HORIZONTAL:  27,
     BOTH_SIDES_FINAL_RIGHT: 28,
-    SPIKES:                 29,
+    BOTH_SIDES_RIGHT:       29,
     GRASS:                  30,
 }
 const Obstacle = {
