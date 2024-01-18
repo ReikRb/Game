@@ -8,8 +8,6 @@ export class EmptyCrystal extends Sprite {
     }
     update(){
     //Updates Key's variables State
-    this.xPos = 95;
-    this.yPos = 2;
 
     this.frames.frameCounter = 0;
     }

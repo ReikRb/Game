@@ -3,7 +3,6 @@ import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY} from "./
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
-import { EmptyCrystal2 } from "./sprites/EmptyCrystal2.js";
 import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
 import ImageSet from "./ImageSet.js";
@@ -384,9 +383,9 @@ function initSprites() {
                 }
             }
         }
-        initEmptyCrystalLife();
+        initEmptyCrystal(95,2);
+        initEmptyCrystal(128,2);
         initLife();
-        initEmptyCrystalMana();
         initMana();
         initPowerHUD();
         initKeyHUD();
@@ -414,7 +413,7 @@ function initParchmentBackground() {
 }
 
 //Interface inits
-function initEmptyCrystalLife(){
+function initEmptyCrystal(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
 
@@ -422,7 +421,7 @@ function initEmptyCrystalLife(){
     const frames = new Frames (1,2)
 
     //Sprite Creation
-    const EmptyCrystalLife = new EmptyCrystal(SpriteId.EMPTY_CRYSTAL_LIFE, State.IDLE_3, 100, 70, imageSet, frames)
+    const EmptyCrystalLife = new EmptyCrystal(SpriteId.EMPTY_CRYSTAL, State.IDLE_3, xPos, yPos, imageSet, frames)
 
     //Adds Sprite to Array
     globals.sprites.push(EmptyCrystalLife)
@@ -442,23 +441,6 @@ function initLife(){
     //Adds Sprite to Array
     globals.sprites.push(life)
     
-}
-
-function initEmptyCrystalMana(){
-        //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
-        const imageSet = new ImageSet(9,       4,      28,    51,     140,      70,      88)
-
-        //Animation Data (8 Frames / State)
-        const frames = new Frames (1,2)
-
-
-        //Sprite Creation
-        const EmptyCrystalMana = new EmptyCrystal2(SpriteId.EMPTY_CRYSTAL_MANA, State.IDLE_3, 100, 70, imageSet, frames)
-
-        //Adds Sprite to Array
-        globals.sprites.push(EmptyCrystalMana)
-        
-
 }
 
 function initMana(){
