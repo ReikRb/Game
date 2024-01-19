@@ -60,7 +60,9 @@ function gameLoop(timeStamp) {
     //Fixes delayed Frame Time regarding frameTimeObj
     globals.deltaTime += elapsedCycleSeconds
 
-    if (globals.deltaTime >= globals.frameTimeObj) {
+    globals.cycleRealTime += elapsedCycleSeconds
+
+    if (globals.cycleRealTime >= globals.frameTimeObj) {
 
         //Updates gameLogic.js
         update();
@@ -69,8 +71,8 @@ function gameLoop(timeStamp) {
         render();
 
         //Fixes Excesive Time
-        globals.deltaTime -= globals.frameTimeObj;
-
+        globals.cycleRealTime -= globals.frameTimeObj;
+        globals.deltaTime = 0;
     }
     }
 
