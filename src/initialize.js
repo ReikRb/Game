@@ -349,67 +349,67 @@ function initSprites() {
             let xPos = j*32
             let yPos = i*32
             switch (ID) {
-                case 1:
+                case 31:
                     initCheckPoint(xPos, yPos);
                     break;
-                case 2:
+                case 32:
                     initSkeleton(xPos, yPos);
                     break;
                 
-                case 3:
+                case 33:
                     initPower(xPos, yPos)
                     break;
-                case 4:
+                case 34:
                     initKey(xPos, yPos);
                     break;
-                case 5:
+                case 35:
                     initDoor(xPos, yPos, false);
                     break;
 
-                case 6:
+                case 36:
                     initSpike(xPos,(yPos+16),0)
                     break;
-                case 7:
+                case 37:
                     initSpike(xPos,yPos,1)
                     break;
-                case 8:
+                case 38:
                     initSpike((xPos+16),yPos,2)
                     break;
-                case 9:
+                case 39:
                     initSpike(xPos,yPos,3)
                     break;
-                case 10:
+                case 40:
                     initPlatformVertical(xPos,yPos, 100)
                     break;
-                case 11:
+                case 41:
                     initPlatformVertical(xPos,yPos, 350)
                     break;
                     
-                case 12:
+                case 42:
                     initPlatformVertical(xPos,yPos, 200)
                     break;
 
-                case 13:
+                case 43:
                     initPlatformHorizontal(xPos,yPos,200)
                     break;
 
-                case 14:
+                case 44:
                     initPlatform(xPos,yPos)
                     break;
 
-                case 15:
+                case 45:
                     initPlatform(xPos,yPos,1.6)
                     break;
 
-                case 16:
+                case 46:
                     initSkeleton(xPos-30, yPos, 0, 1, State.ATTACK_RIGHT_2, 400)
                     break;
                 
-                case 17:
+                case 47:
                     initSkeleton(xPos-40, yPos, 0, 1, State.ATTACK_LEFT_2, 400)
                     break;
 
-                case 99:
+                case 48:
                     initDoor(xPos, yPos, true);
                     break;
 

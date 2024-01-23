@@ -4,6 +4,7 @@ import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParch
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { updateMusic } from "./events.js";
+import { levels } from "./Level.js";
 
 export default function update() {
 
@@ -15,6 +16,7 @@ export default function update() {
 
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
+            globals.currentLevel = 0
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
@@ -30,6 +32,7 @@ export default function update() {
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
+            globals.key = true
             initTimersTemporal()
             initLevel()
             initSprites()
@@ -99,7 +102,11 @@ function nextLevel() {
 
         globals.currentLevel++
 
-        globals.gameState = Game.LOAD_LEVEL
+        if (globals.currentLevel < levels.length) {
+            globals.gameState = Game.LOAD_LEVEL
+        } else {
+            globals.gameState = Game.GAMEOVER
+        }
     }
 }
 function updateText() {
