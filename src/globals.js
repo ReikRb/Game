@@ -23,6 +23,7 @@ export default {
     //Temporizador nivel
     levelTime: {},
 
+    currentLevel: 0,
     PruebaTime: {},
 
     //Debugger Text Box
@@ -51,7 +52,7 @@ export default {
     sounds: [],
 
     currentSound: -1,
-    
+
     //Obj that saves pressed key state
     action: {},
 

@@ -1,5 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
+import { Game } from "../constants.js";
 
 export class Door extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames,hitBox, isFinalDoor = false){
@@ -13,6 +14,10 @@ export class Door extends Sprite {
                 let index = globals.sprites.indexOf(this)
                 globals.sprites.splice(index,1)
                 globals.key = false
+                
+                if (this.isFinalDoor) {
+                    globals.gameState = Game.WIN
+                }
             }else{
                 this.updateAnimationFrame()
             }

@@ -12,6 +12,7 @@ const Game = {
     GAMEOVER2:       7,
     CONTROLS:        8,
     HISTORY :        9,
+    WIN:            10,
 }
 
 //Frames Per Second

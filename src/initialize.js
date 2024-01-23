@@ -7,7 +7,7 @@ import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
-import { Level, level1, monster1,  mainMenu } from "./Level.js";
+import { Level, level1, monster1,  mainMenu, levels, monsters, playerInitPos } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
 import { keydownHandler,keyupHandler, updateMusic } from "./events.js";
@@ -297,7 +297,7 @@ function initBubbleParticle(xPos, yPos) {
 }
 
 function initStarParticle() {
-    const randomX = Math.random()* level1[0].length *32 
+    const randomX = Math.random()* levels[globals.currentLevel][0].length *32 
     const radius        = 3
     const alpha         = 1.0
 
@@ -338,12 +338,14 @@ function initMenuParticle() {
 
 
 function initSprites() {
-    initPlayer(230, 914);
+    const playerX = playerInitPos[globals.currentLevel][0]
+    const playerY = playerInitPos[globals.currentLevel][1]
+    initPlayer(playerX , playerY);
     initChair();
-    for (let i = 0; i < monster1.length; i++) {
+    for (let i = 0; i < monsters[globals.currentLevel].length; i++) {
         
-        for (let j = 0; j < monster1[i].length; j++) {
-            let ID = monster1[i][j]
+        for (let j = 0; j < monsters[globals.currentLevel][i].length; j++) {
+            let ID = monsters[globals.currentLevel][i][j]
             let xPos = j*32
             let yPos = i*32
             switch (ID) {
@@ -424,8 +426,10 @@ function initSprites() {
         initKeyHUD();
         
 
-        for (let i = 0; i < 200; i++) {
-            initStarParticle()  
+        if (globals.currentLevel === 0) {
+            for (let i = 0; i < 200; i++) {
+                initStarParticle()  
+            }  
         }
 
 
@@ -874,7 +878,7 @@ function initLevel() {
     const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
 
     //Makes & Saves Level
-    globals.level = new Level(level1, imageSet)
+    globals.level = new Level(levels[globals.currentLevel], imageSet)
 }
 
 function initText(text, lettersQuantity) {

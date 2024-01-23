@@ -14,6 +14,7 @@ export default function update() {
             break;
 
         case Game.LOAD_MAIN_MENU:
+            globals.score = 0
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
@@ -28,7 +29,7 @@ export default function update() {
             break;
 
         case Game.LOAD_LEVEL:
-            globals.sprites = []
+            restoreDefaultValues()
             initTimersTemporal()
             initLevel()
             initSprites()
@@ -38,6 +39,12 @@ export default function update() {
         case Game.PLAYING:
             playGame();
 
+            break;
+
+        case Game.WIN:
+            globals.sprites = []
+            nextLevel()
+            // initLobbyPlayer(200, 190, State.IDLE_RIGHT)
             break;
 
         case Game.HIGHSCORE:
@@ -86,6 +93,15 @@ export default function update() {
 
 }
 
+function nextLevel() {
+    if (globals.action.fire) {
+        globals.score += globals.levelTime.value * 100
+
+        globals.currentLevel++
+
+        globals.gameState = Game.LOAD_LEVEL
+    }
+}
 function updateText() {
 
     if (globals.lineCounter < globals.lines.length) {

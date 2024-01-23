@@ -22,6 +22,10 @@ export default function render(){
             drawGame();
             break;
 
+        case Game.WIN:
+            drawWin();
+            break;
+
         case Game.GAMEOVER2:
             drawGameOver()
             break;
@@ -257,6 +261,33 @@ function drawHistory() {
     }
 
 }
+
+
+function drawWin() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+    //Draw Return Button
+    document.getElementById("gameScreen").style.backgroundColor = "black"
+    globals.ctxHUD.font = "30px Medieval Scroll of Wisdom";
+    globals.ctxHUD.fillStyle = "white";
+    globals.ctxHUD.fillText("YOU WIN", 48, 44);
+
+    globals.ctx.font = "20px Medieval Scroll of Wisdom";
+    globals.ctx.fillStyle = "white";
+    globals.ctx.fillText("YOUR SCORE", 108, 64);
+    globals.ctx.fillText(globals.score, 400, 64)
+    globals.ctx.fillText("TIME LEFT", 108, 120);
+    globals.ctx.fillText(globals.levelTime.value + "  x  100", 400, 120)
+    globals.ctx.fillText("TOTAL SCORE", 108, 180);
+    globals.ctx.fillText(globals.score + (globals.levelTime.value * 100), 400, 180)
+    globals.ctx.fillText("Z to Continue", 210,260)
+
+    // const sprite = globals.sprites[0]
+    // renderSpriteScaled(sprite)
+}
+
 
 function moveCamera(){
     // globals.ctx.translate(50, 50)
