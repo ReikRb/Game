@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY} from "./constants.js"
+import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY, Sound} from "./constants.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
@@ -10,7 +10,7 @@ import Frames from "./Frames.js";
 import { Level, level1, monster1,  mainMenu } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
-import { keydownHandler,keyupHandler } from "./events.js";
+import { keydownHandler,keyupHandler, updateMusic } from "./events.js";
 import { Mana } from "./sprites/Mana.js";
 import { PowerHUD } from "./sprites/PowerHUD.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
@@ -70,6 +70,8 @@ function initVars() {
     //Inits Game State
     globals.gameState = Game.LOADING;
 
+    globals.currentSound = Sound.NO_SOUND
+
     globals.action = {
         moveLeft:   false,
         moveRight:  false,
@@ -107,6 +109,20 @@ function loadAssets(){
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet)
 
+    //Load sounds
+    let gameMusic = document.querySelector("#gameMusic")
+    gameMusic.addEventListener("canplaythrough", loadHandler, false)
+    gameMusic.addEventListener("timeupdate", updateMusic, false)
+    gameMusic.load()
+    globals.sounds.push(gameMusic)
+    globals.assetsToLoad.push(gameMusic)
+
+    let jumpSound = document.querySelector("#jumpSound")
+    jumpSound.addEventListener("canplaythrough", loadHandler, false)
+    jumpSound.load()
+    globals.sounds.push(jumpSound)
+    globals.assetsToLoad.push(jumpSound)
+
 }
 
 function initEvents() {
@@ -128,6 +144,10 @@ function loadHandler() {
 
         }
 
+        for (let i = 0; i < globals.sounds.length; i++) {
+            globals.sounds[i].removeEventListener("canplaythrough", loadHandler, false)
+            
+        }
         console.log("Assets loaded")
 
         //Starts Game
@@ -300,7 +320,7 @@ function initStarParticle() {
 function initMenuParticle() {
 
     const initAngle = 90 * Math.PI / 180;
-    const omega = 3;
+    const omega = 1000;
     const xRotCenter = 400;
     const yRotCenter = 30;
     const radius        = 3
@@ -341,7 +361,7 @@ function initSprites() {
                     initKey(xPos, yPos);
                     break;
                 case 5:
-                    initDoor(xPos, yPos);
+                    initDoor(xPos, yPos, false);
                     break;
 
                 case 6:
@@ -385,6 +405,10 @@ function initSprites() {
                 
                 case 17:
                     initSkeleton(xPos-40, yPos, 0, 1, State.ATTACK_LEFT_2, 400)
+                    break;
+
+                case 99:
+                    initDoor(xPos, yPos, true);
                     break;
 
                 default:
@@ -706,7 +730,7 @@ function initCheckPoint(xPos, yPos){
 
 }
 
-function initDoor(xPos, yPos){
+function initDoor(xPos, yPos, isFinalDoor){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(17,       2,      11,    96,     140,     68,      54)
 
@@ -714,7 +738,7 @@ function initDoor(xPos, yPos){
     const frames = new Frames (4,12)
     const hitBox = new HitBox(12, 96, 0, 0)
     //Sprite Creation
-    const door = new Door(SpriteId.DOOR, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
+    const door = new Door(SpriteId.DOOR, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox,isFinalDoor)
 
     //Adds Sprite to Array
     globals.sprites.push(door)

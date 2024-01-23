@@ -1,8 +1,9 @@
 import globals from "./globals.js"
-import { Game, State } from "./constants.js"
+import { Game, State, Sound } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
+import { updateMusic } from "./events.js";
 
 export default function update() {
 
@@ -36,6 +37,7 @@ export default function update() {
 
         case Game.PLAYING:
             playGame();
+
             break;
 
         case Game.HIGHSCORE:
@@ -120,8 +122,11 @@ function updateSelection() {
             } else if (globals.action.fire) {
                 switch (globals.position) {
                     case 1:
-                        globals.gameState = Game.LOAD_LEVEL;
                         globals.sprites = []
+                        globals.sounds[Sound.GAME_MUSIC].play()
+                        globals.sounds[Sound.GAME_MUSIC].volume = 0.4
+                        globals.gameState = Game.LOAD_LEVEL;
+
                         break;
 
                     case 2:
@@ -162,6 +167,16 @@ function playGame() {
     updateLife();
     updatePower();
     updateScore();
+    playSound()
+}
+
+function playSound() {
+    if (globals.currentSound != Sound.NO_SOUND) {
+        globals.sounds[globals.currentSound].currentTime = 0
+        globals.sounds[globals.currentSound].play()
+        globals.currentSound = Sound.NO_SOUND
+        globals.sounds[Sound.GAME_MUSIC].volume = 0.4
+    }
 }
 function updateLevelTimePrueba() {
     //Adds the value modifier counter

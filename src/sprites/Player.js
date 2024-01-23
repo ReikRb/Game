@@ -1,6 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
-import {State, GRAVITY, Game} from "../constants.js"
+import {State, GRAVITY, Game, Sound} from "../constants.js"
 import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX, initPower, initFire } from "../initialize.js";
 
 
@@ -231,6 +231,7 @@ export class Player extends Sprite {
                 this.physics.isOnPlatform = false
                 this.physics.vy += this.physics.jumpForce;
                 this.jumpCount++
+                globals.currentSound = Sound.JUMP
             } else if ( globals.action.jump != this.jumpEvent){
                 this.physics.vy += this.physics.jumpForce;
                 this.jumpCount++
@@ -242,6 +243,7 @@ export class Player extends Sprite {
                 this.jumpCount++
                 globals.power = false
                 initJumpVFX(this.xPos, this.yPos)
+                globals.currentSound = Sound.JUMP
             }
         }
         if (this.physics.vy > 300) {

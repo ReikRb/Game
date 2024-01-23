@@ -191,8 +191,10 @@ const ParticleState = {
     OFF:  -1
 }
 
-export const Prueba = {
-    X: 1
+const Sound = {
+    NO_SOUND: -1,
+    GAME_MUSIC: 0,
+    JUMP: 1
  }
  
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState}
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState, Sound}
