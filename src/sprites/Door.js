@@ -15,7 +15,7 @@ export class Door extends Sprite {
                 globals.sprites.splice(index,1)
                 globals.key = false
                 
-                if (this.isFinalDoor) {
+                if (this.isFinalDoor) { 
                     globals.gameState = Game.WIN
                 }
             }else{

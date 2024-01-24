@@ -336,7 +336,14 @@ function initMenuParticle() {
     globals.particles.push(particle)
 }
 
-
+function initGameOver() {
+    if (globals.currentLevel < levels.length) {
+        initLobbyPlayer(200, 190, State.DEAD_RIGHT)
+    } else {
+        initLobbyPlayer(200, 190, State.RUN_RIGHT)
+    }
+    
+}
 function initSprites() {
     const playerX = playerInitPos[globals.currentLevel][0]
     const playerY = playerInitPos[globals.currentLevel][1]
@@ -914,4 +921,4 @@ function initText(text, lettersQuantity) {
     }
 }
 
-export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText }
+export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText, initGameOver }

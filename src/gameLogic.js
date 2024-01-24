@@ -1,6 +1,6 @@
 import globals from "./globals.js"
 import { Game, State, Sound } from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal } from "./initialize.js";
+import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { updateMusic } from "./events.js";
@@ -32,9 +32,9 @@ export default function update() {
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
-            globals.key = true
-            initTimersTemporal()
+            // initTimersTemporal()
             initLevel()
+            globals.key = true
             initSprites()
             globals.gameState = Game.PLAYING
             break;
@@ -58,7 +58,7 @@ export default function update() {
 
         case Game.GAMEOVER:
             globals.sprites = []
-            initLobbyPlayer(200, 190, State.DEAD_RIGHT)
+            initGameOver()
             globals.gameState = Game.GAMEOVER2
             break;
 
@@ -67,6 +67,7 @@ export default function update() {
             updateSelection()
             break;
 
+        
 
         case Game.CONTROLS:
             globals.sprites = []
@@ -97,16 +98,17 @@ export default function update() {
 }
 
 function nextLevel() {
-    if (globals.action.fire) {
-        globals.score += globals.levelTime.value * 100
+        if (globals.action.fire) {
+            globals.score += globals.levelTime.value * 100
+    
+            globals.currentLevel++
+    
+            if (globals.currentLevel < levels.length) {
+                globals.gameState = Game.LOAD_LEVEL
+            } else {
+                globals.gameState = Game.GAMEOVER
+            }
 
-        globals.currentLevel++
-
-        if (globals.currentLevel < levels.length) {
-            globals.gameState = Game.LOAD_LEVEL
-        } else {
-            globals.gameState = Game.GAMEOVER
-        }
     }
 }
 function updateText() {

@@ -1,6 +1,7 @@
 import globals from "./globals.js"
 import {Game, ParticleID, ParticleState} from "./constants.js"
 import { Tile } from "./constants.js";
+import { levels } from "./Level.js";
 //Graphic Renderer Method
 export default function render(){
 
@@ -71,7 +72,7 @@ function drawGame(){
     //Draw HUD
     renderHUD();
 
-    globals.ctx.fillText(globals.PruebaTime.value, 20, 30)
+    // globals.ctx.fillText(globals.PruebaTime.value, 20, 30)
 
 }
 
@@ -181,13 +182,18 @@ function drawGameOver() {
 
     globals.ctx.font = "20px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
-    globals.ctx.fillText("YOUR SCORE", 108, 64);
-    globals.ctx.fillText(globals.score, 400, 64)
-    globals.ctx.fillText("HIGHSCORE", 108, 120);
-    globals.ctx.fillText(globals.highScore, 400, 120)
-    globals.ctx.fillText("NAME", 108, 180);
-    globals.ctx.fillText("AAA", 400, 180)
-    globals.ctx.fillText("X to Return", 20,360)
+    if (globals.currentLevel < levels.length) {
+        globals.ctx.fillText("YOUR SCORE", 108, 64);
+        globals.ctx.fillText(globals.score, 400, 64)
+        globals.ctx.fillText("HIGHSCORE", 108, 120);
+        globals.ctx.fillText(globals.highScore, 400, 120)
+        globals.ctx.fillText("NAME", 108, 180);
+        globals.ctx.fillText("AAA", 400, 180)
+        globals.ctx.fillText("X to Return", 20,360)
+    } else {
+        globals.ctx.fillText("YOU MANAGED TO REACH TO THE INN", 58, 64);
+        globals.ctx.fillText("CONGRATULATIONS ! !", 158, 120);
+    }
 
     const sprite = globals.sprites[0]
     renderSpriteScaled(sprite)
