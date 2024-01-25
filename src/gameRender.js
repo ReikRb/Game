@@ -72,7 +72,7 @@ function drawGame(){
     //Draw HUD
     renderHUD();
 
-    // globals.ctx.fillText(globals.PruebaTime.value, 20, 30)
+    // globals.ctx.fillText(globals.innerTime.value, 20, 30)
 
 }
 

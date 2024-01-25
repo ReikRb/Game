@@ -1,5 +1,7 @@
-import { Key, Sound } from "./constants.js";
+import { getMapTileId, isCollidingWithObstacleAt } from "./collisions.js";
+import { Key, Sound, State } from "./constants.js";
 import globals from "./globals.js";
+import { initSkeleton, initCrystal } from "./initialize.js";
 
 export function keydownHandler(event) {
     switch (event.keyCode) {
@@ -74,3 +76,49 @@ export function updateMusic() {
         music.play()
     }
 }
+
+export function createEnemiesEvent() {
+
+    if (globals.mana === 0 && globals.eventCounter === 0) {
+        const player = globals.sprites[0]
+        let SkeletonX = player.xPos - 150
+        let SkeletonY = player.yPos - 50
+    
+        if (!isCollidingWithObstacleAt(SkeletonX, SkeletonY)) {
+            initSkeleton(SkeletonX, SkeletonY, 60, 1, State.RUN_RIGHT_2,400)
+        }
+    
+         SkeletonX = player.xPos + 200
+         SkeletonY = player.yPos - 50
+    
+        if (!isCollidingWithObstacleAt(SkeletonX, SkeletonY)) {
+            initSkeleton(SkeletonX, SkeletonY, 60, 1, State.RUN_LEFT_2,400)
+        }
+        globals.eventCounter++
+    } else{
+        if (globals.mana > 0) {
+            globals.eventCounter = 0
+        } else if (globals.mana === 0 && globals.eventCounter != 0) {
+            globals.eventCounter++
+        }
+
+        if (globals.eventCounter > 50) {
+            globals.eventCounter = 0
+        }
+    }
+    
+    
+}
+
+export function timedAttackEvent(){
+    console.log(globals.innerTime.value % globals.appearTime);
+    const player = globals.sprites[0]
+    let crystalX = player.xPos -   150
+    let crystalY = player.yPos -    50
+    if (globals.innerTime.value % globals.appearTime === globals.appearTime-1) {
+        globals.innerTime.value = 0
+        initCrystal(crystalX, crystalY, 1)
+        
+    }
+}
+

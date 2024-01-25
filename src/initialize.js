@@ -88,7 +88,7 @@ function initTimers() {
 
 function initTimersTemporal() {
     //Sets timer to 200 with changes/0,5s.
-    globals.PruebaTime = new Timer(180, 1.24)
+    globals.innerTime = new Timer(200, 1)
 }
 
 function loadAssets(){
@@ -502,13 +502,14 @@ function initMana(){
     
 }
 
-function initCrystal(xPos, yPos){
+function initCrystal(xPos, yPos, crystalType = 0){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(9,       5,      28,    51,     140,     70,      88)
 
     //Animation Data (8 Frames / State)
     const frames = new Frames (1,2)
 
+    frames.frameCounter = crystalType
     //Creates Physic obj with vLimit 40
     const physics = new Physics(70);
     const hitBox = new HitBox(30, 51, 0, 0)
@@ -921,4 +922,4 @@ function initText(text, lettersQuantity) {
     }
 }
 
-export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initText, initGameOver }
+export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver }

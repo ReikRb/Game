@@ -25,7 +25,8 @@ export default {
     levelTime: {},
 
     currentLevel: 0,
-    PruebaTime: {},
+    innerTime: {},
+    appearTime: 50,
 
     //Debugger Text Box
     txtPruebas: {},

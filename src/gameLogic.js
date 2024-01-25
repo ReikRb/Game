@@ -3,7 +3,7 @@ import { Game, State, Sound } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
-import { updateMusic } from "./events.js";
+import { createEnemiesEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
 
 export default function update() {
@@ -32,7 +32,8 @@ export default function update() {
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
-            // initTimersTemporal()
+            initTimersTemporal()
+            globals.currentLevel = 1
             initLevel()
             globals.key = true
             initSprites()
@@ -187,11 +188,13 @@ function playGame() {
     detectCollisions();
     updateCamera();
     updateLevelTime();
-    updateLevelTimePrueba()
+    updateInnerTime()
     updateMana();
     updateLife();
     updatePower();
     updateScore();
+    createEnemiesEvent()
+    timedAttackEvent()
     playSound()
 }
 
@@ -203,21 +206,19 @@ function playSound() {
         globals.sounds[Sound.GAME_MUSIC].volume = 0.4
     }
 }
-function updateLevelTimePrueba() {
+function updateInnerTime() {
     //Adds the value modifier counter
-    globals.PruebaTime.timeChangeCounter += globals.deltaTime;
+    globals.innerTime.timeChangeCounter += globals.deltaTime;
 
     //Once enough time has passed, modifies the timer value
-    if (globals.PruebaTime.timeChangeCounter > globals.PruebaTime.timeChangeValue) {
-        globals.PruebaTime.value--;
+    if (globals.innerTime.timeChangeCounter > globals.innerTime.timeChangeValue) {
+        globals.innerTime.value++;
 
         //Then resets the timeChangeCounter
-        globals.PruebaTime.timeChangeCounter = 0;
+        globals.innerTime.timeChangeCounter = 0;
     }
 
-    if (globals.PruebaTime.value <= 0) {
-        globals.gameState = Game.GAMEOVER
-    }
+
 }
 function updateLevelTime() {
     //Adds the value modifier counter
@@ -273,8 +274,8 @@ function updateLife() {
             }
 
         }
-        if (globals.life > 400) {
-            globals.life = 400
+        if (globals.life > 200) {
+            globals.life = 200
         }
 
     }

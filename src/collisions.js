@@ -145,7 +145,8 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
 
             case SpriteId.MANACRYSTAL:
                 if (isOverlap) {
-                    globals.levelTime.value += 30
+                    sprite.frames.frameCounter === 0 ? globals.levelTime.value += 30 : globals.life += 50
+                    
    
                 }
                 break;
@@ -654,7 +655,7 @@ function rectIntersect(x1, y1, w1, h1,
     return isOverlap
 }
 
-function isCollidingWithObstacleAt(xPos, yPos) {
+export function isCollidingWithObstacleAt(xPos, yPos) {
     let isColliding = false
 
     const id = getMapTileId(xPos, yPos)
@@ -668,7 +669,7 @@ function isCollidingWithObstacleAt(xPos, yPos) {
     return isColliding
 }
 
-function getMapTileId(xPos, yPos) {
+export function getMapTileId(xPos, yPos) {
     const brickSize = globals.level.imageSet.gridSize
     const levelData = globals.level.data
 

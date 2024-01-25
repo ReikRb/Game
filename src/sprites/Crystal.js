@@ -35,7 +35,6 @@ export class Crystal extends Sprite {
         this.yPos += this.physics.vy * globals.deltaTime;
 
         //Movimiento de rebote. Cambiamos velocidades según haya colisión con las paredes switch (this.collisionBorder)
-        this.updateAnimationFrame();
         this.calculateCollisionWithFourBorders();
 
         let index = globals.sprites.indexOf(this)
@@ -44,6 +43,7 @@ export class Crystal extends Sprite {
             let xCenter = this.xPos + this.hitBox.xOffset + this.hitBox.xSize/2
             let yCenter = this.yPos + this.hitBox.yOffset + this.hitBox.ySize/2
             initGravityExplosion(xCenter, yCenter)
+            globals.appearTime+=10
         }
 
         if (this.isCollidingWithPlayer) {
