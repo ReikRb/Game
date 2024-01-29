@@ -5,6 +5,7 @@ import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
+import levelNumber from "./try.js";
 
 export default function update() {
 
@@ -33,10 +34,11 @@ export default function update() {
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
             initTimersTemporal()
-            // globals.currentLevel = 1
+            globals.currentLevel = 1
             initLevel()
             globals.key = true
             initSprites()
+            levelNumber()
             globals.gameState = Game.PLAYING
             break;
 
@@ -310,6 +312,10 @@ function updateParticles() {
 function restoreDefaultValues() {
     globals.levelTime.value     = 200
     globals.levelTime.timeChangeCounter = 0
+    globals.innerTime.value = 0
+    globals.innerTime.timeChangeCounter = 0
+
+    globals.appearTime = 50
 
     globals.sprites             = []
     globals.platforms           = []
