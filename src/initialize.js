@@ -556,7 +556,7 @@ function initSpike(xPos,yPos, type){
         case 0:    
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         imageSet = new ImageSet(7,       (4 + type),      32,    16,     140,     10,      134)
-        hitBox = new HitBox(32, 16, 0, 0)    
+        hitBox = new HitBox(22, 13, 4, 3)    
             break;
         case 1:    
         //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
@@ -571,7 +571,7 @@ function initSpike(xPos,yPos, type){
         case 3:    
             //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
             imageSet = new ImageSet(7,       (4 + type),      32,    16,     140,     10,      134)
-            hitBox = new HitBox(32, 16, 0, 0)    
+            hitBox = new HitBox(22, 13, 4, 3)    
                 break;
         default:
             break;
