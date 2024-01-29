@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY} from "./constants.js"
+import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY, Sound} from "./constants.js"
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
@@ -7,10 +7,10 @@ import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
 import ImageSet from "./ImageSet.js";
 import Frames from "./Frames.js";
-import { Level, level1, monster1,  mainMenu } from "./Level.js";
+import { Level, level1, monster1,  mainMenu, levels, monsters, playerInitPos } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
-import { keydownHandler,keyupHandler } from "./events.js";
+import { keydownHandler,keyupHandler, updateMusic } from "./events.js";
 import { Mana } from "./sprites/Mana.js";
 import { PowerHUD } from "./sprites/PowerHUD.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
@@ -70,6 +70,8 @@ function initVars() {
     //Inits Game State
     globals.gameState = Game.LOADING;
 
+    globals.currentSound = Sound.NO_SOUND
+
     globals.action = {
         moveLeft:   false,
         moveRight:  false,
@@ -107,6 +109,20 @@ function loadAssets(){
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet)
 
+    //Load sounds
+    let gameMusic = document.querySelector("#gameMusic")
+    gameMusic.addEventListener("canplaythrough", loadHandler, false)
+    gameMusic.addEventListener("timeupdate", updateMusic, false)
+    gameMusic.load()
+    globals.sounds.push(gameMusic)
+    globals.assetsToLoad.push(gameMusic)
+
+    let jumpSound = document.querySelector("#jumpSound")
+    jumpSound.addEventListener("canplaythrough", loadHandler, false)
+    jumpSound.load()
+    globals.sounds.push(jumpSound)
+    globals.assetsToLoad.push(jumpSound)
+
 }
 
 function initEvents() {
@@ -128,6 +144,10 @@ function loadHandler() {
 
         }
 
+        for (let i = 0; i < globals.sounds.length; i++) {
+            globals.sounds[i].removeEventListener("canplaythrough", loadHandler, false)
+            
+        }
         console.log("Assets loaded")
 
         //Starts Game
@@ -277,7 +297,7 @@ function initBubbleParticle(xPos, yPos) {
 }
 
 function initStarParticle() {
-    const randomX = Math.random()* level1[0].length *32 
+    const randomX = Math.random()* levels[globals.currentLevel][0].length *32 
     const radius        = 3
     const alpha         = 1.0
 
@@ -300,7 +320,7 @@ function initStarParticle() {
 function initMenuParticle() {
 
     const initAngle = 90 * Math.PI / 180;
-    const omega = 3;
+    const omega = 1000;
     const xRotCenter = 400;
     const yRotCenter = 30;
     const radius        = 3
@@ -318,73 +338,79 @@ function initMenuParticle() {
 
 
 function initSprites() {
-    initPlayer(230, 914);
+    const playerX = playerInitPos[globals.currentLevel][0]
+    const playerY = playerInitPos[globals.currentLevel][1]
+    initPlayer(playerX , playerY);
     initChair();
-    for (let i = 0; i < monster1.length; i++) {
+    for (let i = 0; i < monsters[globals.currentLevel].length; i++) {
         
-        for (let j = 0; j < monster1[i].length; j++) {
-            let ID = monster1[i][j]
+        for (let j = 0; j < monsters[globals.currentLevel][i].length; j++) {
+            let ID = monsters[globals.currentLevel][i][j]
             let xPos = j*32
             let yPos = i*32
             switch (ID) {
-                case 1:
+                case 31:
                     initCheckPoint(xPos, yPos);
                     break;
-                case 2:
+                case 32:
                     initSkeleton(xPos, yPos);
                     break;
                 
-                case 3:
+                case 33:
                     initPower(xPos, yPos)
                     break;
-                case 4:
+                case 34:
                     initKey(xPos, yPos);
                     break;
-                case 5:
-                    initDoor(xPos, yPos);
+                case 35:
+                    initDoor(xPos, yPos, false);
                     break;
 
-                case 6:
+                case 36:
                     initSpike(xPos,(yPos+16),0)
                     break;
-                case 7:
+                case 37:
                     initSpike(xPos,yPos,1)
                     break;
-                case 8:
+                case 38:
                     initSpike((xPos+16),yPos,2)
                     break;
-                case 9:
+                case 39:
                     initSpike(xPos,yPos,3)
                     break;
-                case 10:
+                case 40:
                     initPlatformVertical(xPos,yPos, 100)
                     break;
-                case 11:
+                case 41:
                     initPlatformVertical(xPos,yPos, 350)
                     break;
                     
-                case 12:
+                case 42:
                     initPlatformVertical(xPos,yPos, 200)
                     break;
 
-                case 13:
+                case 43:
                     initPlatformHorizontal(xPos,yPos,200)
                     break;
 
-                case 14:
+                case 44:
                     initPlatform(xPos,yPos)
                     break;
 
-                case 15:
+                case 45:
                     initPlatform(xPos,yPos,1.6)
                     break;
 
-                case 16:
+                case 46:
                     initSkeleton(xPos-30, yPos, 0, 1, State.ATTACK_RIGHT_2, 400)
                     break;
                 
-                case 17:
+                case 47:
                     initSkeleton(xPos-40, yPos, 0, 1, State.ATTACK_LEFT_2, 400)
+                    break;
+
+                case 48:
+                    initDoor(xPos, yPos, true);
                     break;
 
                 default:
@@ -400,8 +426,10 @@ function initSprites() {
         initKeyHUD();
         
 
-        for (let i = 0; i < 200; i++) {
-            initStarParticle()  
+        if (globals.currentLevel === 0) {
+            for (let i = 0; i < 200; i++) {
+                initStarParticle()  
+            }  
         }
 
 
@@ -706,7 +734,7 @@ function initCheckPoint(xPos, yPos){
 
 }
 
-function initDoor(xPos, yPos){
+function initDoor(xPos, yPos, isFinalDoor){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(17,       2,      11,    96,     140,     68,      54)
 
@@ -714,7 +742,7 @@ function initDoor(xPos, yPos){
     const frames = new Frames (4,12)
     const hitBox = new HitBox(12, 96, 0, 0)
     //Sprite Creation
-    const door = new Door(SpriteId.DOOR, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
+    const door = new Door(SpriteId.DOOR, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox,isFinalDoor)
 
     //Adds Sprite to Array
     globals.sprites.push(door)
@@ -850,7 +878,7 @@ function initLevel() {
     const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
 
     //Makes & Saves Level
-    globals.level = new Level(level1, imageSet)
+    globals.level = new Level(levels[globals.currentLevel], imageSet)
 }
 
 function initText(text, lettersQuantity) {

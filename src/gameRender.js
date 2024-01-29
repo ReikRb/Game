@@ -7,7 +7,7 @@ export default function render(){
     //Modifies Game Depending On Game State
     switch(globals.gameState){
         case Game.LOADING:
-            //Draws Loading
+            drawLoading()
             break;
 
         case Game.MAIN_MENU:
@@ -20,6 +20,10 @@ export default function render(){
             
         case Game.PLAYING:
             drawGame();
+            break;
+
+        case Game.WIN:
+            drawWin();
             break;
 
         case Game.GAMEOVER2:
@@ -257,6 +261,97 @@ function drawHistory() {
     }
 
 }
+
+function drawLoading() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+    //Draw Return Button
+    document.getElementById("gameScreen").style.backgroundColor = "black"
+    globals.ctx.font = "30px Medieval Scroll of Wisdom";
+    globals.ctx.fillStyle = "white";
+    globals.ctx.fillText("The Decrepyt Throne:", 88, 44);
+
+    globals.ctx.font = "16px Medieval Scroll of Wisdom";
+    globals.ctx.fillText("Wound Valley's Inn Journey", 158, 94);
+
+    globals.ctx.fillText("    _______________________________________________________  ", 0, 0);
+    globals.ctx.fillText(`  /    |                                                                                 |.`, 0, 14);
+    globals.ctx.fillText("  |    .|                                                                                 |.", 0, 24);
+    globals.ctx.fillText("  |___|                                                                                 |.", 0, 34);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 44);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 54);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 64);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 74);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 84);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 94);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 104);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 114);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 124);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 134);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 144);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 154);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 164);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 174);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 184);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 194);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 204);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 214);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 224);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 234);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 244);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 254);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 264);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 274);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 284);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 294);
+    globals.ctx.fillText("       |                                                                                 |.", 0, 304);
+    globals.ctx.fillText("       |   ____________________________________________________ ", 0, 314);
+    globals.ctx.fillText("       |  /                                                                              /.", 0, 334);
+    globals.ctx.fillText("       |_/____________________________________________________/.", 0, 354);
+    
+    
+
+
+
+    
+     
+
+    
+    globals.ctx.fillText("Casting the  required Spells ", 160,200)
+    globals.ctx.fillText("to initialize the game ", 193,225)
+    
+
+    // const sprite = globals.sprites[0]
+    // renderSpriteScaled(sprite)
+}
+
+function drawWin() {
+    //Erases Screen
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    
+    //Draw Return Button
+    document.getElementById("gameScreen").style.backgroundColor = "black"
+    globals.ctxHUD.font = "25px Medieval Scroll of Wisdom";
+    globals.ctxHUD.fillStyle = "white";
+    globals.ctxHUD.fillText("LEVEL CLEAR!", 18, 44);
+
+    globals.ctx.font = "20px Medieval Scroll of Wisdom";
+    globals.ctx.fillStyle = "white";
+    globals.ctx.fillText("YOUR SCORE", 108, 64);
+    globals.ctx.fillText(globals.score, 400, 64)
+    globals.ctx.fillText("TIME LEFT", 108, 120);
+    globals.ctx.fillText(globals.levelTime.value + "  x  100", 400, 120)
+    globals.ctx.fillText("TOTAL SCORE", 108, 180);
+    globals.ctx.fillText(globals.score + (globals.levelTime.value * 100), 400, 180)
+    globals.ctx.fillText("Z to Continue", 210,260)
+
+    // const sprite = globals.sprites[0]
+    // renderSpriteScaled(sprite)
+}
+
 
 function moveCamera(){
     // globals.ctx.translate(50, 50)

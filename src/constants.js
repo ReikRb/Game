@@ -12,6 +12,7 @@ const Game = {
     GAMEOVER2:       7,
     CONTROLS:        8,
     HISTORY :        9,
+    WIN:            10,
 }
 
 //Frames Per Second
@@ -157,7 +158,7 @@ const Obstacle = {
     TOP_RIGHT_2:            6,
     BOTH_SIDES_UP:          7,
     TOP_LEFT_2:             8,
-    BLOCK:                  10,
+    BLOCK:                  9,
     LEFT:                   11,
     DARK:                   12,
     RIGHT:                  13,
@@ -166,7 +167,6 @@ const Obstacle = {
     BOTH_SIDES_DOWN:        17,
     BOT_LEFT_2:             18,
     BOTH_SIDES_LEFT:        19,
-    BOTH_SIDES_RIGHT:       20,
     BOT_LEFT:               21,
     BOT:                    22,
     BOT_RIGHT:              23,
@@ -174,6 +174,7 @@ const Obstacle = {
     BOTH_SIDES_FINAL_LEFT:  26,
     BOTH_SIDES_HORIZONTAL:  27,
     BOTH_SIDES_FINAL_RIGHT: 28,
+    BOTH_SIDES_RIGHT:       29,
 }
 
 const ParticleID = {
@@ -191,8 +192,10 @@ const ParticleState = {
     OFF:  -1
 }
 
-export const Prueba = {
-    X: 1
+const Sound = {
+    NO_SOUND: -1,
+    GAME_MUSIC: 0,
+    JUMP: 1
  }
  
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState}
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState, Sound}
