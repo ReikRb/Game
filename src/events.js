@@ -111,7 +111,6 @@ export function createEnemiesEvent() {
 }
 
 export function timedAttackEvent(){
-    console.log(globals.innerTime.value % globals.appearTime);
     const player = globals.sprites[0]
     let crystalX = player.xPos -   150
     let crystalY = player.yPos -    50

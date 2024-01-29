@@ -36,6 +36,7 @@ import BubbleParticle from "./particles/Bubble.js";
 import StarParticle from "./particles/Star.js";
 import Line from "./Line.js";
 import MenuParticle from "./particles/Menu.js";
+import { Coin } from "./sprites/Coin.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -420,6 +421,10 @@ function initSprites() {
                     initDoor(xPos, yPos, true);
                     break;
 
+                case 49:
+                    initCoin(xPos, yPos)
+                    break;
+
                 default:
                     break;
                 }
@@ -707,7 +712,7 @@ function initSkeleton(xPos, yPos, speed = 40, hp = 3, state = State.RUN_LEFT_2, 
     // const initTimeToChangeDirection = Math.floor(Math.random() * 3) +1;
 
     //Sprite Creation
-    const skeleton = new Skeleton(SpriteId.SKELETON, state, (xPos-15), yPos, imageSet, frames, physics, hitBox,hp,score)
+    const skeleton = new Skeleton(SpriteId.SKELETON, state, (xPos-47), (yPos-32), imageSet, frames, physics, hitBox,hp,score)
 
     //Adds Sprite to Array
     globals.sprites.push(skeleton)
@@ -727,6 +732,21 @@ function initKey(xPos,yPos){
     globals.sprites.push(key)
 }
 
+function initCoin(xPos,yPos){
+    //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
+    const imageSet = new ImageSet(5,       2,      19,    20,     140,      10,      130)
+
+    //Animation Data (8 Frames / State)
+    const frames = new Frames (5,11)
+    const hitBox = new HitBox(19, 20, 0, 0)
+
+    //Sprite Creation
+    const coin = new Coin(SpriteId.COIN, State.IDLE_3, xPos, yPos, imageSet, frames, hitBox)
+
+    //Adds Sprite to Array
+    globals.sprites.push(coin)
+}
+
 function initCheckPoint(xPos, yPos){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(16,       2,      35,    45,     140,     64,      110)
@@ -735,7 +755,7 @@ function initCheckPoint(xPos, yPos){
     const frames = new Frames (5,8)
     const hitBox = new HitBox(25, 38, 5, 3)
     //Sprite Creation
-    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, xPos, (yPos+25), imageSet, frames, hitBox)
+    const checkpoint = new Checkpoint(SpriteId.CHECKPOINT, State.IDLE_3, xPos, (yPos-7), imageSet, frames, hitBox)
 
     //Adds Sprite to Array
     globals.sprites.push(checkpoint)
@@ -803,7 +823,7 @@ function initPlatform(xPos, yPos, speed=0.7) {
         const hitBox = new HitBox(92, 15, 4,0)
 
         //Sprite Creation
-        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos, yPos, imageSet, frames,physics,hitBox,3)
+        const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, (xPos-17), yPos, imageSet, frames,physics,hitBox,3)
 
         // setPlatformPosition(platform);
 
@@ -826,7 +846,7 @@ function initPlatformHorizontal(xPos,yPos,maxRange=100) {
     const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation
-    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos, yPos, imageSet, frames,physics,hitBox,2, maxRange)
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, (xPos-17), yPos, imageSet, frames,physics,hitBox,2, maxRange)
 
     // setPlatformPosition(platform);
 
@@ -848,7 +868,7 @@ function initPlatformVertical(xPos, yPos, maxRange) {
     const hitBox = new HitBox(92, 15, 4, 0)
 
     //Sprite Creation
-    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, xPos+15, yPos, imageSet, frames,physics,hitBox,1, maxRange)
+    const platform = new Platform(SpriteId.PLATFORM, State.PLATFORM_RIGHT, (xPos-17), yPos, imageSet, frames,physics,hitBox,1, maxRange)
 
     // setPlatformPosition(platform);
 

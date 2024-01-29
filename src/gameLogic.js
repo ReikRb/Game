@@ -33,7 +33,7 @@ export default function update() {
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
             initTimersTemporal()
-            globals.currentLevel = 1
+            // globals.currentLevel = 1
             initLevel()
             globals.key = true
             initSprites()

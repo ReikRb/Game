@@ -42,7 +42,8 @@ const SpriteId = {
     POWER: 18,
     JUMPVFX:19,
     SPIKE: 20,
-    LOBBYPLAYER: 21
+    LOBBYPLAYER: 21,
+    COIN: 22
 
 }
 
