@@ -250,7 +250,7 @@ function drawHistory() {
     //Draw Title
     globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
     globals.ctxHUD.fillStyle = "white";
-    globals.ctxHUD.fillText("Chapter 3: To the Twilight Inn", 28, 30);
+    globals.ctxHUD.fillText("Chapter 3: Wound Valley's Inn Journey ", 28, 30);
 
     //Draw Return Button
     globals.ctx.font = "15px Medieval Scroll of Wisdom";

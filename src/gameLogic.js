@@ -80,7 +80,7 @@ export default function update() {
         case Game.LOAD_HISTORY:
             globals.sprites = []
             initParchmentBackground();
-            initText(story, 76)
+            initText(story, 120)
             globals.gameState = Game.HISTORY
             break;
 
