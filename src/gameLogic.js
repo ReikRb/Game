@@ -38,7 +38,6 @@ export default function update() {
             initLevel()
             globals.key = true
             initSprites()
-            levelNumber()
             globals.gameState = Game.PLAYING
             break;
 
