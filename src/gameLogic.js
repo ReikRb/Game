@@ -5,7 +5,6 @@ import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
-import levelNumber from "./try.js";
 
 export default function update() {
 
