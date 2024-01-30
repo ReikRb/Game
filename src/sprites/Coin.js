@@ -6,7 +6,6 @@ export class Coin extends Sprite {
         this.hitBox = hitBox
     }
     update(){
-        console.log("im here");
 
         if (this.isCollidingWithPlayer) {
             let index = globals.sprites.indexOf(this)

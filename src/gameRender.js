@@ -193,6 +193,7 @@ function drawGameOver() {
     } else {
         globals.ctx.fillText("YOU MANAGED TO REACH TO THE INN", 58, 64);
         globals.ctx.fillText("CONGRATULATIONS ! !", 158, 120);
+        globals.ctx.fillText("X to Continue", 360,360)
     }
 
     const sprite = globals.sprites[0]
@@ -427,7 +428,7 @@ function renderSprites() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
         // drawSpriteRectangle(sprite)
-        drawHitBox(sprite)
+        // drawHitBox(sprite)
          renderSprite(sprite)
     }
 }

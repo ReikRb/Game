@@ -81,6 +81,8 @@ export default {
     particles: [],
     fireworkCounter: 0,
 
+    monsterEventCounter: 0,
+
     position: 1,
     positionCD: 0,
 

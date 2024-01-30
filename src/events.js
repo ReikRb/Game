@@ -1,7 +1,8 @@
-import { getMapTileId, isCollidingWithObstacleAt } from "./collisions.js";
+import { isCollidingWithObstacleAt } from "./collisions.js";
 import { Key, Sound, State } from "./constants.js";
 import globals from "./globals.js";
 import { initSkeleton, initCrystal } from "./initialize.js";
+import { eventPos } from "./Level.js";
 
 export function keydownHandler(event) {
     switch (event.keyCode) {
@@ -121,3 +122,40 @@ export function timedAttackEvent(){
     }
 }
 
+export function positionMonsterEvent() {
+    const player = globals.sprites[0]
+    const spawnPosX = eventPos[globals.currentLevel][0]
+    const spawnPosY = eventPos[globals.currentLevel][1]
+
+if (player.xPos > spawnPosX         &&
+    player.xPos < (spawnPosX + 30) &&
+    player.yPos > spawnPosY -50     &&
+    player.yPos < spawnPosY +1        &&
+    globals.monsterEventCounter <  ((globals.currentLevel *50)+50)
+    ) {
+    
+        if (globals.monsterEventCounter % 50 === 0) {
+            let SkeletonX = player.xPos - 150
+            let SkeletonY = player.yPos - 50
+        
+            if (!isCollidingWithObstacleAt(SkeletonX, SkeletonY)) {
+                initSkeleton(SkeletonX, SkeletonY, 60, 1, State.RUN_RIGHT_2,400)
+            }
+        
+             SkeletonX = player.xPos + 200
+             SkeletonY = player.yPos - 50
+        
+            if (!isCollidingWithObstacleAt(SkeletonX, SkeletonY)) {
+                initSkeleton(SkeletonX, SkeletonY, 60, 1, State.RUN_LEFT_2,400)
+            }
+    
+            globals.monsterEventCounter++
+            
+        } else {
+            globals.monsterEventCounter++
+        }
+}
+
+                
+            
+}

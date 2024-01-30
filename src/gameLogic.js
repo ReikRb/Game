@@ -3,7 +3,7 @@ import { Game, State, Sound } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
-import { createEnemiesEvent, timedAttackEvent, updateMusic } from "./events.js";
+import { createEnemiesEvent, positionMonsterEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
 
 export default function update() {
@@ -33,9 +33,10 @@ export default function update() {
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
             initTimersTemporal()
-            // globals.currentLevel = 1
+            globals.currentLevel = 1
             initLevel()
-            // globals.key = true
+            globals.key = true
+            // globals.levelTime.value = 5
             initSprites()
             globals.gameState = Game.PLAYING
             break;
@@ -195,7 +196,9 @@ function playGame() {
     updateScore();
     createEnemiesEvent()
     timedAttackEvent()
+    positionMonsterEvent()
     playSound()
+    
 }
 
 function playSound() {
