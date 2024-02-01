@@ -198,5 +198,7 @@ const Sound = {
     GAME_MUSIC: 0,
     JUMP: 1
  }
+
+const ScoreWheel = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "V", "W", "X", "Y", "Z"]
  
-export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState, Sound}
+export {Game, FPS, SpriteId, Key, State, Tile, Block ,GRAVITY, Collision, Obstacle, ParticleID, ParticleState, Sound, ScoreWheel}

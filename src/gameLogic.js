@@ -5,6 +5,7 @@ import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, positionMonsterEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
+import { createHighScores } from "./HighScore.js";
 
 export default function update() {
 
@@ -12,6 +13,7 @@ export default function update() {
     switch (globals.gameState) {
         case Game.LOADING:
             console.log("Loading assets...");
+            createHighScores()
             break;
 
         case Game.LOAD_MAIN_MENU:

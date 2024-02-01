@@ -89,4 +89,10 @@ export default {
     lines:[],
     lineCounter: 0,
     typingCounter: 0,
+
+    firstScoreWheelValue: 0,
+    secondScoreWheelValue: 0,
+    thirdScoreWheelValue: 0,
+
+    highScores:[]
 }
