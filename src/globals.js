@@ -90,9 +90,81 @@ export default {
     lineCounter: 0,
     typingCounter: 0,
 
-    firstScoreWheelValue: 0,
-    secondScoreWheelValue: 0,
-    thirdScoreWheelValue: 0,
+    scoreWheelValues: [0,0,0],
 
-    highScores:[]
+    highScores:[
+        {
+            id: 0,
+            name: "ABD",
+            score: 5000
+            
+        },
+        {
+            id: 1,
+            name: "URB",
+            score: 12000
+            
+        },
+        {
+            id: 2,
+            name: "ORB",
+            score: 5300
+            
+        },
+        {
+            id: 3,
+            name: "MLG",
+            score: 1000
+            
+        },
+        {
+            id: 4,
+            name: "XXX",
+            score: 9900
+            
+        },
+        {
+            id: 5,
+            name: "ABD",
+            score: 8800
+            
+        },
+        {
+            id: 6,
+            name: "MSD",
+            score: 1200
+            
+        },
+        {
+            id: 7,
+            name: "SRK",
+            score: 6000
+            
+        },
+        {
+            id: 8,
+            name: "TYP",
+            score: 16000
+            
+        },
+        {
+            id: 9,
+            name: "ABD",
+            score: 11000
+            
+        },
+        {
+            id: 10,
+            name: "URB",
+            score: 3500
+            
+        },
+        {
+            id: 11,
+            name: "AVD",
+            score: 14000
+            
+        },
+
+    ]
 }

@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import {Game, ParticleID, ParticleState} from "./constants.js"
+import {Game, ParticleID, ParticleState, ScoreWheel} from "./constants.js"
 import { Tile } from "./constants.js";
 import { levels } from "./Level.js";
 //Graphic Renderer Method
@@ -139,33 +139,14 @@ function drawHighScore() {
             globals.ctx.fillText("SCORE", 355, 130);
 
             globals.ctx.font = "12px Medieval Scroll of Wisdom";
-            globals.ctx.fillText("1", 135, 160);
-            globals.ctx.fillText("AAA", 243, 160);
-            globals.ctx.fillText("127574", 365, 160);
+            for (let i = 0; i < globals.highScores.length; i++) {
+                const highScore = globals.highScores[i];
 
-            globals.ctx.fillText("2", 135, 190);
-            globals.ctx.fillText("URB", 243, 190);
-            globals.ctx.fillText("113896", 365, 190);
-
-            globals.ctx.fillText("3", 135, 220);
-            globals.ctx.fillText("AFS", 243, 220);
-            globals.ctx.fillText("105893", 365, 220);
-
-            globals.ctx.fillText("4", 135, 250);
-            globals.ctx.fillText("ZZZ", 243, 250);
-            globals.ctx.fillText("102833", 365, 250);
-
-            globals.ctx.fillText("5", 135, 280);
-            globals.ctx.fillText("YRM", 243, 280);
-            globals.ctx.fillText("98734", 365, 280);
-
-            globals.ctx.fillText("6", 135, 310);
-            globals.ctx.fillText("OCS", 243, 310);
-            globals.ctx.fillText("79385", 365, 310);
-
-            globals.ctx.fillText("7", 135, 340);
-            globals.ctx.fillText("JGF", 243, 340);
-            globals.ctx.fillText("50389", 365, 340);
+                globals.ctx.fillText(i+1, 135, 160);
+                globals.ctx.fillText(highScore.name, 243, 160);
+                globals.ctx.fillText(highScore.score, 365, 160);
+                
+            }
 
 }
 
@@ -188,12 +169,15 @@ function drawGameOver() {
         globals.ctx.fillText("HIGHSCORE", 108, 120);
         globals.ctx.fillText(globals.highScore, 400, 120)
         globals.ctx.fillText("NAME", 108, 180);
-        globals.ctx.fillText("AAA", 400, 180)
-        globals.ctx.fillText("X to Return", 20,360)
+        globals.ctx.fillText("" +   ScoreWheel[globals.scoreWheelValues[0]]+
+                                    ScoreWheel[globals.scoreWheelValues[1]]+
+                                    ScoreWheel[globals.scoreWheelValues[2]], 400, 180)
+        globals.ctx.fillText("_", 403+(globals.position-1)*15, 185);
+        globals.ctx.fillText("Enter to Continue", 20,360)
     } else {
         globals.ctx.fillText("YOU MANAGED TO REACH TO THE INN", 58, 64);
         globals.ctx.fillText("CONGRATULATIONS ! !", 158, 120);
-        globals.ctx.fillText("X to Continue", 360,360)
+        globals.ctx.fillText("Enter to Continue", 360,360)
     }
 
     const sprite = globals.sprites[0]

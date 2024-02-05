@@ -14,7 +14,7 @@ export class Player extends Sprite {
         this.previousLife = 0
     }
      update() {
-        console.log(Math.floor(this.xPos), Math.floor(this.yPos));
+        // console.log(Math.floor(this.xPos), Math.floor(this.yPos));
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         } 

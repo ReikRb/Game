@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import { Game, State, Sound } from "./constants.js"
+import { Game, State, Sound, ScoreWheel } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
@@ -8,7 +8,6 @@ import { levels } from "./Level.js";
 import { createHighScores } from "./HighScore.js";
 
 export default function update() {
-
     //Modifies Game Depending On Game State
     switch (globals.gameState) {
         case Game.LOADING:
@@ -69,6 +68,8 @@ export default function update() {
         case Game.GAMEOVER2:
             updateSprites()
             updateSelection()
+            updateScoreWheel()
+            postScore()
             break;
 
         
@@ -136,6 +137,53 @@ function updateText() {
 
 }
 
+function updateScoreWheel() {
+    if (globals.gameState === Game.GAMEOVER2) {
+        if (globals.positionCD === 0) {
+            if (globals.action.moveRight) {
+                globals.position++
+                globals.position = globals.position > 3 ? 3 : globals.position
+                globals.positionCD++
+            } else if (globals.action.moveLeft) {
+                globals.position--
+                globals.position = globals.position < 1 ? 1 : globals.position
+                globals.positionCD++
+            } else if (globals.action.moveUp) {
+                globals.scoreWheelValues[globals.position-1]++
+                globals.scoreWheelValues[globals.position-1] = globals.scoreWheelValues[globals.position-1] > 24 ? 0 : globals.scoreWheelValues[globals.position-1]
+                globals.positionCD++
+            } else if (globals.action.moveDown) {
+                globals.scoreWheelValues[globals.position-1]--
+                globals.scoreWheelValues[globals.position-1] = globals.scoreWheelValues[globals.position-1] < 0 ? 24 : globals.scoreWheelValues[globals.position-1]
+                globals.positionCD++
+            } 
+        } else {
+
+            globals.positionCD = globals.positionCD > 5 ? 0 : (globals.positionCD + 1)
+
+        }
+    } 
+}
+
+function postScore() {
+        if (globals.action.enter) {
+            const newHighScore = {
+                id: globals.highScores.length+1,
+                name: "" + ScoreWheel[globals.scoreWheelValues[0]]+
+                           ScoreWheel[globals.scoreWheelValues[1]]+
+                           ScoreWheel[globals.scoreWheelValues[2]],
+                score: globals.score
+                
+            }
+            globals.highScores.push(newHighScore)
+            updateHighScore()
+            globals.gameState = Game.LOAD_MAIN_MENU;
+        }
+}
+
+function updateHighScore() {
+    globals.highScores.sort()
+}
 function updateSelection() {
 
     if (globals.gameState === Game.MAIN_MENU) {

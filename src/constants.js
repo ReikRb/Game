@@ -55,7 +55,8 @@ const Key = {
     DOWN: 40,
     JUMP: 32,
     FIRE: 90,
-    RETURN: 88
+    RETURN: 88,
+    ENTER: 13
 }
 
 

@@ -34,6 +34,10 @@ export function keydownHandler(event) {
             globals.action.return = true;
             break;
 
+        case Key.ENTER:
+            globals.action.enter = true;
+            break;
+
     }
 }
 
@@ -65,6 +69,10 @@ export function keyupHandler(event) {
 
         case Key.RETURN:
             globals.action.return = false;
+            break;
+
+        case Key.ENTER:
+            globals.action.enter = false;
             break;
     }
 }
