@@ -5,6 +5,7 @@ const Game = {
     LOADING:         0,
     LOAD_MAIN_MENU:  1,
     MAIN_MENU:       2,
+    LOAD_HIGHSCORE:  11,
     HIGHSCORE:       3,
     LOAD_LEVEL:      4,
     PLAYING:         5,

@@ -5,7 +5,7 @@ import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, positionMonsterEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
-import { createHighScores } from "./HighScore.js";
+import { calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
 
 export default function update() {
     //Modifies Game Depending On Game State
@@ -18,6 +18,7 @@ export default function update() {
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
             globals.currentLevel = 0
+
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
@@ -36,7 +37,7 @@ export default function update() {
             initTimersTemporal()
             globals.currentLevel = 1
             initLevel()
-            globals.key = true
+            globals.score = 5111
             // globals.levelTime.value = 5
             initSprites()
             globals.gameState = Game.PLAYING
@@ -53,15 +54,22 @@ export default function update() {
             // initLobbyPlayer(200, 190, State.IDLE_RIGHT)
             break;
 
-        case Game.HIGHSCORE:
+        case Game.LOAD_HIGHSCORE:
             globals.sprites = []
             initParchmentBackground();
+            sortHighScores()
+            globals.gameState = Game.HIGHSCORE
+            break;
+
+        case Game.HIGHSCORE:
             updateSelection()
+            updateHighScorePage()
             break;
 
         case Game.GAMEOVER:
             globals.sprites = []
             initGameOver()
+            calculatePositionHighScore()
             globals.gameState = Game.GAMEOVER2
             break;
 
@@ -137,6 +145,25 @@ function updateText() {
 
 }
 
+function updateHighScorePage() {
+    if (globals.positionCD === 0) {
+        const maxPages = Math.ceil(globals.highScores.length/10)
+        console.log(globals.highScores, maxPages, globals.highScorePage);
+        if (globals.action.moveRight) {
+            globals.highScorePage++
+            globals.highScorePage = globals.highScorePage > maxPages-1 ? maxPages-1 : globals.highScorePage
+            globals.positionCD++
+        } else if (globals.action.moveLeft) {
+            globals.highScorePage--
+            globals.highScorePage = globals.highScorePage < 0 ? 0 : globals.highScorePage
+            globals.positionCD++
+        } 
+    } else {
+
+        globals.positionCD = globals.positionCD > 5 ? 0 : (globals.positionCD + 1)
+
+    }
+}
 function updateScoreWheel() {
     if (globals.gameState === Game.GAMEOVER2) {
         if (globals.positionCD === 0) {
@@ -176,14 +203,14 @@ function postScore() {
                 
             }
             globals.highScores.push(newHighScore)
-            updateHighScore()
-            globals.gameState = Game.LOAD_MAIN_MENU;
+            sortHighScores()
+            globals.highScorePage = Math.floor(globals.scorePos / 10)
+            console.log(globals.highScorePage);
+            globals.gameState = Game.LOAD_HIGHSCORE;
         }
 }
 
-function updateHighScore() {
-    globals.highScores.sort()
-}
+
 function updateSelection() {
 
     if (globals.gameState === Game.MAIN_MENU) {
@@ -213,7 +240,7 @@ function updateSelection() {
                         globals.gameState = Game.CONTROLS;
                         break;
                     case 4:
-                        globals.gameState = Game.HIGHSCORE;
+                        globals.gameState = Game.LOAD_HIGHSCORE;
                         break;
 
                     default:
@@ -379,6 +406,9 @@ function restoreDefaultValues() {
     globals.mana                = 100
 
     globals.score               = 0
+    globals.scoreWheelValues    = [0,0,0] 
+    globals.scorePos            = 0
+    globals.highScorePage       = 0
 
     globals.key                 = false
 

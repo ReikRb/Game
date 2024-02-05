@@ -130,21 +130,22 @@ function drawHighScore() {
             //Draw Title
             globals.ctx.font = "30px Medieval Scroll of Wisdom";
             globals.ctx.fillStyle = "black";
-            globals.ctx.fillText("LEADERBOARD", 155, 90);
+            globals.ctx.fillText("LEADERBOARD", 155, 50);
 
             //Draw List
             globals.ctx.font = "15px Medieval Scroll of Wisdom";
-            globals.ctx.fillText("RANK", 115, 130);
-            globals.ctx.fillText("NAME", 235, 130);
-            globals.ctx.fillText("SCORE", 355, 130);
+            globals.ctx.fillText("RANK", 115, 80);
+            globals.ctx.fillText("NAME", 235, 80);
+            globals.ctx.fillText("SCORE", 355, 80);
 
             globals.ctx.font = "12px Medieval Scroll of Wisdom";
-            for (let i = 0; i < globals.highScores.length; i++) {
+            for (let i = (globals.highScorePage*10); i < (globals.highScorePage*10+10); i++) {
                 const highScore = globals.highScores[i];
-
-                globals.ctx.fillText(i+1, 135, 160);
-                globals.ctx.fillText(highScore.name, 243, 160);
-                globals.ctx.fillText(highScore.score, 365, 160);
+                if (highScore) {
+                    globals.ctx.fillText(i+1, 135, 100 + (i-(globals.highScorePage*10))*30);
+                    globals.ctx.fillText(highScore.name, 243, 100 + (i-(globals.highScorePage*10))*30);
+                    globals.ctx.fillText(highScore.score, 365, 100 + (i-(globals.highScorePage*10))*30);   
+                }
                 
             }
 
@@ -164,15 +165,47 @@ function drawGameOver() {
     globals.ctx.font = "20px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
     if (globals.currentLevel < levels.length) {
-        globals.ctx.fillText("YOUR SCORE", 108, 64);
-        globals.ctx.fillText(globals.score, 400, 64)
-        globals.ctx.fillText("HIGHSCORE", 108, 120);
-        globals.ctx.fillText(globals.highScore, 400, 120)
-        globals.ctx.fillText("NAME", 108, 180);
+        // globals.ctx.fillText("YOUR SCORE", 108, 64);
+        // globals.ctx.fillText(globals.score, 400, 64)
+        // globals.ctx.fillText("HIGHSCORE", 108, 120);
+        // globals.ctx.fillText(globals.highScore, 400, 120)
+        // globals.ctx.fillText("NAME", 108, 180);
+        console.log(globals.scorePos);
+        if (globals.scorePos-2 >= 1) {
+
+            globals.ctx.fillText(globals.scorePos-2+1, 50, 60);
+            globals.ctx.fillText(globals.highScores[globals.scorePos-2].name, 230, 60)
+            globals.ctx.fillText(globals.highScores[globals.scorePos-2].score, 380, 60);    
+        }
+        if (globals.scorePos-1 >= 0) {
+
+            globals.ctx.fillText(globals.scorePos-1+1, 50, 80);
+            globals.ctx.fillText(globals.highScores[globals.scorePos-1].name, 230, 80)
+            globals.ctx.fillText(globals.highScores[globals.scorePos-1].score, 380, 80);    
+        }
+
+        globals.ctx.fillText("YOUR SCORE", 50, 100);
         globals.ctx.fillText("" +   ScoreWheel[globals.scoreWheelValues[0]]+
                                     ScoreWheel[globals.scoreWheelValues[1]]+
-                                    ScoreWheel[globals.scoreWheelValues[2]], 400, 180)
-        globals.ctx.fillText("_", 403+(globals.position-1)*15, 185);
+                                    ScoreWheel[globals.scoreWheelValues[2]], 230, 100)
+        globals.ctx.fillText("_", 232+(globals.position-1)*15, 100);
+        globals.ctx.fillText(globals.score, 380, 100);
+
+        if (globals.scorePos <= globals.highScores.length) {
+            globals.ctx.fillText(globals.scorePos+2, 50, 120);
+            globals.ctx.fillText(globals.highScores[globals.scorePos].name, 230, 120)
+            globals.ctx.fillText(globals.highScores[globals.scorePos].score, 380, 120);    
+        }
+        if (globals.scorePos+1 <= globals.highScores.length) {
+            globals.ctx.fillText(globals.scorePos+1+2, 50, 150);
+            globals.ctx.fillText(globals.highScores[globals.scorePos+1].name, 230, 150)
+            globals.ctx.fillText(globals.highScores[globals.scorePos+1].score, 380, 150);    
+        }
+
+
+
+
+
         globals.ctx.fillText("Enter to Continue", 20,360)
     } else {
         globals.ctx.fillText("YOU MANAGED TO REACH TO THE INN", 58, 64);
@@ -269,8 +302,8 @@ function drawLoading() {
 
     globals.ctx.fillText("    _______________________________________________________  ", 0, 0);
     globals.ctx.fillText(`  /    |                                                                                 |.`, 0, 14);
-    globals.ctx.fillText("  |    .|                                                                                 |.", 0, 24);
-    globals.ctx.fillText("  |___|                                                                                 |.", 0, 34);
+    globals.ctx.fillText("  |    |                                                                                 |.", 0, 24);
+    globals.ctx.fillText("   |___|                                                                                 |.", 0, 34);
     globals.ctx.fillText("       |                                                                                 |.", 0, 44);
     globals.ctx.fillText("       |                                                                                 |.", 0, 54);
     globals.ctx.fillText("       |                                                                                 |.", 0, 64);

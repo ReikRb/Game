@@ -23,15 +23,24 @@ export function createHighScores() {
     sortHighScores(globals.highScores)
 }
 
+export function calculatePositionHighScore() {
+    for (let i = 0; i < globals.highScores.length; i++) {
+        const highScore = globals.highScores[i];
+        if (globals.score > highScore.score) {
+            globals.scorePos = i
+            break;
+        }
+        
+    }
+}
+export function sortHighScores() {
+    for (let i = 0; i < globals.highScores.length - 1; i++) {
+        for (let j = 0; j < globals.highScores.length - 1 - i; j++) {
 
-function sortHighScores(array) {
-    for (let i = 0; i < array.length - 1; i++) {
-        for (let j = 0; j < array.length - 1 - i; j++) {
-
-            if (array[j]['id'] > array[j + 1]['id']) {
-                const temp = array[j];
-                array[j] = array[j + 1];
-                array[j + 1] = temp;
+            if (globals.highScores[j]['score'] < globals.highScores[j + 1]['score']) {
+                const temp = globals.highScores[j];
+                globals.highScores[j] = globals.highScores[j + 1];
+                globals.highScores[j + 1] = temp;
             }
         }
     }
