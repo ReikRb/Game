@@ -1,6 +1,13 @@
 import globals from "./globals.js"
 import { ScoreWheel } from "./constants.js"
 
+export class HighScore {
+    constructor(id, name, score){
+        this.id = id
+        this.name = name
+        this.score = score
+    }
+}
 
 export function createHighScores() {
     for (let i = 0; i < 20; i++) {
@@ -9,13 +16,8 @@ export function createHighScores() {
         const thirdLetter = Math.floor(Math.random()*25)
         
         const score = Math.floor(Math.random()*100)*100
-    
-        const highScore = {
-            id: i,
-            name: ("" + ScoreWheel[firstLetter] + ScoreWheel[secondLetter] + ScoreWheel[thirdLetter]),
-            score: score
-    
-        }
+        const name = "" + ScoreWheel[firstLetter] + ScoreWheel[secondLetter] + ScoreWheel[thirdLetter]
+        const highScore = new HighScore (i,name,score)
     
         globals.highScores.push(highScore)
         

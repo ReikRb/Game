@@ -5,7 +5,7 @@ import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, positionMonsterEvent, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
-import { calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
+import { HighScore, calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
 
 export default function update() {
     //Modifies Game Depending On Game State
@@ -92,7 +92,7 @@ export default function update() {
         case Game.LOAD_HISTORY:
             globals.sprites = []
             initParchmentBackground();
-            initText(story, 120)
+            initText(story, 80)
             globals.gameState = Game.HISTORY
             break;
 
@@ -141,29 +141,69 @@ function updateText() {
             globals.typingCounter === 1 ? globals.typingCounter = 0 : globals.typingCounter++
         }  
     }
-    
-
 }
 
 function updateHighScorePage() {
-    if (globals.positionCD === 0) {
-        const maxPages = Math.ceil(globals.highScores.length/10)
-        console.log(globals.highScores, maxPages, globals.highScorePage);
-        if (globals.action.moveRight) {
-            globals.highScorePage++
-            globals.highScorePage = globals.highScorePage > maxPages-1 ? maxPages-1 : globals.highScorePage
-            globals.positionCD++
-        } else if (globals.action.moveLeft) {
-            globals.highScorePage--
-            globals.highScorePage = globals.highScorePage < 0 ? 0 : globals.highScorePage
-            globals.positionCD++
-        } 
-    } else {
-
-        globals.positionCD = globals.positionCD > 5 ? 0 : (globals.positionCD + 1)
-
+    if (globals.leftText >=150 &&
+        globals.midText >=400 &&
+        globals.rightText >=235) {
+            if (globals.positionCD === 0) {
+                const maxPages = Math.ceil(globals.highScores.length/10)
+                if (globals.action.moveRight) {
+                    console.log("pag1+");
+                    globals.highScorePage++
+                    globals.highScorePage = globals.highScorePage > maxPages-1 ? maxPages-1 : globals.highScorePage
+                    globals.positionCD++
+                } else if (globals.action.moveLeft) {
+                    console.log("pag1-");
+                    globals.highScorePage--
+                    globals.highScorePage = globals.highScorePage < 0 ? 0 : globals.highScorePage
+                    globals.positionCD++
+                } 
+            } else {
+        
+                globals.positionCD = globals.positionCD > 5 ? 0 : (globals.positionCD + 1)
+        
+            }
+        }else {
+            updateTextHighScore()
+        }
+}
+function updateTextHighScore(){
+    if (globals.typingCounter === 2) {
+        globals.typingCounter = 0
+        if (globals.leftText <150) {
+            globals.leftText+=3
+        }
+        if (globals.midText<400) {
+            globals.midText+=6
+        }
+        if (globals.rightText<235) {
+            globals.rightText+=4
+        }
+    }else{
+        globals.typingCounter++
+    }
+    resetText(globals.action.moveRight)
+    resetText(globals.action.moveLeft)
+}
+function resetText(action) {
+    const maxPages = Math.ceil(globals.highScores.length/10)
+    if (globals.leftText >=150   && 
+        globals.midText >= 400   && 
+        globals.rightText >= 235 && 
+        action === true          ) {
+        if (globals.highScorePage+1 <= maxPages && action === globals.action.moveRight ||
+            globals.highScorePage-1 >=0         && action === globals.action.moveLeft) {
+                console.log("reseteo");
+                globals.leftText = 0
+                globals.midText = 0
+                globals.rightText = 0
+            
+        }
     }
 }
+
 function updateScoreWheel() {
     if (globals.gameState === Game.GAMEOVER2) {
         if (globals.positionCD === 0) {
@@ -194,14 +234,12 @@ function updateScoreWheel() {
 
 function postScore() {
         if (globals.action.enter) {
-            const newHighScore = {
-                id: globals.highScores.length+1,
-                name: "" + ScoreWheel[globals.scoreWheelValues[0]]+
-                           ScoreWheel[globals.scoreWheelValues[1]]+
-                           ScoreWheel[globals.scoreWheelValues[2]],
-                score: globals.score
+            const id = globals.highScores.length+1
+            const name = "" + ScoreWheel[globals.scoreWheelValues[0]] + ScoreWheel[globals.scoreWheelValues[1]] + ScoreWheel[globals.scoreWheelValues[2]]
+            const score = globals.score
+            const newHighScore = new HighScore(id, name, score)
                 
-            }
+            
             globals.highScores.push(newHighScore)
             sortHighScores()
             globals.highScorePage = Math.floor(globals.scorePos / 10)
@@ -223,7 +261,7 @@ function updateSelection() {
                 globals.position--
                 globals.position = globals.position < 1 ? 1 : globals.position
                 globals.positionCD++
-            } else if (globals.action.fire) {
+            } else if (globals.action.enter) {
                 switch (globals.position) {
                     case 1:
                         globals.sprites = []

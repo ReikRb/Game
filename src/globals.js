@@ -94,5 +94,10 @@ export default {
     scoreWheelValues: [0,0,0],
     scorePos:0,
     highScorePage:0,
+
+    leftText:0,
+    midText:0,
+    rightText:0,
+    pageChange: true
     
 }

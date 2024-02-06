@@ -125,7 +125,7 @@ function drawHighScore() {
             //Draw Return Button
             globals.ctx.font = "15px Medieval Scroll of Wisdom";
             globals.ctx.fillStyle = "black";
-            globals.ctx.fillText("GO BACK", 30, 40);
+            globals.ctx.fillText("X TO BACK", 15, 20);
 
             //Draw Title
             globals.ctx.font = "30px Medieval Scroll of Wisdom";
@@ -142,9 +142,9 @@ function drawHighScore() {
             for (let i = (globals.highScorePage*10); i < (globals.highScorePage*10+10); i++) {
                 const highScore = globals.highScores[i];
                 if (highScore) {
-                    globals.ctx.fillText(i+1, 135, 100 + (i-(globals.highScorePage*10))*30);
-                    globals.ctx.fillText(highScore.name, 243, 100 + (i-(globals.highScorePage*10))*30);
-                    globals.ctx.fillText(highScore.score, 365, 100 + (i-(globals.highScorePage*10))*30);   
+                    globals.ctx.fillText(i+1, -15+globals.leftText, 100 + (i-(globals.highScorePage*10))*30);
+                    globals.ctx.fillText(highScore.name, 243, 500-globals.midText + (i-(globals.highScorePage*10))*30);
+                    globals.ctx.fillText(highScore.score, 600-globals.rightText, 100 + (i-(globals.highScorePage*10))*30);   
                 }
                 
             }
@@ -173,33 +173,33 @@ function drawGameOver() {
         console.log(globals.scorePos);
         if (globals.scorePos-2 >= 1) {
 
-            globals.ctx.fillText(globals.scorePos-2+1, 50, 60);
-            globals.ctx.fillText(globals.highScores[globals.scorePos-2].name, 230, 60)
-            globals.ctx.fillText(globals.highScores[globals.scorePos-2].score, 380, 60);    
+            globals.ctx.fillText(globals.scorePos-2+1, 50, 50);
+            globals.ctx.fillText(globals.highScores[globals.scorePos-2].name, 230, 50)
+            globals.ctx.fillText(globals.highScores[globals.scorePos-2].score, 380, 50);    
         }
         if (globals.scorePos-1 >= 0) {
 
-            globals.ctx.fillText(globals.scorePos-1+1, 50, 80);
-            globals.ctx.fillText(globals.highScores[globals.scorePos-1].name, 230, 80)
-            globals.ctx.fillText(globals.highScores[globals.scorePos-1].score, 380, 80);    
+            globals.ctx.fillText(globals.scorePos-1+1, 50, 75);
+            globals.ctx.fillText(globals.highScores[globals.scorePos-1].name, 230, 75)
+            globals.ctx.fillText(globals.highScores[globals.scorePos-1].score, 380, 75);    
         }
 
         globals.ctx.fillText("YOUR SCORE", 50, 100);
         globals.ctx.fillText("" +   ScoreWheel[globals.scoreWheelValues[0]]+
                                     ScoreWheel[globals.scoreWheelValues[1]]+
                                     ScoreWheel[globals.scoreWheelValues[2]], 230, 100)
-        globals.ctx.fillText("_", 232+(globals.position-1)*15, 100);
+        globals.ctx.fillText("_", 235+(globals.position-1)*20, 102);
         globals.ctx.fillText(globals.score, 380, 100);
 
-        if (globals.scorePos <= globals.highScores.length) {
-            globals.ctx.fillText(globals.scorePos+2, 50, 120);
-            globals.ctx.fillText(globals.highScores[globals.scorePos].name, 230, 120)
-            globals.ctx.fillText(globals.highScores[globals.scorePos].score, 380, 120);    
+        if (globals.scorePos < globals.highScores.length) {
+            globals.ctx.fillText(globals.scorePos+2, 50, 125);
+            globals.ctx.fillText(globals.highScores[globals.scorePos].name, 230, 125)
+            globals.ctx.fillText(globals.highScores[globals.scorePos].score, 380, 125);    
         }
-        if (globals.scorePos+1 <= globals.highScores.length) {
-            globals.ctx.fillText(globals.scorePos+1+2, 50, 150);
-            globals.ctx.fillText(globals.highScores[globals.scorePos+1].name, 230, 150)
-            globals.ctx.fillText(globals.highScores[globals.scorePos+1].score, 380, 150);    
+        if (globals.scorePos+1 < globals.highScores.length) {
+            globals.ctx.fillText(globals.scorePos+1+2, 50, 155);
+            globals.ctx.fillText(globals.highScores[globals.scorePos+1].name, 230, 155)
+            globals.ctx.fillText(globals.highScores[globals.scorePos+1].score, 380, 155);    
         }
 
 
@@ -237,7 +237,7 @@ function drawControls() {
     //Draw Return Button
     globals.ctx.font = "15px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "black";
-    globals.ctx.fillText("GO BACK", 30, 40);
+    globals.ctx.fillText("X TO BACK", 15, 20);
 
     //Draw History
     globals.ctx.font = "15px Medieval Scroll of Wisdom";
@@ -256,6 +256,9 @@ function drawControls() {
     globals.ctx.fillText(`RETURN`, 150, 280)
     globals.ctx.fillText(`>`, 260, 280)
     globals.ctx.fillText(`X`, 330, 280)
+    globals.ctx.fillText(`CONFIRM`, 150, 320)
+    globals.ctx.fillText(`>`, 260, 320)
+    globals.ctx.fillText(`ENTER`, 330, 320)
 }
 
 function drawHistory() {
@@ -266,14 +269,14 @@ function drawHistory() {
     renderSprites();
 
     //Draw Title
-    globals.ctxHUD.font = "12px Medieval Scroll of Wisdom";
+    globals.ctxHUD.font = "16px Medieval Scroll of Wisdom";
     globals.ctxHUD.fillStyle = "white";
-    globals.ctxHUD.fillText("Chapter 3: Wound Valley's Inn Journey ", 28, 30);
+    globals.ctxHUD.fillText("Chapter 3", 78, 30);
 
     //Draw Return Button
     globals.ctx.font = "15px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "black";
-    globals.ctx.fillText("GO BACK", 30, 40);
+    globals.ctx.fillText("X TO BACK", 15, 20);
 
     //Draw History
     globals.ctx.font = "10px Medieval Scroll of Wisdom";
