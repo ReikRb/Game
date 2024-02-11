@@ -1,7 +1,8 @@
 import { isCollidingWithObstacleAt } from "./collisions.js";
 import { Key, Sound, State } from "./constants.js";
 import globals from "./globals.js";
-import { initSkeleton, initCrystal } from "./initialize.js";
+import { HighScore } from "./HighScore.js";
+import { initSkeleton, initCrystal, initScores } from "./initialize.js";
 import { eventPos } from "./Level.js";
 
 export function keydownHandler(event) {
@@ -166,4 +167,54 @@ if (player.xPos > spawnPosX         &&
 
                 
             
+}
+
+export function getScores() {
+
+    const url = "http://localhost:3000/Game/server/routes/getAllClassic.php"
+    const request = new XMLHttpRequest();
+
+    request.onreadystatechange = function () {
+        
+        this.readyState     != 4     ? false :
+        this.status         != 200   ? alert("Communication error: " + this.statusText) :
+        this.responseText   === null ? alert("Communication error: No data received") :
+        initScores(JSON.parse(this.responseText))
+    }
+
+    request.open('GET', url, true)
+    request.responseType = "text"
+    request.send()
+}
+
+export function postScore(){
+    if (globals.action.enter) {
+        const name = "" + ScoreWheel[globals.scoreWheelValues[0]] + ScoreWheel[globals.scoreWheelValues[1]] + ScoreWheel[globals.scoreWheelValues[2]]
+        const score = globals.score
+        const newHighScore = new HighScore(name, score)
+            
+        globals.highScorePage = Math.floor(globals.scorePos / 10)       
+
+        const dataToSend = 'name=' + newHighScore.name + '&score=' + newHighScore.score
+        const url = "http://localhost:3000/BookCardExample/server/routes/postClassic.php"
+        const request = new XMLHttpRequest();
+    
+        request.open('POST', url, true)
+        request.setRequestHeader("Content-type", "application/x-www-form-urlencoded")
+    
+        request.onreadystatechange = function () {
+            // const resultJSON = JSON.parse(this.responseText)
+            // const arrayResult = [resultJSON]
+            console.log(this.status);
+            this.readyState     != 4     ? false                                            :
+            this.status         != 200   ? alert("Communication error: " + this.statusText) :
+            this.responseText   === null ? alert("Communication error: No data received")   :
+            initGame([JSON.parse(this.responseText)])
+        }
+    
+        request.responseType = "text"
+        request.send(dataToSend)
+        globals.gameState = Game.LOAD_HIGHSCORE;
+    }
+
 }

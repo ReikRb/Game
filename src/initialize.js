@@ -37,6 +37,7 @@ import StarParticle from "./particles/Star.js";
 import Line from "./Line.js";
 import MenuParticle from "./particles/Menu.js";
 import { Coin } from "./sprites/Coin.js";
+import { HighScore } from "./HighScore.js";
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -942,4 +943,13 @@ function initText(text, lettersQuantity) {
     }
 }
 
-export {initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver }
+function initScores(data) {
+    globals.highScores = []
+
+    for (let i = 0; i < data.length; i++) {
+        const highScore = new HighScore(i, data.name, data.score)
+       
+        globals.highScores.push(highScore)
+    }
+}
+export {initScores, initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver }

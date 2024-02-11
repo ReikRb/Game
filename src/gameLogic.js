@@ -3,7 +3,7 @@ import { Game, State, Sound, ScoreWheel } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
-import { createEnemiesEvent, positionMonsterEvent, timedAttackEvent, updateMusic } from "./events.js";
+import { createEnemiesEvent, getScores, positionMonsterEvent, postScore, timedAttackEvent, updateMusic } from "./events.js";
 import { levels } from "./Level.js";
 import { HighScore, calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
 
@@ -12,7 +12,7 @@ export default function update() {
     switch (globals.gameState) {
         case Game.LOADING:
             console.log("Loading assets...");
-            createHighScores()
+            // createHighScores()
             break;
 
         case Game.LOAD_MAIN_MENU:
@@ -57,6 +57,7 @@ export default function update() {
         case Game.LOAD_HIGHSCORE:
             globals.sprites = []
             initParchmentBackground();
+            getScores()
             sortHighScores()
             globals.gameState = Game.HIGHSCORE
             break;
@@ -230,22 +231,6 @@ function updateScoreWheel() {
 
         }
     } 
-}
-
-function postScore() {
-        if (globals.action.enter) {
-            const id = globals.highScores.length+1
-            const name = "" + ScoreWheel[globals.scoreWheelValues[0]] + ScoreWheel[globals.scoreWheelValues[1]] + ScoreWheel[globals.scoreWheelValues[2]]
-            const score = globals.score
-            const newHighScore = new HighScore(id, name, score)
-                
-            
-            globals.highScores.push(newHighScore)
-            sortHighScores()
-            globals.highScorePage = Math.floor(globals.scorePos / 10)
-            console.log(globals.highScorePage);
-            globals.gameState = Game.LOAD_HIGHSCORE;
-        }
 }
 
 
