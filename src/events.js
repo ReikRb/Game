@@ -1,5 +1,5 @@
 import { isCollidingWithObstacleAt } from "./collisions.js";
-import { Key, Sound, State } from "./constants.js";
+import { Key, Sound, State, ScoreWheel, Game } from "./constants.js";
 import globals from "./globals.js";
 import { HighScore } from "./HighScore.js";
 import { initSkeleton, initCrystal, initScores } from "./initialize.js";
@@ -214,7 +214,7 @@ export function postScore(){
     
         request.responseType = "text"
         request.send(dataToSend)
-        globals.gameState = Game.LOAD_HIGHSCORE;
+        globals.gameState = Game.OVER_SCORE;
     }
 
 }

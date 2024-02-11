@@ -171,7 +171,8 @@ function detectCollisionBetweenPlayerAndSprite(sprite) {
             case SpriteId.SPIKE:
                 
                 if (isOverlap) {
-                    globals.life = 0 
+                    sprite.isCollidingWithPlayer = true
+                     
                 }
                 break;
         }

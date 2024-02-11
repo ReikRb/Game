@@ -199,7 +199,13 @@ const ParticleState = {
 const Sound = {
     NO_SOUND: -1,
     GAME_MUSIC: 0,
-    JUMP: 1
+    JUMP: 1,
+    // DOUBLE_JUMP: 2,
+    COIN: 2,
+    DAMAGE: 3,
+    POWER_UP: 4,
+    CHECKPOINT: 5,
+
  }
 
 const ScoreWheel = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "U", "V", "W", "X", "Y", "Z"]

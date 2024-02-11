@@ -1,6 +1,7 @@
 import Sprite from "./Sprite.js";
 import {initExplosion} from "../initialize.js"
 import globals from "../globals.js";
+import { Sound } from "../constants.js";
 
 export class Checkpoint extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, hitBox){
@@ -15,8 +16,10 @@ export class Checkpoint extends Sprite {
         if (!this.fireworkDone) {
             if (this.used && globals.fireworkCounter < 3) {
                 
-                this.timer === 0 ? initExplosion(this.xPos , this.yPos)  :
-                false
+                if (this.timer === 0) {
+                    initExplosion(this.xPos , this.yPos)
+                    globals.currentSound = Sound.CHECKPOINT
+                }
 
                 if (this.timer === 50) {
                     this.timer = 0

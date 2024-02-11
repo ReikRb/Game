@@ -119,12 +119,20 @@ function loadAssets(){
     globals.sounds.push(gameMusic)
     globals.assetsToLoad.push(gameMusic)
 
-    let jumpSound = document.querySelector("#jumpSound")
-    jumpSound.addEventListener("canplaythrough", loadHandler, false)
-    jumpSound.load()
-    globals.sounds.push(jumpSound)
-    globals.assetsToLoad.push(jumpSound)
+    initSound('jumpSound')
+    initSound('pickupCoinSound')
+    initSound('damageSound')
+    initSound('powerUpSound')
+    initSound('checkPointSound')
 
+}
+
+function initSound(soundName) {
+    let sound = document.querySelector(`#${soundName}`)
+    sound.addEventListener("canplaythrough", loadHandler, false)
+    sound.load()
+    globals.sounds.push(sound)
+    globals.assetsToLoad.push(sound)
 }
 
 function initEvents() {

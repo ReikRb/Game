@@ -1,5 +1,5 @@
 import globals from "./globals.js"
-import { Game, State, Sound, ScoreWheel } from "./constants.js"
+import { Game, State, Sound, ScoreWheel, SpriteId } from "./constants.js"
 import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
@@ -38,6 +38,7 @@ export default function update() {
             globals.currentLevel = 1
             initLevel()
             globals.score = 10111
+            globals.key = true
             // globals.levelTime.value = 5
             initSprites()
             globals.gameState = Game.PLAYING
@@ -372,17 +373,25 @@ function updateLife() {
     for (let i = 0; i < globals.sprites.length; i++) {
         const sprite = globals.sprites[i];
 
-        if (sprite.isCollidingWithPlayer && sprite.id === 1) {
+        if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SKELETON) {
             if (globals.damagedCounter === 0) {
                 globals.life -= 25
+                globals.currentSound = Sound.DAMAGE
+                globals.damagedCounter++
+
+            } 
+
+        } else if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SPIKE) {
+            if (globals.damagedCounter === 0) {
+                globals.life = 0
+                globals.currentSound = Sound.DAMAGE
                 globals.damagedCounter++
 
             }
+        }
 
-            if (globals.life < 0) {
-                globals.life = 0
-            }
-
+        if (globals.life < 0) {
+            globals.life = 0
         }
         if (globals.life > 200) {
             globals.life = 200
