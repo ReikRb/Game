@@ -14,6 +14,7 @@ const Game = {
     CONTROLS:        8,
     HISTORY :        9,
     WIN:            10,
+    OVER_SCORE: 12
 }
 
 //Frames Per Second

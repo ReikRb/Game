@@ -37,7 +37,7 @@ export default function update() {
             initTimersTemporal()
             globals.currentLevel = 1
             initLevel()
-            globals.score = 5111
+            globals.score = 10111
             // globals.levelTime.value = 5
             initSprites()
             globals.gameState = Game.PLAYING
@@ -80,6 +80,9 @@ export default function update() {
             postScore()
             break;
 
+        case Game.OVER_SCORE:
+            updateSelection()
+            break;
         
 
         case Game.CONTROLS:
@@ -244,7 +247,10 @@ function postScore() {
             sortHighScores()
             globals.highScorePage = Math.floor(globals.scorePos / 10)
             console.log(globals.highScorePage);
-            globals.gameState = Game.LOAD_HIGHSCORE;
+            globals.gameState = Game.OVER_SCORE;
+            globals.scorePos = globals.scorePos  === 0 ? 2 :
+                                globals.scorePos === 1  ? 2 :
+                                globals.scorePos
         }
 }
 
@@ -291,7 +297,11 @@ function updateSelection() {
 
         }
     } else {
-        if (globals.action.return) {
+        if (globals.gameState === Game.OVER_SCORE) {
+            if (globals.action.fire) {
+                globals.gameState = Game.LOAD_HIGHSCORE;
+            }
+        }else if (globals.action.return) {
             globals.gameState = Game.LOAD_MAIN_MENU;
         }
 
@@ -461,7 +471,11 @@ function restoreDefaultValues() {
     globals.position            = 1
     globals.positionCD          = 0
 
-    globals.lines               =[]
+    globals.lines               = []
     globals.lineCounter         = 0
     globals.typingCounter       = 0
+    globals.leftText                    = 0
+    globals.midText                     = 0
+    globals.rightText                   = 0
+    globals.pageChange                  = true
 }

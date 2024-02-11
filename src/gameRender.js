@@ -2,6 +2,7 @@ import globals from "./globals.js"
 import {Game, ParticleID, ParticleState, ScoreWheel} from "./constants.js"
 import { Tile } from "./constants.js";
 import { levels } from "./Level.js";
+import { HighScore } from "./HighScore.js";
 //Graphic Renderer Method
 export default function render(){
 
@@ -28,9 +29,12 @@ export default function render(){
             break;
 
         case Game.GAMEOVER2:
-            drawGameOver()
+            drawGameOver();
             break;
-
+        
+        case Game.OVER_SCORE:
+            drawOverScore();
+            break;
         case Game.CONTROLS:
             drawControls();
             break;
@@ -165,44 +169,16 @@ function drawGameOver() {
     globals.ctx.font = "20px Medieval Scroll of Wisdom";
     globals.ctx.fillStyle = "white";
     if (globals.currentLevel < levels.length) {
-        // globals.ctx.fillText("YOUR SCORE", 108, 64);
-        // globals.ctx.fillText(globals.score, 400, 64)
-        // globals.ctx.fillText("HIGHSCORE", 108, 120);
-        // globals.ctx.fillText(globals.highScore, 400, 120)
-        // globals.ctx.fillText("NAME", 108, 180);
-        console.log(globals.scorePos);
-        if (globals.scorePos-2 >= 1) {
 
-            globals.ctx.fillText(globals.scorePos-2+1, 50, 50);
-            globals.ctx.fillText(globals.highScores[globals.scorePos-2].name, 230, 50)
-            globals.ctx.fillText(globals.highScores[globals.scorePos-2].score, 380, 50);    
+        if (globals.score ===globals.highScore) {
+            globals.ctx.fillText("¡¡NEW RECORD!!", 180, 50);
         }
-        if (globals.scorePos-1 >= 0) {
-
-            globals.ctx.fillText(globals.scorePos-1+1, 50, 75);
-            globals.ctx.fillText(globals.highScores[globals.scorePos-1].name, 230, 75)
-            globals.ctx.fillText(globals.highScores[globals.scorePos-1].score, 380, 75);    
-        }
-
         globals.ctx.fillText("YOUR SCORE", 50, 100);
         globals.ctx.fillText("" +   ScoreWheel[globals.scoreWheelValues[0]]+
                                     ScoreWheel[globals.scoreWheelValues[1]]+
                                     ScoreWheel[globals.scoreWheelValues[2]], 230, 100)
         globals.ctx.fillText("_", 235+(globals.position-1)*20, 102);
         globals.ctx.fillText(globals.score, 380, 100);
-
-        if (globals.scorePos < globals.highScores.length) {
-            globals.ctx.fillText(globals.scorePos+2, 50, 125);
-            globals.ctx.fillText(globals.highScores[globals.scorePos].name, 230, 125)
-            globals.ctx.fillText(globals.highScores[globals.scorePos].score, 380, 125);    
-        }
-        if (globals.scorePos+1 < globals.highScores.length) {
-            globals.ctx.fillText(globals.scorePos+1+2, 50, 155);
-            globals.ctx.fillText(globals.highScores[globals.scorePos+1].name, 230, 155)
-            globals.ctx.fillText(globals.highScores[globals.scorePos+1].score, 380, 155);    
-        }
-
-
 
 
 
@@ -217,6 +193,25 @@ function drawGameOver() {
     renderSpriteScaled(sprite)
 }
 
+function drawOverScore() {
+    globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
+    globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
+    globals.ctxHUD.fillText("HIGHSCORE", 18, 44);
+console.log(globals.scorePos);
+    for (let i = -2; i < 3; i++) {
+        const highScore = globals.highScores[globals.scorePos+i];
+        console.log(highScore ,globals.scorePos+i);
+        
+        globals.ctx.fillText(globals.scorePos+i+1, 50, 150+i*25);
+        globals.ctx.fillText(highScore.name, 230, 150+i*25)
+        globals.ctx.fillText(highScore.score, 420, 150+i*25);
+        // if (globals.highScores[globals.scorePos+i+1] != HighScore) {
+        //     break;
+        // }
+    }
+    
+    globals.ctx.fillText("Z to HighScore", 200,360)
+}
 function drawControls() {
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
@@ -284,7 +279,6 @@ function drawHistory() {
     for (let i = 0; i < globals.lines.length; i++) {
         const line = globals.lines[i];
         globals.ctx.fillText(line.typing, line.xPos, line.yPos)
-        
     }
 
 }
