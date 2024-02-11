@@ -2,8 +2,7 @@ import globals from "./globals.js"
 import { ScoreWheel } from "./constants.js"
 
 export class HighScore {
-    constructor(id, name, score){
-        this.id = id
+    constructor(name, score){
         this.name = name
         this.score = score
     }
