@@ -1,5 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
+import { Sound } from "../constants.js";
 
 export class Power extends Sprite {
     constructor (id, state, xPos, yPos, imageSet, frames, hitBox){
@@ -12,6 +13,7 @@ export class Power extends Sprite {
             globals.sprites.splice(index,1)
             globals.powerX = this.xPos
             globals.powerY = this.yPos
+            globals.currentSound = Sound.POWER_UP
         }
 
     }

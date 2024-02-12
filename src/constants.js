@@ -199,12 +199,16 @@ const ParticleState = {
 const Sound = {
     NO_SOUND: -1,
     GAME_MUSIC: 0,
-    JUMP: 1,
+    MENU_MUSIC:1,
+    JUMP: 2,
     // DOUBLE_JUMP: 2,
-    COIN: 2,
-    DAMAGE: 3,
-    POWER_UP: 4,
-    CHECKPOINT: 5,
+    COIN: 3,
+    DAMAGE: 4,
+    POWER_UP: 5,
+    CHECKPOINT: 6,
+    GAME_OVER_MUSIC: 7,
+    VICTORY_MUSIC: 8,
+    STORY_MUSIC:9
 
  }
 

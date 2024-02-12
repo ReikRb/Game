@@ -112,24 +112,24 @@ function loadAssets(){
     globals.assetsToLoad.push(tileSet)
 
     //Load sounds
-    let gameMusic = document.querySelector("#gameMusic")
-    gameMusic.addEventListener("canplaythrough", loadHandler, false)
-    gameMusic.addEventListener("timeupdate", updateMusic, false)
-    gameMusic.load()
-    globals.sounds.push(gameMusic)
-    globals.assetsToLoad.push(gameMusic)
-
+    initSound('gameMusic', true, Sound.GAME_MUSIC)
+    initSound('menuMusic', true, Sound.MENU_MUSIC)
     initSound('jumpSound')
     initSound('pickupCoinSound')
     initSound('damageSound')
     initSound('powerUpSound')
     initSound('checkPointSound')
+    initSound('gameOverMusic', true, Sound.GAME_OVER_MUSIC)
+    initSound('victoryMusic', true, Sound.VICTORY_MUSIC)
+    initSound('storyMusic', true, Sound.STORY_MUSIC)
 
 }
 
-function initSound(soundName) {
+function initSound(soundName, isSong = false, songName) {
     let sound = document.querySelector(`#${soundName}`)
     sound.addEventListener("canplaythrough", loadHandler, false)
+    if (isSong) 
+        gameMusic.addEventListener("timeupdate", updateMusic, false)
     sound.load()
     globals.sounds.push(sound)
     globals.assetsToLoad.push(sound)
@@ -160,8 +160,6 @@ function loadHandler() {
         }
         console.log("Assets loaded")
 
-        //Starts Game
-        globals.gameState = Game.LOAD_MAIN_MENU;
     }
 }
 

@@ -170,7 +170,7 @@ function drawGameOver() {
     globals.ctx.fillStyle = "white";
     if (globals.currentLevel < levels.length) {
 
-        if (globals.score ===globals.highScore) {
+        if (globals.score === globals.highScore) {
             globals.ctx.fillText("¡¡NEW RECORD!!", 180, 50);
         }
         globals.ctx.fillText("YOUR SCORE", 50, 100);
@@ -338,10 +338,17 @@ function drawLoading() {
 
     
      
-
     
-    globals.ctx.fillText("Casting the  required Spells ", 160,200)
-    globals.ctx.fillText("to initialize the game ", 193,225)
+    if (globals.assetsToLoad.length != globals.assetsLoaded) {
+        globals.ctx.fillText("Casting the  required Spells ", 160,200)
+        globals.ctx.fillText("to initialize the game ", 193,225)
+
+        globals.ctx.fillRect(60,334,300*(globals.assetsLoaded/globals.assetsToLoad.length), 10)
+        
+    } else {
+        globals.ctx.fillText("Press Enter to Continue ", 193,225)
+
+    }
     
 
     // const sprite = globals.sprites[0]

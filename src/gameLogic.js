@@ -12,6 +12,7 @@ export default function update() {
     switch (globals.gameState) {
         case Game.LOADING:
             console.log("Loading assets...");
+            updateLoading()
             // createHighScores()
             break;
 
@@ -30,6 +31,7 @@ export default function update() {
             updateSprites()
             updateSelection()
             updateParticles()
+            updateMusic(Sound.MENU_MUSIC)
             break;
 
         case Game.LOAD_LEVEL:
@@ -37,7 +39,7 @@ export default function update() {
             initTimersTemporal()
             globals.currentLevel = 1
             initLevel()
-            globals.score = 10111
+            globals.score = 10100
             globals.key = true
             // globals.levelTime.value = 5
             initSprites()
@@ -70,8 +72,10 @@ export default function update() {
 
         case Game.GAMEOVER:
             globals.sprites = []
+            selectOverMusic()
             initGameOver()
             calculatePositionHighScore()
+            updateGameOverMusic()
             globals.gameState = Game.GAMEOVER2
             break;
 
@@ -80,6 +84,7 @@ export default function update() {
             updateSelection()
             updateScoreWheel()
             postScore()
+            updateGameOverMusic()
             break;
 
         case Game.OVER_SCORE:
@@ -114,7 +119,36 @@ export default function update() {
     }
 
 }
+function selectOverMusic() {
+    globals.sounds[Sound.GAME_MUSIC].pause()
+    if (globals.currentLevel < levels.length) {
+        globals.sounds[Sound.GAME_OVER_MUSIC].play()
+    } else{
+        globals.sounds[Sound.VICTORY_MUSIC].play()
+  
+    }
+}
 
+function updateGameOverMusic() {
+
+    if (globals.currentLevel < levels.length) {
+        updateMusic(Sound.GAME_OVER_MUSIC)
+    } else{
+        updateMusic(Sound.VICTORY_MUSIC)
+    }
+
+    
+}
+function updateLoading() {
+    if (globals.action.enter && globals.assetsLoaded === globals.assetsToLoad.length) {
+
+        globals.sounds[Sound.MENU_MUSIC].play()
+        globals.sounds[Sound.MENU_MUSIC].volume = 0.4
+        globals.positionCD++
+        //Starts Game
+        globals.gameState = Game.LOAD_MAIN_MENU;  
+    }
+}
 function nextLevel() {
         if (globals.action.fire) {
             globals.score += globals.levelTime.value * 100
@@ -254,6 +288,7 @@ function updateSelection() {
                 switch (globals.position) {
                     case 1:
                         globals.sprites = []
+                        globals.sounds[Sound.MENU_MUSIC].pause()
                         globals.sounds[Sound.GAME_MUSIC].play()
                         globals.sounds[Sound.GAME_MUSIC].volume = 0.4
                         globals.gameState = Game.LOAD_LEVEL;
@@ -261,6 +296,8 @@ function updateSelection() {
                         break;
 
                     case 2:
+                        globals.sounds[Sound.MENU_MUSIC].pause()
+                        globals.sounds[Sound.STORY_MUSIC].play()
                         globals.gameState = Game.LOAD_HISTORY;
                         break;
                     case 3:
@@ -305,18 +342,19 @@ function playGame() {
     createEnemiesEvent()
     timedAttackEvent()
     positionMonsterEvent()
-    playSound()
+    playSound(Sound.GAME_MUSIC)
     
 }
 
-function playSound() {
+function playSound(songName) {
     if (globals.currentSound != Sound.NO_SOUND) {
         globals.sounds[globals.currentSound].currentTime = 0
         globals.sounds[globals.currentSound].play()
         globals.currentSound = Sound.NO_SOUND
-        globals.sounds[Sound.GAME_MUSIC].volume = 0.4
+        globals.sounds[songName].volume = 0.4
     }
 }
+
 function updateInnerTime() {
     //Adds the value modifier counter
     globals.innerTime.timeChangeCounter += globals.deltaTime;
@@ -460,7 +498,6 @@ function restoreDefaultValues() {
     globals.fireworkCounter     = 0
 
     globals.position            = 1
-    globals.positionCD          = 0
 
     globals.lines               = []
     globals.lineCounter         = 0

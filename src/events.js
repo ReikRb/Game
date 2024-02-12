@@ -78,9 +78,9 @@ export function keyupHandler(event) {
     }
 }
 
-export function updateMusic() {
-    const buffer = 0.3
-    const music  = globals.sounds[Sound.GAME_MUSIC]
+export function updateMusic(songName = Sound.GAME_MUSIC) {
+    const buffer = 0.01
+    const music  = globals.sounds[songName]
     if (music.currentTime > music.duration - buffer) {
         music.currentTime = 0
         music.play()

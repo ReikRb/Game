@@ -98,6 +98,8 @@ export default {
     leftText:0,
     midText:0,
     rightText:0,
-    pageChange: true
+    pageChange: true,
+
+    loadingCounter: 0
     
 }
