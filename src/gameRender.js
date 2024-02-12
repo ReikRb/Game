@@ -50,7 +50,6 @@ export default function render(){
 }
 
 function drawGame(){
-
     //Erases Screen
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
@@ -197,10 +196,8 @@ function drawOverScore() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     globals.ctxHUD.fillText("HIGHSCORE", 18, 44);
-console.log(globals.scorePos);
     for (let i = -2; i < 3; i++) {
         const highScore = globals.highScores[globals.scorePos+i];
-        console.log(highScore ,globals.scorePos+i);
         
         globals.ctx.fillText(globals.scorePos+i+1, 50, 150+i*25);
         globals.ctx.fillText(highScore.name, 230, 150+i*25)

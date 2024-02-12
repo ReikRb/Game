@@ -39,7 +39,7 @@ export default function update() {
             initTimersTemporal()
             globals.currentLevel = 1
             initLevel()
-            globals.score = 10100
+            globals.score = 5100
             globals.key = true
             // globals.levelTime.value = 5
             initSprites()
@@ -60,9 +60,11 @@ export default function update() {
         case Game.LOAD_HIGHSCORE:
             globals.sprites = []
             initParchmentBackground();
-            getScores()
-            sortHighScores()
-            globals.gameState = Game.HIGHSCORE
+            if (globals.highScores.length != 0){
+                sortHighScores()
+                    globals.gameState = Game.HIGHSCORE
+
+            } 
             break;
 
         case Game.HIGHSCORE:
@@ -74,9 +76,13 @@ export default function update() {
             globals.sprites = []
             selectOverMusic()
             initGameOver()
-            calculatePositionHighScore()
             updateGameOverMusic()
-            globals.gameState = Game.GAMEOVER2
+            if (globals.highScores.length != 0) {
+                sortHighScores()       
+                    calculatePositionHighScore()
+                    globals.gameState = Game.GAMEOVER2
+
+            } 
             break;
 
         case Game.GAMEOVER2:
@@ -84,6 +90,9 @@ export default function update() {
             updateSelection()
             updateScoreWheel()
             postScore()
+            sortHighScores()
+            calculatePositionHighScore()
+ 
             updateGameOverMusic()
             break;
 
@@ -140,6 +149,7 @@ function updateGameOverMusic() {
     
 }
 function updateLoading() {
+    
     if (globals.action.enter && globals.assetsLoaded === globals.assetsToLoad.length) {
 
         globals.sounds[Sound.MENU_MUSIC].play()

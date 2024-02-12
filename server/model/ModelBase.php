@@ -15,7 +15,6 @@ class ModelBase extends Conexion{
         $query = $this->selectDB($this->table_name);
 
         $result = $this->conexion->query($query);
-        
         $array = $this->createArray($result);
 
         return $array;

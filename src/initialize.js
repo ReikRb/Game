@@ -10,7 +10,7 @@ import Frames from "./Frames.js";
 import { Level, level1, monster1,  mainMenu, levels, monsters, playerInitPos } from "./Level.js";
 import Timer from "./Timer.js";
 import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
-import { keydownHandler,keyupHandler, updateMusic } from "./events.js";
+import { getScores, keydownHandler,keyupHandler, updateMusic } from "./events.js";
 import { Mana } from "./sprites/Mana.js";
 import { PowerHUD } from "./sprites/PowerHUD.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
@@ -111,6 +111,7 @@ function loadAssets(){
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet)
 
+    getScores()
     //Load sounds
     initSound('gameMusic', true, Sound.GAME_MUSIC)
     initSound('menuMusic', true, Sound.MENU_MUSIC)
@@ -951,10 +952,8 @@ function initText(text, lettersQuantity) {
 
 function initScores(data) {
     globals.highScores = []
-
     for (let i = 0; i < data.length; i++) {
-        const highScore = new HighScore(i, data.name, data.score)
-       
+        const highScore = new HighScore(data[i].id, data[i].name, data[i].score)
         globals.highScores.push(highScore)
     }
 }

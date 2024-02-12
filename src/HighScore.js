@@ -2,7 +2,8 @@ import globals from "./globals.js"
 import { ScoreWheel } from "./constants.js"
 
 export class HighScore {
-    constructor(name, score){
+    constructor(id, name, score){
+        this.id = id
         this.name = name
         this.score = score
     }
@@ -35,6 +36,7 @@ export function calculatePositionHighScore() {
     }
 }
 export function sortHighScores() {
+    console.log(globals.highScores);
     for (let i = 0; i < globals.highScores.length - 1; i++) {
         for (let j = 0; j < globals.highScores.length - 1 - i; j++) {
 
