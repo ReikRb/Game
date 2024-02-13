@@ -340,10 +340,16 @@ function drawLoading() {
         globals.ctx.fillText("Casting the  required Spells ", 160,200)
         globals.ctx.fillText("to initialize the game ", 193,225)
 
-        globals.ctx.fillRect(60,334,300*(globals.assetsLoaded/globals.assetsToLoad.length), 10)
-        
+        globals.ctx.fillRect(85,324,450*(globals.assetsLoaded/globals.assetsToLoad.length), 20)
+        globals.ctx.fillStyle = "black";
+        globals.ctx.fillText("LOADING", 270,342)
+        globals.ctx.fillStyle = "white";
     } else {
+        globals.ctx.fillRect(85,324,450*(globals.assetsLoaded/globals.assetsToLoad.length), 20)
         globals.ctx.fillText("Press Enter to Continue ", 193,225)
+        globals.ctx.fillStyle = "black";
+        globals.ctx.fillText("LOAD COMPLETE", 220,342)
+        globals.ctx.fillStyle = "white";
 
     }
     

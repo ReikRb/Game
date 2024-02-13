@@ -3,6 +3,11 @@
     src: url("../fonts/emulogic.ttf");
 }
 
+@font-face {
+    font-family: 'Medieval Scroll of Wisdom';
+    src: url("../fonts/Medieval\ Scroll\ of\ Wisdom.ttf");
+}
+
 body{
 margin-left:381px;
 margin-right: 381px;
