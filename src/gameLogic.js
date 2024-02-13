@@ -4,7 +4,7 @@ import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParch
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
 import { createEnemiesEvent, getScores, positionMonsterEvent, postScore, timedAttackEvent, updateMusic } from "./events.js";
-import { levels } from "./Level.js";
+import { levels, playerInitPos } from "./Level.js";
 import { HighScore, calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
 
 export default function update() {
@@ -39,6 +39,8 @@ export default function update() {
             initTimersTemporal()
             globals.currentLevel = 1
             initLevel()
+            globals.checkPointX = playerInitPos[globals.currentLevel][0]
+            globals.checkPointY = playerInitPos[globals.currentLevel][1]
             globals.score = 5100
             globals.key = true
             // globals.levelTime.value = 5
@@ -431,7 +433,7 @@ function updateLife() {
 
         } else if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SPIKE) {
             if (globals.damagedCounter === 0) {
-                globals.life = 0
+                globals.life -= 50
                 globals.currentSound = Sound.DAMAGE
                 globals.damagedCounter++
 
@@ -516,4 +518,7 @@ function restoreDefaultValues() {
     globals.midText                     = 0
     globals.rightText                   = 0
     globals.pageChange                  = true
+
+    globals.checkPointX = 0
+    globals.checkPointY = 0
 }

@@ -100,6 +100,9 @@ export default {
     rightText:0,
     pageChange: true,
 
+    checkPointX:0,
+    checkPointY:0,
+
     loadingCounter: 0
     
 }

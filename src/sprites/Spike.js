@@ -11,6 +11,10 @@ export class Spike extends Sprite {
         
     }
     update(){
-
+        if (this.isCollidingWithPlayer) {
+            const player = globals.sprites[0]
+            player.xPos = globals.checkPointX
+            player.yPos = globals.checkPointY
+        }
     }
 }
