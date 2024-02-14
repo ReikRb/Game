@@ -1,11 +1,11 @@
 import globals from "../globals.js";
 import { ParticleState, GRAVITY } from "../constants.js";
-import  Particle  from "./Particle.js";
+import Particle from "./Particle.js";
 import { initStarParticle } from "../initialize.js";
 
 export default class StarParticle extends Particle {
     constructor(id, state, xPos, yPos, radius, alpha, physics, timeToFade) {
-        super  (id, state, xPos, yPos, radius, alpha, physics)
+        super(id, state, xPos, yPos, radius, alpha, physics)
 
         this.colour         = 'lightblue'
         this.fadeCounter    = 0
@@ -14,7 +14,7 @@ export default class StarParticle extends Particle {
         this.physics.aLimit = 300
     }
 
-    update(){
+    update() {
         this.fadeCounter += globals.deltaTime
 
         switch (this.state) {
@@ -24,7 +24,7 @@ export default class StarParticle extends Particle {
                     this.state = ParticleState.FADE
                 }
                 break;
-        
+
 
             case ParticleState.FADE:
                 this.alpha -= 0.5
@@ -34,7 +34,7 @@ export default class StarParticle extends Particle {
 
             case ParticleState.OFF:
                 let index = globals.particles.indexOf(this)
-                globals.particles.splice(index,1)
+                globals.particles.splice(index, 1)
                 initStarParticle()
                 break;
 
@@ -43,24 +43,24 @@ export default class StarParticle extends Particle {
                 break;
         }
 
-    // this.physics.vx += this.physics.ax * globals.deltaTime
-    this.physics.vy += this.physics.ay * globals.deltaTime;
+        // this.physics.vx += this.physics.ax * globals.deltaTime
+        this.physics.vy += this.physics.ay * globals.deltaTime;
 
-    this.physics.vy > this.aLimit ? this.physics.vy = this.aLimit : this.physics.vy
-    const velModule = Math.sqrt(Math.pow(this.physics.vx, 2) + Math.pow(this.physics.vy, 2))
+        this.physics.vy > this.aLimit ? this.physics.vy = this.aLimit : this.physics.vy
+        const velModule = Math.sqrt(Math.pow(this.physics.vx, 2) + Math.pow(this.physics.vy, 2))
 
-    if (velModule < 1) {
-        this.physics.vx = 0
-        this.physics.vy = 0
-    }
+        if (velModule < 1) {
+            this.physics.vx = 0
+            this.physics.vy = 0
+        }
 
-    this.xPos += this.physics.vx * globals.deltaTime
-    this.yPos += this.physics.vy * globals.deltaTime
+        this.xPos += this.physics.vx * globals.deltaTime
+        this.yPos += this.physics.vy * globals.deltaTime
 
-    if (this.yPos > 1040) {
-        let index = globals.particles.indexOf(this)
-        globals.particles.splice(index,1)
-        initStarParticle()
-    }
+        if (this.yPos > 1040) {
+            let index = globals.particles.indexOf(this)
+            globals.particles.splice(index, 1)
+            initStarParticle()
+        }
     }
 }

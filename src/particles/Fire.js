@@ -1,18 +1,18 @@
 import globals from "../globals.js";
 import { ParticleState, State } from "../constants.js";
-import  Particle  from "./Particle.js";
+import Particle from "./Particle.js";
 import { createFireParticle } from "../initialize.js";
 export default class FireParticle extends Particle {
     constructor(id, state, xPos, yPos, radius, alpha, physics, timeToFade, colour) {
-        super  (id, state, xPos, yPos, radius, alpha, physics)
+        super(id, state, xPos, yPos, radius, alpha, physics)
 
         this.colour         = colour
         this.fadeCounter    = 0
         this.timeToFade     = timeToFade
     }
 
-    update(){
-        
+    update() {
+
 
         const player = globals.sprites[0]
         switch (this.state) {
@@ -25,7 +25,7 @@ export default class FireParticle extends Particle {
                     this.state = ParticleState.OFF
                 }
                 break;
-        
+
 
             case ParticleState.FADE:
                 this.alpha -= 0.3
@@ -38,22 +38,22 @@ export default class FireParticle extends Particle {
 
             case ParticleState.OFF:
                 let index = globals.particles.indexOf(this)
-                globals.particles.splice(index,1)
+                globals.particles.splice(index, 1)
 
-                if (player.state <2 ) { // ONLY WHEN PLAYER IS IDLING
+                if (player.state < 2) { // ONLY WHEN PLAYER IS IDLING
                     let xFirePos
                     let yFirePos
                     if (player.state === State.IDLE_RIGHT) {
-                         xFirePos = player.xPos+player.hitBox.xOffset + 36
-                         yFirePos = player.yPos+player.hitBox.yOffset + 10
-                        
+                        xFirePos = player.xPos + player.hitBox.xOffset + 36
+                        yFirePos = player.yPos + player.hitBox.yOffset + 10
+
                     } else {
-                         xFirePos = player.xPos+player.hitBox.xOffset -5
-                         yFirePos = player.yPos+player.hitBox.yOffset + 10
+                        xFirePos = player.xPos + player.hitBox.xOffset - 5
+                        yFirePos = player.yPos + player.hitBox.yOffset + 10
                     }
-                    
+
                     createFireParticle(xFirePos, yFirePos)
-                    
+
                 }
                 break;
 
@@ -62,8 +62,8 @@ export default class FireParticle extends Particle {
                 break;
         }
 
-    this.xPos += this.physics.vx * globals.deltaTime
-    this.yPos += this.physics.vy * globals.deltaTime
+        this.xPos += this.physics.vx * globals.deltaTime
+        this.yPos += this.physics.vy * globals.deltaTime
 
     }
 }

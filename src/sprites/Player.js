@@ -1,6 +1,6 @@
 import Sprite from "./Sprite.js";
 import globals from "../globals.js"
-import {State, GRAVITY, Game, Sound} from "../constants.js"
+import {State, GRAVITY, Game, Sound, SpriteId} from "../constants.js"
 import { initPlayerAttackVFX,initPlayerFireball, initJumpVFX, initPower, initFire } from "../initialize.js";
 
 
@@ -14,7 +14,6 @@ export class Player extends Sprite {
         this.previousLife = 0
     }
      update() {
-        // console.log(Math.floor(this.xPos), Math.floor(this.yPos));
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         } 
@@ -22,44 +21,10 @@ export class Player extends Sprite {
         //Keyboard event reader
         this.readKeyboardAndAssignState();
         const isLeftOrRightPressed = globals.action.moveLeft || globals.action.moveRight;
-        if        (this.previousState === State.ATTACK_RIGHT && this.frames.frameCounter / (this.frames.framesPerState-1) !=  1) {
-            this.state = State.ATTACK_RIGHT
-            this.physics.isShooting = true
-        } else if (this.previousState === State.ATTACK_RIGHT && this.frames.frameCounter / (this.frames.framesPerState-1) === 1){
-            this.frames.frameCounter = 0
-            this.frames.frameChangeCounter = 0
-            this.physics.shootingIntervalCounter = 0
-        } else if (this.previousState === State.ATTACK_LEFT  && this.frames.frameCounter / (this.frames.framesPerState-1) !=  1) {
-            this.state = State.ATTACK_LEFT
-            this.physics.isShooting = true
-        } else if (this.previousState === State.ATTACK_LEFT  && this.frames.frameCounter / (this.frames.framesPerState-1) === 1){
-            this.frames.frameCounter = 0
-            this.frames.frameChangeCounter = 0
-            this.physics.shootingIntervalCounter = 0
-        } else if (this.previousState === State.DAMAGED_RIGHT && !globals.inmune){
-            this.state = State.DAMAGED_RIGHT
-        } else if (this.previousState === State.DAMAGED_LEFT && !globals.inmune){
-            this.state = State.DAMAGED_LEFT
-        }
-            if (!globals.inmune) {
-                for (let i = 0; i < globals.sprites.length; i++) {
-                    const skeleton = globals.sprites[i];
-                    
-                    if (skeleton.isCollidingWithPlayer && skeleton.id === 1) {
-                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              > 
-                            (skeleton.xPos+skeleton.hitBox.xOffset + (skeleton.hitBox.xSize/2)) ) {
-                            
-                            this.state = State.DAMAGED_LEFT
-                        } else if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              < 
-                                   (skeleton.xPos+skeleton.hitBox.xOffset + (skeleton.hitBox.xSize/2))) {
-                            this.state = State.DAMAGED_RIGHT
-                        }
-                            
-                        
-                    }
-                }
-                
-            }
+
+        this.animationCompletionCheck()
+
+        this.damageAnimationCheck()
 
         //Updates Player's variables State
         switch (this.state) {
@@ -121,19 +86,24 @@ export class Player extends Sprite {
             case State.ATTACK_LEFT:
                 this.frames.framesPerState = 8
                 this.physics.vx=0
+
+                //Resets shooting CD if not attacking
                 if (this.previousState != State.ATTACK_LEFT) {
                     this.physics.shootingIntervalCounter = 0
                 }
-                    if (this.frames.frameCounter / (this.frames.framesPerState-1) != 1 && this.physics.shootingIntervalCounter === 0) {
-                        initPlayerAttackVFX((this.xPos+-22), this.yPos, State.LEFT);
-                        setTimeout(() => { initPlayerFireball((this.xPos + -22), this.yPos, State.LEFT); }, 400);
-                    }
-                    if (this.physics.shootingIntervalCounter === this.physics.shootingInterval) {
-                        this.physics.shootingIntervalCounter = 0
+                //Creates the attack sprite & fireball at an exact frame to match animation
+                if (this.frames.frameCounter / (this.frames.framesPerState-1) != 1 && this.physics.shootingIntervalCounter === 0) {
+                    initPlayerAttackVFX((this.xPos+-22), this.yPos, State.LEFT);
+                    setTimeout(() => { initPlayerFireball((this.xPos + -22), this.yPos, State.LEFT); }, 400);
+                }
+
+                //increases shooting CD counter untill requirement mets. Then resets it
+                if (this.physics.shootingIntervalCounter === this.physics.shootingInterval) {
+                    this.physics.shootingIntervalCounter = 0
     
-                    } else{
-                        this.physics.shootingIntervalCounter++
-                    }
+                } else {
+                    this.physics.shootingIntervalCounter++
+                }
                 break;
             
             case State.JUMP_RIGHT:
@@ -149,6 +119,8 @@ export class Player extends Sprite {
                 this.frames.framesPerState = 8
                 this.frames.speed = 5
                 this.physics.vx = 0
+
+                //Changes Game State if dead animation is completed
                 if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
                     globals.gameState = Game.LOAD_GAMEOVER
                 }
@@ -269,6 +241,49 @@ export class Player extends Sprite {
         this.jumpEvent = globals.action.jump
     }
 
+    damageAnimationCheck(){
+        if (!globals.inmune) {
+            for (let i = 0; i < globals.sprites.length; i++) {
+                const sprite = globals.sprites[i];
+                if (sprite.isCollidingWithPlayer) {
+                    if ( sprite.id === SpriteId.SKELETON ||sprite.id === SpriteId.SPIKE) {
+                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              > 
+                            (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2)) ) {
+                            
+                            this.state = State.DAMAGED_LEFT
+                        } else if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              < 
+                                   (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2))) {
+                            this.state = State.DAMAGED_RIGHT
+                        }
+                    }  
+                }
+
+            }
+            
+        }
+    }
+
+    animationCompletionCheck(){
+        if        (this.previousState === State.ATTACK_RIGHT && this.frames.frameCounter / (this.frames.framesPerState-1) !=  1) {
+            this.state = State.ATTACK_RIGHT
+            this.physics.isShooting = true
+        } else if (this.previousState === State.ATTACK_RIGHT && this.frames.frameCounter / (this.frames.framesPerState-1) === 1){
+            this.frames.frameCounter = 0
+            this.frames.frameChangeCounter = 0
+            this.physics.shootingIntervalCounter = 0
+        } else if (this.previousState === State.ATTACK_LEFT  && this.frames.frameCounter / (this.frames.framesPerState-1) !=  1) {
+            this.state = State.ATTACK_LEFT
+            this.physics.isShooting = true
+        } else if (this.previousState === State.ATTACK_LEFT  && this.frames.frameCounter / (this.frames.framesPerState-1) === 1){
+            this.frames.frameCounter = 0
+            this.frames.frameChangeCounter = 0
+            this.physics.shootingIntervalCounter = 0
+        } else if (this.previousState === State.DAMAGED_RIGHT && !globals.inmune){
+            this.state = State.DAMAGED_RIGHT
+        } else if (this.previousState === State.DAMAGED_LEFT && !globals.inmune){
+            this.state = State.DAMAGED_LEFT
+        }
+    }
 
     readKeyboardAndAssignState() {
         if (globals.life <= 0) {
