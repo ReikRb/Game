@@ -28,7 +28,7 @@ export default function render(){
             drawWin();
             break;
 
-        case Game.GAMEOVER2:
+        case Game.GAMEOVER:
             drawGameOver();
             break;
         
@@ -203,7 +203,6 @@ function drawOverScore() {
         if (i === 0) {
             globals.ctx.fillStyle = "red";
         }
-        console.log(parseInt(highScore.id), globals.scorePos);
         globals.ctx.fillText(globals.scorePos+i+1, 50, 150+i*25);
         globals.ctx.fillText(highScore.name, 230, 150+i*25)
         globals.ctx.fillText(highScore.score, 420, 150+i*25);

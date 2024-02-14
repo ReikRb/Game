@@ -19,8 +19,7 @@ export default function update() {
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
             globals.currentLevel = 0
-            // globals.sounds[Sound.MENU_MUSIC].play()
-            // globals.sounds[Sound.MENU_MUSIC].volume = 0.4
+            
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
@@ -29,10 +28,13 @@ export default function update() {
             break;
 
         case Game.MAIN_MENU:
+            globals.sounds[Sound.STORY_MUSIC].pause()
+            globals.sounds[Sound.MENU_MUSIC].play()
+            globals.sounds[Sound.MENU_MUSIC].volume = 0.4
             updateSprites()
             updateSelection()
             updateParticles()
-            updateMusic(Sound.MENU_MUSIC)
+            // updateMusic(Sound.MENU_MUSIC)
             break;
 
         case Game.LOAD_LEVEL:
@@ -46,15 +48,18 @@ export default function update() {
             globals.key = true
             // globals.levelTime.value = 5
             initSprites()
+            globals.sounds[Sound.MENU_MUSIC].pause()
+            globals.sounds[Sound.GAME_MUSIC].play()
             globals.gameState = Game.PLAYING
             break;
 
         case Game.PLAYING:
             playGame();
-
+            // updateMusic(Sound.GAME_MUSIC)
             break;
 
         case Game.WIN:
+            globals.sounds[Sound.GAME_MUSIC].play()
             globals.sprites = []
             nextLevel()
             // initLobbyPlayer(200, 190, State.IDLE_RIGHT)
@@ -73,19 +78,20 @@ export default function update() {
             updateHighScorePage()
             break;
 
-        case Game.GAMEOVER:
+        case Game.LOAD_GAMEOVER:
             globals.sprites = []
-            selectOverMusic()
+           
             initGameOver()
             updateGameOverMusic()
             if (globals.highScores.length != 0) {
                 sortHighScores()
                 calculatePositionHighScore()
-                globals.gameState = Game.GAMEOVER2
+                globals.gameState = Game.GAMEOVER
             } 
             break;
 
-        case Game.GAMEOVER2:
+        case Game.GAMEOVER:
+            selectOverMusic()
             updateSprites()
             updateSelection()
             updateScoreWheel()
@@ -114,7 +120,8 @@ export default function update() {
 
         
         case Game.HISTORY:
-            updateMusic(Sound.STORY_MUSIC)
+            globals.sounds[Sound.MENU_MUSIC].pause()
+            globals.sounds[Sound.STORY_MUSIC].play()
             updateSelection()
             updateText()
             break;
@@ -126,22 +133,22 @@ export default function update() {
 
 }
 function selectOverMusic() {
-    // globals.sounds[Sound.GAME_MUSIC].pause()
-    // if (globals.currentLevel < levels.length) {
-    //     globals.sounds[Sound.GAME_OVER_MUSIC].play()
-    // } else{
-    //     globals.sounds[Sound.VICTORY_MUSIC].play()
+    globals.sounds[Sound.GAME_MUSIC].pause()
+    if (globals.currentLevel < levels.length) {
+        globals.sounds[Sound.GAME_OVER_MUSIC].play()
+    } else{
+        globals.sounds[Sound.VICTORY_MUSIC].play()
   
-    // }
+    }
 }
 
 function updateGameOverMusic() {
 
-    if (globals.currentLevel < levels.length) {
-        updateMusic(Sound.GAME_OVER_MUSIC)
-    } else{
-        updateMusic(Sound.VICTORY_MUSIC)
-    }
+    // if (globals.currentLevel < levels.length) {
+    //     updateMusic(Sound.GAME_OVER_MUSIC)
+    // } else{
+    //     updateMusic(Sound.VICTORY_MUSIC)
+    // }
 
     
 }
@@ -163,7 +170,7 @@ function nextLevel() {
             if (globals.currentLevel < levels.length) {
                 globals.gameState = Game.LOAD_LEVEL
             } else {
-                globals.gameState = Game.GAMEOVER
+                globals.gameState = Game.LOAD_GAMEOVER
             }
 
     }
@@ -249,7 +256,7 @@ function resetText(action) {
 }
 
 function updateScoreWheel() {
-    if (globals.gameState === Game.GAMEOVER2) {
+    if (globals.gameState === Game.GAMEOVER) {
         if (globals.positionCD === 0) {
             if (globals.action.moveRight) {
                 globals.position++
@@ -321,7 +328,7 @@ function updateSelection() {
 
         }
     } else {
-        if (globals.gameState === Game.GAMEOVER2) {
+        if (globals.gameState === Game.GAMEOVER) {
             if (!globals.posted && globals.action.enter) {
                 postScore()
                 globals.posted = true
@@ -354,15 +361,15 @@ function playGame() {
     createEnemiesEvent()
     timedAttackEvent()
     positionMonsterEvent()
-    // playSound(Sound.GAME_MUSIC)
+    playSound()
+    
 }
 
-function playSound(songName) {
+function playSound() {
     if (globals.currentSound != Sound.NO_SOUND) {
-        // globals.sounds[globals.currentSound].currentTime = 0
-        // globals.sounds[globals.currentSound].play()
+        globals.sounds[globals.currentSound].currentTime = 0
+        globals.sounds[globals.currentSound].play()
         globals.currentSound = Sound.NO_SOUND
-        globals.sounds[songName].volume = 0.4
     }
 }
 

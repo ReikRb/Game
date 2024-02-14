@@ -3,7 +3,7 @@ import { Key, Sound, State, ScoreWheel, Game } from "./constants.js";
 import globals from "./globals.js";
 import { calculatePositionHighScore, HighScore } from "./HighScore.js";
 import { initSkeleton, initCrystal, initScores } from "./initialize.js";
-import { eventPos } from "./Level.js";
+import { eventPos, levels } from "./Level.js";
 
 export function keydownHandler(event) {
     switch (event.keyCode) {
@@ -78,15 +78,37 @@ export function keyupHandler(event) {
     }
 }
 
-export function updateMusic(songName = Sound.GAME_MUSIC) {
+export function updateMusic() {
+    
     const buffer = 0.01
-    const music  = globals.sounds[songName]
+    const music  = globals.sounds[gameMusic()]
     if (music.currentTime > music.duration - buffer) {
         music.currentTime = 0
         music.play()
     }
 }
+function gameMusic() {
+    const state = globals.gameState
 
+    switch (state) {
+        case Game.PLAYING:
+        case Game.WIN:
+            return Sound.GAME_MUSIC
+
+        case Game.MAIN_MENU:
+            return Sound.MENU_MUSIC
+        
+        case Game.HISTORY:
+            return Sound.STORY_MUSIC
+
+        case Game.GAMEOVER:
+             let sound = globals.currentLevel < levels.length ? Sound.GAME_OVER_MUSIC : Sound.VICTORY_MUSIC
+            return sound
+    
+        default:
+            break;
+    }
+}
 export function createEnemiesEvent() {
 
     if (globals.mana === 0 && globals.eventCounter === 0) {
@@ -181,10 +203,9 @@ export function getScores() {
         initScores(JSON.parse(this.responseText))
 
         this.onload = () => {
-            if (globals.gameState === Game.GAMEOVER2) {
+            if (globals.gameState === Game.GAMEOVER) {
                 calculatePositionHighScore()
                 globals.highScorePage = Math.floor(globals.scorePos / 10) 
-                console.log(globals.scorePos);
                 globals.gameState = Game.OVER_SCORE
                 globals.posted   = false
             } else if (globals.gameState === Game.LOADING) {
@@ -206,8 +227,7 @@ export function postScore(){
         const score = globals.score
         const newHighScore = new HighScore(globals.highScores.length, name, score)
         globals.highScores.push(newHighScore)
-              
-        console.log(id);
+            
         const dataToSend ='name=' + newHighScore.name + '&score=' + newHighScore.score
         const url = "http://localhost:3000/server/routes/postClassic.php"
         const request = new XMLHttpRequest();
@@ -218,7 +238,6 @@ export function postScore(){
         request.onreadystatechange = function () {
             // const resultJSON = JSON.parse(this.responseText)
             // const arrayResult = [resultJSON]
-            console.log(this.status);
             this.readyState     != 4     ? false                                            :
             this.status         != 200   ? alert("Communication error: " + this.statusText) :
             this.responseText   === null ? alert("Communication error: No data received")   :

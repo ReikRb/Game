@@ -30,9 +30,6 @@ export class LobbyPlayer extends Sprite {
             case State.DEAD_RIGHT:
                     this.frames.framesPerState = 7
                     this.frames.speed = 7
-                    // if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
-                    //     globals.gameState = Game.GAMEOVER
-                    // }
                     break;
 
         }

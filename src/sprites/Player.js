@@ -150,7 +150,7 @@ export class Player extends Sprite {
                 this.frames.speed = 5
                 this.physics.vx = 0
                 if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
-                    globals.gameState = Game.GAMEOVER
+                    globals.gameState = Game.LOAD_GAMEOVER
                 }
                 break;
             
