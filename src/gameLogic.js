@@ -355,6 +355,7 @@ function playGame() {
     updateLevelTime();
     updateInnerTime()
     updateMana();
+    gameOverCheck()
     updateLife();
     updatePower();
     updateScore();
@@ -418,6 +419,9 @@ function updatePower() {
     }
     globals.powerPreviousState = globals.power
 }
+function gameOverCheck() {
+    globals.life === -1 ? globals.gameState = Game.LOAD_GAMEOVER : false
+}
 function updateLife() {
     if (globals.damagedCounter != 0) {
         globals.damagedCounter++
@@ -439,7 +443,7 @@ function updateLife() {
 
         } else if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SPIKE) {
             if (globals.damagedCounter === 0) {
-                globals.life -= 200
+                globals.life -= 50
                 globals.currentSound = Sound.DAMAGE
                 globals.damagedCounter++
 
@@ -454,7 +458,6 @@ function updateLife() {
         }
 
     }
-
 }
 
 function updateMana() {

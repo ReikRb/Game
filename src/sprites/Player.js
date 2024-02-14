@@ -14,6 +14,8 @@ export class Player extends Sprite {
         this.previousLife = 0
     }
      update() {
+
+        //GET RESULT FROM COLISION
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
         } 
@@ -26,6 +28,7 @@ export class Player extends Sprite {
 
         this.damageAnimationCheck()
 
+                                ///////////////////PLAYER STATES///////////////////
         //Updates Player's variables State
         switch (this.state) {
             case State.RUN_RIGHT:
@@ -120,9 +123,9 @@ export class Player extends Sprite {
                 this.frames.speed = 5
                 this.physics.vx = 0
 
-                //Changes Game State if dead animation is completed
+                //Changes Game State if dead animation is completed(gameOverCheck method - GameLogic)
                 if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
-                    globals.gameState = Game.LOAD_GAMEOVER
+                    globals.life--
                 }
                 break;
             
@@ -161,7 +164,9 @@ export class Player extends Sprite {
                     break;
         }
     
-        //XY Speed Calculation
+                                ///////////////////MOVEMENT////////////////////////
+
+        ///////////////////////X Speed Calculation//////////////
         this.physics.vx += this.physics.ax * globals.deltaTime;
 
         if ((this.state === State.RUN_LEFT && this.physics.vx  > 0) ||
@@ -178,19 +183,21 @@ export class Player extends Sprite {
         
     
         
+        this.calculateShoot()
+
         //Calculates movement in X
         this.xPos += this.physics.vx * globals.deltaTime
        
 
-        this.calculateShoot()
-        const isCollision = this.calculateCollisionWithBorders()
-        if (isCollision) {
-            this.xPos -= this.physics.vx * globals.deltaTime
-        }
-        // if (this.xPos < 0) {
-        //      this.xPos = 0
+        // const isCollision = this.calculateCollisionWithBorders()
+        // if (isCollision) {
+        //     this.xPos -= this.physics.vx * globals.deltaTime
         // }
         
+
+        //////////////////////// JUMPS & Y DISPLACEMENT//////////////////
+
+        ///////////////////////  Y Speed Calculation//////////////
         this.physics.ay = GRAVITY;
         this.physics.vy += this.physics.ay * globals.deltaTime;
         if (this.jumpCount ===1) {
@@ -219,28 +226,27 @@ export class Player extends Sprite {
                 globals.currentSound = Sound.JUMP
             }
         }
+        //Caps falling speed only
         if (this.physics.vy > 300) {
             this.physics.vy = 300
         }
+
+        //Calculates movement in Y
         this.yPos += this.physics.vy * globals.deltaTime;
         if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
             this.physics.isOnGround = true
             this.physics.vy = 0;
             this.jumpCount = 0
         }
-        // if (this.yPos > (globals.level.data[0].length*32) - this.imageSet.ySize) {
-        //     this.physics.isOnGround = true;
-        //     this.yPos = 900
-        //     this.physics.vy = 0;
-        //     this.jumpCount = 0
-        // }
 
+        // UPDATES FRAMES AND SAVES  THIS STATE & JUMP STATE FOR NEXT LOOP
         this.updateAnimationFrame()
     
         this.previousState = this.state
         this.jumpEvent = globals.action.jump
     }
 
+    
     damageAnimationCheck(){
         if (!globals.inmune) {
             for (let i = 0; i < globals.sprites.length; i++) {
