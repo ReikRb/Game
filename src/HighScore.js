@@ -28,15 +28,21 @@ export function createHighScores() {
 export function calculatePositionHighScore() {
     for (let i = 0; i < globals.highScores.length; i++) {
         const highScore = globals.highScores[i];
-        if (globals.score > highScore.score) {
+        if ((globals.highScores.length) === parseInt(highScore.id)) {
             globals.scorePos = i
+
+            globals.posCorrection = 
+                                    globals.scorePos === 0 ? 2 :
+                                    globals.scorePos === 1 ? 1 :
+                                    globals.scorePos === globals.highScores.length-1 ? -2 :
+                                    globals.scorePos === globals.highScores.length-2 ? -1 :
+                                    0
             break;
         }
         
     }
 }
 export function sortHighScores() {
-    console.log(globals.highScores);
     for (let i = 0; i < globals.highScores.length - 1; i++) {
         for (let j = 0; j < globals.highScores.length - 1 - i; j++) {
 

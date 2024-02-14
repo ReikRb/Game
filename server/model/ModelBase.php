@@ -59,6 +59,7 @@ class ModelBase extends Conexion{
         if ($name != "" && $value != "" ) 
             $query .= " WHERE $name = '$value'";
 
+        $query .= " order by score DESC";
         //echo $query
         return $query;
     }

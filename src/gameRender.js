@@ -117,13 +117,8 @@ function drawHighScore() {
             //Draw SortBy
             globals.ctxHUD.font = "10px Medieval Scroll of Wisdom";
             globals.ctxHUD.fillStyle = "white";
-            globals.ctxHUD.fillText("SORT BY :", 5, 30);
+            globals.ctxHUD.fillText("THE DECREPYT THRONE :", 55, 30);
     
-            //Draw Show
-            globals.ctxHUD.fillText("SHOW :", 100, 30);
-    
-            //Draw Date
-            globals.ctxHUD.fillText("DATE :", 185, 30);
 
             //Draw Return Button
             globals.ctx.font = "15px Medieval Scroll of Wisdom";
@@ -197,9 +192,9 @@ function drawOverScore() {
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     globals.ctxHUD.fillText("HIGHSCORE", 18, 44);
     for (let i = -2; i < 3; i++) {
-        const highScore = globals.highScores[globals.scorePos+i];
+        const highScore = globals.highScores[globals.scorePos+i+globals.posCorrection];
         
-        globals.ctx.fillText(globals.scorePos+i+1, 50, 150+i*25);
+        globals.ctx.fillText(globals.scorePos+i+1+ globals.posCorrection, 50, 150+i*25);
         globals.ctx.fillText(highScore.name, 230, 150+i*25)
         globals.ctx.fillText(highScore.score, 420, 150+i*25);
         // if (globals.highScores[globals.scorePos+i+1] != HighScore) {

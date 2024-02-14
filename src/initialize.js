@@ -111,22 +111,21 @@ function loadAssets(){
     globals.tileSets.push(tileSet);
     globals.assetsToLoad.push(tileSet)
 
-    getScores()
     //Load sounds
-    initSound('gameMusic', true, Sound.GAME_MUSIC)
-    initSound('menuMusic', true, Sound.MENU_MUSIC)
+    initSound('gameMusic', true)
+    initSound('menuMusic', true)
     initSound('jumpSound')
     initSound('pickupCoinSound')
     initSound('damageSound')
     initSound('powerUpSound')
     initSound('checkPointSound')
-    initSound('gameOverMusic', true, Sound.GAME_OVER_MUSIC)
-    initSound('victoryMusic', true, Sound.VICTORY_MUSIC)
-    initSound('storyMusic', true, Sound.STORY_MUSIC)
+    initSound('gameOverMusic', true)
+    initSound('victoryMusic', true)
+    initSound('storyMusic', true)
 
 }
 
-function initSound(soundName, isSong = false, songName) {
+function initSound(soundName, isSong = false) {
     let sound = document.querySelector(`#${soundName}`)
     sound.addEventListener("canplaythrough", loadHandler, false)
     if (isSong) 

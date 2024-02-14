@@ -19,7 +19,8 @@ export default function update() {
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
             globals.currentLevel = 0
-
+            // globals.sounds[Sound.MENU_MUSIC].play()
+            // globals.sounds[Sound.MENU_MUSIC].volume = 0.4
             restoreDefaultValues()
             initMainMenuMap()
             initMainMenuSprites()
@@ -38,10 +39,10 @@ export default function update() {
             restoreDefaultValues()
             initTimersTemporal()
             globals.currentLevel = 1
+            globals.highScore = globals.highScores[0].score
             initLevel()
             globals.checkPointX = playerInitPos[globals.currentLevel][0]
             globals.checkPointY = playerInitPos[globals.currentLevel][1]
-            globals.score = 5100
             globals.key = true
             // globals.levelTime.value = 5
             initSprites()
@@ -62,11 +63,9 @@ export default function update() {
         case Game.LOAD_HIGHSCORE:
             globals.sprites = []
             initParchmentBackground();
-            if (globals.highScores.length != 0){
-                sortHighScores()
-                    globals.gameState = Game.HIGHSCORE
+            globals.gameState = Game.HIGHSCORE
 
-            } 
+            
             break;
 
         case Game.HIGHSCORE:
@@ -80,10 +79,9 @@ export default function update() {
             initGameOver()
             updateGameOverMusic()
             if (globals.highScores.length != 0) {
-                sortHighScores()       
-                    calculatePositionHighScore()
-                    globals.gameState = Game.GAMEOVER2
-
+                sortHighScores()
+                calculatePositionHighScore()
+                globals.gameState = Game.GAMEOVER2
             } 
             break;
 
@@ -91,9 +89,6 @@ export default function update() {
             updateSprites()
             updateSelection()
             updateScoreWheel()
-            postScore()
-            sortHighScores()
-            calculatePositionHighScore()
  
             updateGameOverMusic()
             break;
@@ -119,7 +114,7 @@ export default function update() {
 
         
         case Game.HISTORY:
-            
+            updateMusic(Sound.STORY_MUSIC)
             updateSelection()
             updateText()
             break;
@@ -131,13 +126,13 @@ export default function update() {
 
 }
 function selectOverMusic() {
-    globals.sounds[Sound.GAME_MUSIC].pause()
-    if (globals.currentLevel < levels.length) {
-        globals.sounds[Sound.GAME_OVER_MUSIC].play()
-    } else{
-        globals.sounds[Sound.VICTORY_MUSIC].play()
+    // globals.sounds[Sound.GAME_MUSIC].pause()
+    // if (globals.currentLevel < levels.length) {
+    //     globals.sounds[Sound.GAME_OVER_MUSIC].play()
+    // } else{
+    //     globals.sounds[Sound.VICTORY_MUSIC].play()
   
-    }
+    // }
 }
 
 function updateGameOverMusic() {
@@ -153,11 +148,9 @@ function updateGameOverMusic() {
 function updateLoading() {
     
     if (globals.action.enter && globals.assetsLoaded === globals.assetsToLoad.length) {
-
-        globals.sounds[Sound.MENU_MUSIC].play()
-        globals.sounds[Sound.MENU_MUSIC].volume = 0.4
         globals.positionCD++
         //Starts Game
+        getScores()
         globals.gameState = Game.LOAD_MAIN_MENU;  
     }
 }
@@ -300,16 +293,15 @@ function updateSelection() {
                 switch (globals.position) {
                     case 1:
                         globals.sprites = []
-                        globals.sounds[Sound.MENU_MUSIC].pause()
-                        globals.sounds[Sound.GAME_MUSIC].play()
+                        // globals.sounds[Sound.MENU_MUSIC].pause()
+                        // globals.sounds[Sound.GAME_MUSIC].play()
                         globals.sounds[Sound.GAME_MUSIC].volume = 0.4
                         globals.gameState = Game.LOAD_LEVEL;
-
                         break;
 
                     case 2:
-                        globals.sounds[Sound.MENU_MUSIC].pause()
-                        globals.sounds[Sound.STORY_MUSIC].play()
+                        // globals.sounds[Sound.MENU_MUSIC].pause()
+                        // globals.sounds[Sound.STORY_MUSIC].play()
                         globals.gameState = Game.LOAD_HISTORY;
                         break;
                     case 3:
@@ -329,11 +321,19 @@ function updateSelection() {
 
         }
     } else {
+        if (globals.gameState === Game.GAMEOVER2) {
+            if (!globals.posted && globals.action.enter) {
+                postScore()
+                globals.posted = true
+            }
+        }
         if (globals.gameState === Game.OVER_SCORE) {
             if (globals.action.fire) {
                 globals.gameState = Game.LOAD_HIGHSCORE;
             }
         }else if (globals.action.return) {
+            // globals.sounds[Sound.STORY_MUSIC].pause()
+            // globals.sounds[Sound.MENU_MUSIC].play()
             globals.gameState = Game.LOAD_MAIN_MENU;
         }
 
@@ -354,14 +354,13 @@ function playGame() {
     createEnemiesEvent()
     timedAttackEvent()
     positionMonsterEvent()
-    playSound(Sound.GAME_MUSIC)
-    
+    // playSound(Sound.GAME_MUSIC)
 }
 
 function playSound(songName) {
     if (globals.currentSound != Sound.NO_SOUND) {
-        globals.sounds[globals.currentSound].currentTime = 0
-        globals.sounds[globals.currentSound].play()
+        // globals.sounds[globals.currentSound].currentTime = 0
+        // globals.sounds[globals.currentSound].play()
         globals.currentSound = Sound.NO_SOUND
         globals.sounds[songName].volume = 0.4
     }
@@ -433,7 +432,7 @@ function updateLife() {
 
         } else if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SPIKE) {
             if (globals.damagedCounter === 0) {
-                globals.life -= 50
+                globals.life -= 200
                 globals.currentSound = Sound.DAMAGE
                 globals.damagedCounter++
 
@@ -481,7 +480,7 @@ function restoreDefaultValues() {
     globals.levelTime.timeChangeCounter = 0
     globals.innerTime.value = 0
     globals.innerTime.timeChangeCounter = 0
-
+    globals.posted = false
     globals.appearTime = 50
 
     globals.sprites             = []

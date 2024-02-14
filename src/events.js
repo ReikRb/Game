@@ -1,7 +1,7 @@
 import { isCollidingWithObstacleAt } from "./collisions.js";
 import { Key, Sound, State, ScoreWheel, Game } from "./constants.js";
 import globals from "./globals.js";
-import { HighScore } from "./HighScore.js";
+import { calculatePositionHighScore, HighScore } from "./HighScore.js";
 import { initSkeleton, initCrystal, initScores } from "./initialize.js";
 import { eventPos } from "./Level.js";
 
@@ -179,6 +179,19 @@ export function getScores() {
         this.status         != 200   ? alert("Communication error: " + this.statusText) :
         this.responseText   === null ? alert("Communication error: No data received") :
         initScores(JSON.parse(this.responseText))
+
+        this.onload = () => {
+            if (globals.gameState === Game.GAMEOVER2) {
+                calculatePositionHighScore()
+                globals.highScorePage = Math.floor(globals.scorePos / 10) 
+                console.log(globals.scorePos);
+                globals.gameState = Game.OVER_SCORE
+                globals.posted   = false
+            } else if (globals.gameState === Game.LOADING) {
+                globals.gameState = Game.LOAD_MAIN_MENU
+            }
+            
+          };
     }
 
     request.open('GET', url, true)
@@ -187,14 +200,15 @@ export function getScores() {
 }
 
 export function postScore(){
-    if (globals.action.enter) {
+    if (!globals.posted) {
+        const id = globals.highScores.length
         const name = "" + ScoreWheel[globals.scoreWheelValues[0]] + ScoreWheel[globals.scoreWheelValues[1]] + ScoreWheel[globals.scoreWheelValues[2]]
         const score = globals.score
         const newHighScore = new HighScore(globals.highScores.length, name, score)
         globals.highScores.push(newHighScore)
-        globals.highScorePage = Math.floor(globals.scorePos / 10)       
-
-        const dataToSend =  '&name=' + newHighScore.name + '&score=' + newHighScore.score
+              
+        console.log(id);
+        const dataToSend ='name=' + newHighScore.name + '&score=' + newHighScore.score
         const url = "http://localhost:3000/server/routes/postClassic.php"
         const request = new XMLHttpRequest();
     
@@ -208,12 +222,18 @@ export function postScore(){
             this.readyState     != 4     ? false                                            :
             this.status         != 200   ? alert("Communication error: " + this.statusText) :
             this.responseText   === null ? alert("Communication error: No data received")   :
-            initGame([JSON.parse(this.responseText)])
+            false
+
+            if (this.readyState === XMLHttpRequest.DONE && this.status === 200) {
+                globals.highScores = []
+                getScores()
+              }
         }
     
+
         request.responseType = "text"
         request.send(dataToSend)
-        globals.gameState = Game.OVER_SCORE;
+
     }
 
 }

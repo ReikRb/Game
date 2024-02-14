@@ -93,6 +93,7 @@ export default {
     
     scoreWheelValues: [0,0,0],
     scorePos:0,
+    posCorrection: 0,
     highScorePage:0,
 
     leftText:0,
@@ -102,7 +103,7 @@ export default {
 
     checkPointX:0,
     checkPointY:0,
-
+    posted: false,
     loadingCounter: 0
     
 }
