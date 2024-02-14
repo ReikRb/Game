@@ -439,7 +439,7 @@ const levels = [level1, level2]
 
 const monsters = [monster1, monster2]
 
-const playerInitPos = [[230, 914], [530, 330]]
+const playerInitPos = [[230, 914], [330, 1730]]
 
 const eventPos = [[1242,1522], [210, 2482]]
 

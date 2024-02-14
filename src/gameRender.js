@@ -181,6 +181,13 @@ function drawGameOver() {
         globals.ctx.fillText("YOU MANAGED TO REACH TO THE INN", 58, 64);
         globals.ctx.fillText("CONGRATULATIONS ! !", 158, 120);
         globals.ctx.fillText("Enter to Continue", 360,360)
+
+        globals.ctx.fillText("YOUR SCORE", 100, 175);
+        globals.ctx.fillText("" +   ScoreWheel[globals.scoreWheelValues[0]]+
+                                    ScoreWheel[globals.scoreWheelValues[1]]+
+                                    ScoreWheel[globals.scoreWheelValues[2]], 280, 175)
+        globals.ctx.fillText("_", 285+(globals.position-1)*20, 177);
+        globals.ctx.fillText(globals.score, 430, 175);
     }
 
     const sprite = globals.sprites[0]
@@ -191,15 +198,16 @@ function drawOverScore() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
     globals.ctxHUD.fillText("HIGHSCORE", 18, 44);
-    for (let i = -2; i < 3; i++) {
-        const highScore = globals.highScores[globals.scorePos+i+globals.posCorrection];
-        
-        globals.ctx.fillText(globals.scorePos+i+1+ globals.posCorrection, 50, 150+i*25);
+    for (let i = (-2+globals.posCorrection); i < (3+globals.posCorrection); i++) {
+        const highScore = globals.highScores[globals.scorePos+i];
+        if (i === 0) {
+            globals.ctx.fillStyle = "red";
+        }
+        console.log(parseInt(highScore.id), globals.scorePos);
+        globals.ctx.fillText(globals.scorePos+i+1, 50, 150+i*25);
         globals.ctx.fillText(highScore.name, 230, 150+i*25)
         globals.ctx.fillText(highScore.score, 420, 150+i*25);
-        // if (globals.highScores[globals.scorePos+i+1] != HighScore) {
-        //     break;
-        // }
+        globals.ctx.fillStyle = "white";
     }
     
     globals.ctx.fillText("Z to HighScore", 200,360)
