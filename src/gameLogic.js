@@ -18,7 +18,6 @@ export default function update() {
 
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
-
             globals.currentLevel = 0
             
             restoreDefaultValues()
@@ -38,7 +37,6 @@ export default function update() {
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
-            globals.key = true
             initLevel()
 
             initSprites()
