@@ -34,7 +34,7 @@ export class Player extends Sprite {
         this.playerStateActions()
 
                                 ///////////////////MOVEMENT////////////////////////
-        this.xDisplacement()
+        this.xDisplacement(isLeftOrRightPressed)
 
         //////////////////////// JUMPS & Y DISPLACEMENT//////////////////
         this.yDisplacement()
@@ -97,7 +97,6 @@ export class Player extends Sprite {
             
             case State.DAMAGED_RIGHT:
             case State.DAMAGED_LEFT:
-                const displacementDirectionPower = this.state    % 2 === 0 ? 1000 : -1000
 
                 this.frameSetter(4, 5)
                 this.damagedDisplacement()
@@ -105,7 +104,7 @@ export class Player extends Sprite {
         }
     }
 
-    xDisplacement(){
+    xDisplacement(isLeftOrRightPressed){
                 ///////////////////////X Speed Calculation//////////////
                 this.physics.vx += this.physics.ax * globals.deltaTime;
 
@@ -193,7 +192,9 @@ export class Player extends Sprite {
     }
 
     damagedDisplacement(){
-        if (globals.damagedCounter ===1 && !globals.inmune) {
+        const displacementDirectionPower = this.state    % 2 === 0 ? -1000 : 1000
+
+        if (globals.damagedCounter === 1 && !globals.inmune) {
             this.physics.vy = 0
             this.physics.vy += this.physics.jumpForce/1.4
         }
@@ -229,17 +230,20 @@ export class Player extends Sprite {
     }
 
     damageAnimationCheck(){
+        
         if (!globals.inmune) {
             for (let i = 0; i < globals.sprites.length; i++) {
                 const sprite = globals.sprites[i];
+
                 if (sprite.isCollidingWithPlayer) {
-                    if ( sprite.id === SpriteId.SKELETON ||sprite.id === SpriteId.SPIKE) {
-                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              > 
-                            (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2)) ) {
+
+                    if ( sprite.id === SpriteId.SKELETON || sprite.id === SpriteId.SPIKE) {
+
+                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2)) > (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2)) ) {
                             
                             this.state = State.DAMAGED_LEFT
-                        } else if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2))              < 
-                                   (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2))) {
+
+                        } else {
                             this.state = State.DAMAGED_RIGHT
                         }
                     }  
