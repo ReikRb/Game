@@ -29,98 +29,64 @@ export class Player extends Sprite {
         this.damageAnimationCheck()
 
                                 ///////////////////PLAYER STATES///////////////////
-        //Updates Player's variables State
+                                
+        //Updates Player's variables State Switch cases
+        this.playerStateActions()
+
+                                ///////////////////MOVEMENT////////////////////////
+        this.xDisplacement()
+
+        //////////////////////// JUMPS & Y DISPLACEMENT//////////////////
+        this.yDisplacement()
+
+        /// Checks if character is Shooting/////
+        this.isShooting()
+
+        // UPDATES FRAMES AND SAVES  THIS STATE & JUMP STATE FOR NEXT LOOP
+        this.updateAnimationFrame()
+        this.previousState = this.state
+        this.jumpEvent = globals.action.jump
+    }
+
+
+
+                                                    /////METHODS/////
+    
+    playerStateActions(){
         switch (this.state) {
             case State.RUN_RIGHT:
-                this.frames.framesPerState = 8
-                
+            case State.RUN_LEFT:    
+
+                this.frameSetter()
                 //If character moves right X is positive
-                this.physics.ax = this.physics.aLimit;
-                break;
-    
-            case State.RUN_LEFT:
-                this.frames.framesPerState = 8
-                
                 //If character moves left X is negative
-                this.physics.ax = -this.physics.aLimit;
-            break;
+                this.physics.ax = this.state    % 2 === 0 ? this.physics.aLimit : -this.physics.aLimit
+                break;
     
             case State.IDLE_LEFT:
-                this.frames.framesPerState = 6
-                this.physics.ax = 0
-                this.frames.speed = 3
-
-                if (this.previousState != this.state ) {
-                    const xFirePos = this.xPos+this.hitBox.xOffset - 5
-                    const yFirePos = this.yPos+this.hitBox.yOffset + 10
-                    initFire(xFirePos, yFirePos)
-                }
-                break;
             case State.IDLE_RIGHT:
-                this.frames.framesPerState = 6
+                this.frameSetter(6)
                 this.physics.ax = 0
-                this.frames.speed = 3
-
-                if (this.previousState != this.state ) {
-                    const xFirePos = this.xPos+this.hitBox.xOffset + 36
-                    const yFirePos = this.yPos+this.hitBox.yOffset + 10
-                    initFire(xFirePos, yFirePos)
-                }
+                this.idlingFire()
                 break;
     
             case State.ATTACK_RIGHT:
-                this.frames.framesPerState = 8
-                this.physics.vx=0
-                if (this.previousState != State.ATTACK_RIGHT) {
-                    this.physics.shootingIntervalCounter = 0
-                }
-                    if (this.frames.frameCounter / (this.frames.framesPerState-1) != 1 && this.physics.shootingIntervalCounter === 0) {
-                        initPlayerAttackVFX((this.xPos+78), this.yPos, State.RIGHT);
-                        setTimeout(() => { initPlayerFireball((this.xPos + 78), this.yPos, State.RIGHT); }, 400);
-                    }
-                    if (this.physics.shootingIntervalCounter === this.physics.shootingInterval) {
-                        this.physics.shootingIntervalCounter = 0
-    
-                    } else{
-                        this.physics.shootingIntervalCounter++
-                    }
-                break;
-    
             case State.ATTACK_LEFT:
-                this.frames.framesPerState = 8
+                this.frameSetter()
                 this.physics.vx=0
-
-                //Resets shooting CD if not attacking
-                if (this.previousState != State.ATTACK_LEFT) {
-                    this.physics.shootingIntervalCounter = 0
-                }
-                //Creates the attack sprite & fireball at an exact frame to match animation
-                if (this.frames.frameCounter / (this.frames.framesPerState-1) != 1 && this.physics.shootingIntervalCounter === 0) {
-                    initPlayerAttackVFX((this.xPos+-22), this.yPos, State.LEFT);
-                    setTimeout(() => { initPlayerFireball((this.xPos + -22), this.yPos, State.LEFT); }, 400);
-                }
-
-                //increases shooting CD counter untill requirement mets. Then resets it
-                if (this.physics.shootingIntervalCounter === this.physics.shootingInterval) {
-                    this.physics.shootingIntervalCounter = 0
-    
-                } else {
-                    this.physics.shootingIntervalCounter++
-                }
+                this.attackMethod()
                 break;
             
             case State.JUMP_RIGHT:
             case State.JUMP_LEFT:
             case State.FALL_LEFT:
             case State.FALL_RIGHT:
-                this.frames.framesPerState = 2
-                this.frames.frameCounter = 0
+                this.frameSetter(2)
                 break;
             
             case State.DEAD_RIGHT:
             case State.DEAD_LEFT:
-                this.frames.framesPerState = 8
-                this.frames.speed = 5
+                this.frameSetter(8,5)
                 this.physics.vx = 0
 
                 //Changes Game State if dead animation is completed(gameOverCheck method - GameLogic)
@@ -130,91 +96,64 @@ export class Player extends Sprite {
                 break;
             
             case State.DAMAGED_RIGHT:
-                this.frames.framesPerState = 4
-                this.frames.speed = 5
-                
-                if (globals.damagedCounter ===1 && !globals.inmune) {
-                    this.physics.vy = 0
-                    this.physics.vy +=this.physics.jumpForce/1.4
-                }
-
-                if (this.physics.vy != 0 && !globals.inmune) {
-                    this.physics.vx = -1000
-                }  else {
-                    globals.inmune = true
-                }
-                    
-                
-            
-
-                break;
             case State.DAMAGED_LEFT:
-                this.frames.framesPerState = 4
-                this.frames.speed = 5
-                if (globals.damagedCounter ===1 && !globals.inmune) {
-                    this.physics.vy = 0
-                    this.physics.vy +=this.physics.jumpForce/1.4
-                }
+                const displacementDirectionPower = this.state    % 2 === 0 ? 1000 : -1000
 
-                if (this.physics.vy != 0 && !globals.inmune) {
-                    this.physics.vx = 1000
-                }  else {
-                    globals.inmune = true
-                }
+                this.frameSetter(4, 5)
+                this.damagedDisplacement()
                     break;
         }
-    
-                                ///////////////////MOVEMENT////////////////////////
+    }
 
-        ///////////////////////X Speed Calculation//////////////
-        this.physics.vx += this.physics.ax * globals.deltaTime;
+    xDisplacement(){
+                ///////////////////////X Speed Calculation//////////////
+                this.physics.vx += this.physics.ax * globals.deltaTime;
 
-        if ((this.state === State.RUN_LEFT && this.physics.vx  > 0) ||
-            (this.state === State.RUN_RIGHT && this.physics.vx < 0) ||
-            (!isLeftOrRightPressed)) {
-            this.physics.vx *= this.physics.friction;
-        }
-
-            if (this.physics.vx > this.physics.vLimit) {
-                this.physics.vx = this.physics.vLimit
-            } else if (this.physics.vx < -this.physics.vLimit) {
-                this.physics.vx =- this.physics.vLimit;
-            }    
+                /////// X Acceleration & Displacement(velocity) /////
+                if ((this.state === State.RUN_LEFT && this.physics.vx  > 0) ||
+                    (this.state === State.RUN_RIGHT && this.physics.vx < 0) ||
+                    (!isLeftOrRightPressed)) {
+                    this.physics.vx *= this.physics.friction;
+                }
         
-    
+                //////// X CAP ////////
+                    if (this.physics.vx > this.physics.vLimit) {
+                        this.physics.vx = this.physics.vLimit
+                    } else if (this.physics.vx < -this.physics.vLimit) {
+                        this.physics.vx =- this.physics.vLimit;
+                    }    
+                
         
-        this.calculateShoot()
-
-        //Calculates movement in X
-        this.xPos += this.physics.vx * globals.deltaTime
-       
-
-        // const isCollision = this.calculateCollisionWithBorders()
-        // if (isCollision) {
-        //     this.xPos -= this.physics.vx * globals.deltaTime
-        // }
+                //Calculates result movement in X
+                this.xPos += this.physics.vx * globals.deltaTime
         
+    }
 
-        //////////////////////// JUMPS & Y DISPLACEMENT//////////////////
-
-        ///////////////////////  Y Speed Calculation//////////////
+    yDisplacement(){
+                ///////////////////////  Y Speed Calculation//////////////
         this.physics.ay = GRAVITY;
         this.physics.vy += this.physics.ay * globals.deltaTime;
+
+                ////////////// JUMP & DOUBLE JUMP/////////
         if (this.jumpCount ===1) {
             this.jumpChangeCounter++
         }
+
         if (this.physics.isOnGround) {
             this.jumpCount = 0
             this.jumpChangeCounter = 0
+
             if (globals.action.jump) {
                 this.physics.isOnGround = false;
                 this.physics.isOnPlatform = false
                 this.physics.vy += this.physics.jumpForce;
                 this.jumpCount++
                 globals.currentSound = Sound.JUMP
+
             } else if ( globals.action.jump != this.jumpEvent){
                 this.physics.vy += this.physics.jumpForce;
                 this.jumpCount++
+
             }
         } else if (!this.physics.isOnGround && globals.power) {
             if (globals.action.jump && this.jumpChangeCounter >17) {
@@ -226,6 +165,7 @@ export class Player extends Sprite {
                 globals.currentSound = Sound.JUMP
             }
         }
+
         //Caps falling speed only
         if (this.physics.vy > 300) {
             this.physics.vy = 300
@@ -233,20 +173,61 @@ export class Player extends Sprite {
 
         //Calculates movement in Y
         this.yPos += this.physics.vy * globals.deltaTime;
-        if (this.physics.vy === 0 && this.isCollidingWithObstacleOnBottom ) {
-            this.physics.isOnGround = true
-            this.physics.vy = 0;
-            this.jumpCount = 0
-        }
-
-        // UPDATES FRAMES AND SAVES  THIS STATE & JUMP STATE FOR NEXT LOOP
-        this.updateAnimationFrame()
-    
-        this.previousState = this.state
-        this.jumpEvent = globals.action.jump
     }
 
+    frameSetter(framesPerState = 8, frameSpeed = 3, frameCounter = null){
+        this.frames.framesPerState = framesPerState
+        this.frames.speed = frameSpeed
+
+        if (frameCounter != null) 
+            this.frames.frameCounter = frameCounter
+    }
+
+    idlingFire(){
+        const fireModifier = this.state % 2 === 0 ? 10 : -5
+        if (this.previousState != this.state ) {
+            const xFirePos = this.xPos+this.hitBox.xOffset + fireModifier
+            const yFirePos = this.yPos+this.hitBox.yOffset + fireModifier
+            initFire(xFirePos, yFirePos)
+        }
+    }
+
+    damagedDisplacement(){
+        if (globals.damagedCounter ===1 && !globals.inmune) {
+            this.physics.vy = 0
+            this.physics.vy += this.physics.jumpForce/1.4
+        }
+
+        if (this.physics.vy != 0 && !globals.inmune) {
+            this.physics.vx = displacementDirectionPower
+        }  else {
+            globals.inmune = true
+        }
+    }
     
+    attackMethod(){
+        const xModifierVFX = this.state % 2 === 0 ? 78 : -42
+        const direction = this.state    % 2 === 0 ? State.RIGHT : State.LEFT
+
+        //Resets shooting CD if not attacking
+        if (this.previousState != this.state) {
+            this.physics.shootingIntervalCounter = 0
+        }
+        //Creates the attack sprite & fireball at an exact frame to match animation
+        if (this.frames.frameCounter / (this.frames.framesPerState-1) != 1 && this.physics.shootingIntervalCounter === 0) {
+            initPlayerAttackVFX((this.xPos + xModifierVFX), this.yPos, direction);
+            setTimeout(() => { initPlayerFireball((this.xPos + xModifierVFX), this.yPos, direction); }, 400);
+        }
+        
+        //increases shooting CD counter untill requirement mets. Then resets it
+        if (this.physics.shootingIntervalCounter === this.physics.shootingInterval) {
+            this.physics.shootingIntervalCounter = 0
+            
+        } else {
+            this.physics.shootingIntervalCounter++
+        }
+    }
+
     damageAnimationCheck(){
         if (!globals.inmune) {
             for (let i = 0; i < globals.sprites.length; i++) {
@@ -332,7 +313,8 @@ export class Player extends Sprite {
                         
                     }
                 }
-    calculateShoot() {
+
+    isShooting() {
     if (globals.action.fire) {
         this.physics.isShooting = true
     } else {

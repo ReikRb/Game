@@ -11,6 +11,8 @@ export class Power extends Sprite {
         if (globals.power && this.isCollidingWithPlayer) {
             let index = globals.sprites.indexOf(this)
             globals.sprites.splice(index, 1)
+            
+            // Assigns xPos and yPos to init again after player used it
             globals.powerX = this.xPos
             globals.powerY = this.yPos
             globals.currentSound = Sound.POWER_UP
