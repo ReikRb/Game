@@ -979,5 +979,6 @@ function initScores(data) {
         const highScore = new HighScore(data[i].id, data[i].name, data[i].score)
         globals.highScores.push(highScore)
     }
+    globals.highScore = globals.highScores[0].score
 }
 export {initScores, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver, initMenuProps }

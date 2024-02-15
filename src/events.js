@@ -209,6 +209,7 @@ export function getScores() {
                 globals.gameState = Game.OVER_SCORE
                 globals.posted   = false
             } else if (globals.gameState === Game.LOADING) {
+                
                 globals.gameState = Game.LOAD_MAIN_MENU
             }
             

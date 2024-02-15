@@ -208,7 +208,7 @@ function drawOverScore() {
         globals.ctx.fillStyle = "white";
     }
     
-    globals.ctx.fillText("Z to HighScore", 200,360)
+    globals.ctx.fillText("Enter to HighScore", 180,360)
 }
 function drawControls() {
     //Erases Screen
