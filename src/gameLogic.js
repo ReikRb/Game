@@ -18,6 +18,7 @@ export default function update() {
 
         case Game.LOAD_MAIN_MENU:
             globals.score = 0
+
             globals.currentLevel = 0
             
             restoreDefaultValues()
@@ -37,7 +38,7 @@ export default function update() {
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
-            globals.highScore = globals.highScores[0].score
+            globals.key = true
             initLevel()
 
             initSprites()
@@ -75,7 +76,7 @@ export default function update() {
             globals.sprites = []
            
             initGameOver()
-            updateGameOverMusic()
+            
             if (globals.highScores.length != 0) {
                 sortHighScores()
                 calculatePositionHighScore()
@@ -88,8 +89,6 @@ export default function update() {
             updateSprites()
             updateSelection()
             updateScoreWheel()
- 
-            updateGameOverMusic()
             break;
 
         case Game.OVER_SCORE:
@@ -135,16 +134,6 @@ function selectOverMusic() {
     }
 }
 
-function updateGameOverMusic() {
-
-    // if (globals.currentLevel < levels.length) {
-    //     updateMusic(Sound.GAME_OVER_MUSIC)
-    // } else{
-    //     updateMusic(Sound.VICTORY_MUSIC)
-    // }
-
-    
-}
 function updateLoading() {
     
     if (globals.action.enter && globals.assetsLoaded === globals.assetsToLoad.length) {
@@ -323,8 +312,14 @@ function updateSelection() {
             }
         }
         if (globals.gameState === Game.OVER_SCORE) {
-            if (globals.action.fire) {
+            if (globals.action.enter) {
+                if (globals.currentLevel< levels.length) {
+                    globals.sounds[Sound.GAME_OVER_MUSIC].pause()
+                }else{
+                    globals.sounds[Sound.VICTORY_MUSIC].pause()
+                }
                 globals.gameState = Game.LOAD_HIGHSCORE;
+
             }
         }else if (globals.action.return) {
             globals.gameState = Game.LOAD_MAIN_MENU;
@@ -463,7 +458,6 @@ function restoreDefaultValues() {
 
     globals.mana                = 100
 
-    globals.score               = 0
     globals.scoreWheelValues    = [0,0,0] 
     globals.scorePos            = 0
     globals.highScorePage       = 0
