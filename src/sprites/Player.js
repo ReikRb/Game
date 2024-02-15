@@ -235,7 +235,6 @@ export class Player extends Sprite {
             if (!globals.inmune) {
                 for (let i = 0; i < globals.sprites.length; i++) {
                     const sprite = globals.sprites[i];
-            
                     if (sprite.isCollidingWithPlayer){
                         switch (sprite.id) {
                             case SpriteId.SKELETON:
@@ -243,6 +242,7 @@ export class Player extends Sprite {
                                 break;
                             case SpriteId.SPIKE:
                                 this.calculateDamage(sprite, 50)
+                                
                                 break;
                         }
                     }
@@ -266,12 +266,14 @@ export class Player extends Sprite {
     }
 
     calculateDamage(sprite, damage){
-        globals.life -= damage
+        if (!globals.inmune) {
+            globals.life -= damage
+            globals.inmune = true
+        }
 
         globals.currentSound = Sound.DAMAGE
 
         globals.damagedCounter++
-        globals.inmune = true
 
         this.calculateDamagedDirection (sprite)
     }

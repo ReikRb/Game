@@ -1,11 +1,11 @@
 import globals from "./globals.js"
-import { Game, State, Sound, ScoreWheel, SpriteId } from "./constants.js"
-import { initMainMenuMap, initMainMenuSprites, initSprites, initLevel, initParchmentBackground, initPower, initGravityExplosion, initLobbyPlayer, initText, initMenuParticle, initTimersTemporal, initGameOver } from "./initialize.js";
+import { Game, Sound } from "./constants.js"
+import { initMenuProps, initSprites, initLevel, initParchmentBackground, initPower,  initText, initGameOver } from "./initialize.js";
 import detectCollisions from "./collisions.js";
 import { story } from "./Text.js";
-import { createEnemiesEvent, getScores, positionMonsterEvent, postScore, timedAttackEvent, updateMusic } from "./events.js";
+import { createEnemiesEvent, getScores, positionMonsterEvent, postScore, timedAttackEvent,  } from "./events.js";
 import { levels, playerInitPos } from "./Level.js";
-import { HighScore, calculatePositionHighScore, createHighScores, sortHighScores } from "./HighScore.js";
+import { calculatePositionHighScore, sortHighScores } from "./HighScore.js";
 
 export default function update() {
     //Modifies Game Depending On Game State
@@ -21,9 +21,7 @@ export default function update() {
             globals.currentLevel = 0
             
             restoreDefaultValues()
-            initMainMenuMap()
-            initMainMenuSprites()
-            initMenuParticle()
+            initMenuProps()
             globals.gameState = Game.MAIN_MENU
             break;
 
@@ -34,19 +32,14 @@ export default function update() {
             updateSprites()
             updateSelection()
             updateParticles()
-            // updateMusic(Sound.MENU_MUSIC)
+            
             break;
 
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
-            initTimersTemporal()
-            globals.currentLevel = 0
             globals.highScore = globals.highScores[0].score
             initLevel()
-            globals.checkPointX = playerInitPos[globals.currentLevel][0]
-            globals.checkPointY = playerInitPos[globals.currentLevel][1]
-            globals.key = true
-            // globals.levelTime.value = 5
+
             initSprites()
             globals.sounds[Sound.MENU_MUSIC].pause()
             globals.sounds[Sound.GAME_MUSIC].play()
@@ -495,6 +488,6 @@ function restoreDefaultValues() {
     globals.rightText                   = 0
     globals.pageChange                  = true
 
-    globals.checkPointX = 0
-    globals.checkPointY = 0
+    globals.checkPointX = playerInitPos[globals.currentLevel][0]
+    globals.checkPointY = playerInitPos[globals.currentLevel][1]
 }

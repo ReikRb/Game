@@ -2,7 +2,6 @@ import globals from "./globals.js"
 import {Game, ParticleID, ParticleState, ScoreWheel} from "./constants.js"
 import { Tile } from "./constants.js";
 import { levels } from "./Level.js";
-import { HighScore } from "./HighScore.js";
 //Graphic Renderer Method
 export default function render(){
 
@@ -197,7 +196,7 @@ function drawGameOver() {
 function drawOverScore() {
     globals.ctx.clearRect(0,0, globals.canvas.width, globals.canvas.height)
     globals.ctxHUD.clearRect(0, 0, globals.canvasHUD.width, globals.canvasHUD.height)
-    globals.ctxHUD.fillText("HIGHSCORE", 18, 44);
+    globals.ctxHUD.fillText("HIGHSCORES", 18, 44);
     for (let i = (-2+globals.posCorrection); i < (3+globals.posCorrection); i++) {
         const highScore = globals.highScores[globals.scorePos+i];
         if (i === 0) {

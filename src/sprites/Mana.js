@@ -7,7 +7,6 @@ export class Mana extends Sprite {
         this.HUD = true
     }
     update() {
-        //Updates Key's variables State
         let dif = Math.floor(50 - (globals.mana / 4))
         this.yPos = 4 + dif;
         this.imageSet.yOffset = 90 + dif

@@ -15,8 +15,8 @@ export class Checkpoint extends Sprite {
 
         if (!this.fireworkDone) {
             if (this.used && globals.fireworkCounter < 3) {
-                globals.checkPointX = this.xPos
-                globals.checkPointY = this.yPos
+                globals.checkPointX = this.xPos -40
+                globals.checkPointY = this.yPos -40
 
                 if (this.timer === 0) {
                     initExplosion(this.xPos, this.yPos)

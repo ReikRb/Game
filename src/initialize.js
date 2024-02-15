@@ -1,16 +1,22 @@
 import globals from "./globals.js"
 import {Game, FPS, SpriteId, State, ParticleID, ParticleState, GRAVITY, Sound} from "./constants.js"
+import ImageSet from "./ImageSet.js";
+import Frames from "./Frames.js";
+import { Level, mainMenu, levels, monsters, playerInitPos } from "./Level.js";
+import Timer from "./Timer.js";
+import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
+import { keydownHandler,keyupHandler, updateMusic } from "./events.js";
+import HitBox  from "./HitBox.js";
+import Camera from "./Camera.js";
+import Line from "./Line.js";
+import { HighScore } from "./HighScore.js";
+
+            /////////SPRITE IMPORTS////////
 import { Player } from "./sprites/Player.js";
 import { Skeleton } from "./sprites/Skeleton.js";
 import { EmptyCrystal } from "./sprites/EmptyCrystal.js";
 import { Life } from "./sprites/Life.js";
 import { Crystal } from "./sprites/Crystal.js";
-import ImageSet from "./ImageSet.js";
-import Frames from "./Frames.js";
-import { Level, level1, monster1,  mainMenu, levels, monsters, playerInitPos } from "./Level.js";
-import Timer from "./Timer.js";
-import Physics, { Eliptic, PlayerPhysics, UniformHorizontalMove } from "./Physics.js";
-import { getScores, keydownHandler,keyupHandler, updateMusic } from "./events.js";
 import { Mana } from "./sprites/Mana.js";
 import { PowerHUD } from "./sprites/PowerHUD.js";
 import { KeyHUD } from "./sprites/KeyHUD.js";
@@ -23,21 +29,21 @@ import { Door } from "./sprites/Door.js";
 import { Parchment } from "./sprites/Parchment.js";
 import { Platform } from "./sprites/Platform.js";
 import { Dummy } from "./sprites/Dummy.js";
-import HitBox  from "./HitBox.js";
 import { Power } from "./sprites/Power.js";
 import { JumpVFX } from "./sprites/JumpVFX.js";
 import { Spike } from "./sprites/Spike.js";
-import Camera from "./Camera.js";
+import { LobbyPlayer } from "./sprites/LobbyPlayer.js";
+import { Coin } from "./sprites/Coin.js";
+
+            /////////PARTICLE IMPORTS////////
 import  ExplosionParticle  from "./particles/Explosion.js";
 import FireParticle from "./particles/Fire.js";
-import { LobbyPlayer } from "./sprites/LobbyPlayer.js";
 import GravityParticle from "./particles/Gravity.js";
 import BubbleParticle from "./particles/Bubble.js";
 import StarParticle from "./particles/Star.js";
-import Line from "./Line.js";
 import MenuParticle from "./particles/Menu.js";
-import { Coin } from "./sprites/Coin.js";
-import { HighScore } from "./HighScore.js";
+
+
 
 //Inits HTML elements Method
 function initHTMLelements(){
@@ -86,11 +92,6 @@ function initVars() {
 function initTimers() {
     //Sets timer to 200 with changes/0,5s.
     globals.levelTime = new Timer(200, 1)
-}
-
-function initTimersTemporal() {
-    //Sets timer to 200 with changes/0,5s.
-    globals.innerTime = new Timer(200, 1)
 }
 
 function loadAssets(){
@@ -166,6 +167,7 @@ function loadHandler() {
 function initCamera() {
     globals.camera = new Camera(0, 0)
 }
+        ///////// PARTICLE INITS/////////
 function initParticles() {
     // initExplosion()
     // initFire()
@@ -178,6 +180,7 @@ function initFire(xPos, yPos) {
         
     }
 }
+
 function createFireParticle(xPos, yPos) {
     const alpha     = 1.0
     const velocity  = Math.random() * 20 
@@ -196,6 +199,7 @@ function createFireParticle(xPos, yPos) {
 
     globals.particles.push(particle)
 }
+
 function initExplosion(xPos, yPos) {
     const numParticles  = 300
     const radius        = 0.7
@@ -252,6 +256,7 @@ function initExplosion(xPos, yPos) {
     }
     globals.fireworkCounter++
 }
+
 function initGravityExplosion(xPos, yPos) {
     const numParticles  = 200
     const radius        = 0.9
@@ -344,6 +349,7 @@ function initMenuParticle() {
     globals.particles.push(particle)
 }
 
+//////// STATE'S INIT///////
 function initGameOver() {
     if (globals.currentLevel < levels.length) {
         initLobbyPlayer(200, 190, State.DEAD_RIGHT)
@@ -352,6 +358,17 @@ function initGameOver() {
     }
     
 }
+function initMenuProps() {
+    initMainMenuMap()
+    initMainMenuSprites()
+    initMenuParticle()
+}
+
+
+
+
+
+//////// SPRITE'S INIT ///////
 function initSprites() {
     const playerX = playerInitPos[globals.currentLevel][0]
     const playerY = playerInitPos[globals.currentLevel][1]
@@ -552,6 +569,7 @@ function initPower(xPos, yPos){
     
 
 }
+
 function initSpike(xPos,yPos, type){
     let imageSet
     let hitBox
@@ -593,6 +611,7 @@ function initSpike(xPos,yPos, type){
     
 
 }
+
 function initPowerHUD(){
     //Img Properties:          initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
     const imageSet = new ImageSet(8,       4,      50,    50,     140,     54,      55)
@@ -899,6 +918,10 @@ function initDummy() {
 }
 
 
+
+
+
+///////// MAP'S INIT ////////
 function initMainMenuMap() {
         //Makes Properties of Map Img: initFil, initCol, xSize, ySize, gridSize, xOffset, yOffset
         const imageSet = new ImageSet(    0,       0,      32,    32,      32,      0,      0)
@@ -916,6 +939,7 @@ function initLevel() {
     globals.level = new Level(levels[globals.currentLevel], imageSet)
 }
 
+///////// TEXT'S INIT ////////
 function initText(text, lettersQuantity) {
     // const lines = Math.ceil(text.length / lettersQuantity)
     const words = text.split(" ")
@@ -948,7 +972,7 @@ function initText(text, lettersQuantity) {
         
     }
 }
-
+///////// SCORE'S INIT /////////
 function initScores(data) {
     globals.highScores = []
     for (let i = 0; i < data.length; i++) {
@@ -956,4 +980,4 @@ function initScores(data) {
         globals.highScores.push(highScore)
     }
 }
-export {initScores, initTimersTemporal, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initMainMenuMap, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initMenuParticle, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver }
+export {initScores, initHTMLelements, initVars, loadAssets, initSprites,initLevel, initMainMenuSprites, initParchmentBackground, initTimers, initEvents, initCamera, initParticles, initExplosion, initFire, createFireParticle, initGravityExplosion, initBubbleParticle, initStarParticle, initPlayerFireball, initPlayerAttackVFX, initJumpVFX, initCrystal, initPower, initLobbyPlayer, initSkeleton, initText, initGameOver, initMenuProps }
