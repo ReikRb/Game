@@ -40,7 +40,7 @@ export default function update() {
         case Game.LOAD_LEVEL:
             restoreDefaultValues()
             initTimersTemporal()
-            globals.currentLevel = 1
+            globals.currentLevel = 0
             globals.highScore = globals.highScores[0].score
             initLevel()
             globals.checkPointX = playerInitPos[globals.currentLevel][0]
@@ -300,15 +300,10 @@ function updateSelection() {
                 switch (globals.position) {
                     case 1:
                         globals.sprites = []
-                        // globals.sounds[Sound.MENU_MUSIC].pause()
-                        // globals.sounds[Sound.GAME_MUSIC].play()
-                        globals.sounds[Sound.GAME_MUSIC].volume = 0.4
                         globals.gameState = Game.LOAD_LEVEL;
                         break;
 
                     case 2:
-                        // globals.sounds[Sound.MENU_MUSIC].pause()
-                        // globals.sounds[Sound.STORY_MUSIC].play()
                         globals.gameState = Game.LOAD_HISTORY;
                         break;
                     case 3:
@@ -339,8 +334,6 @@ function updateSelection() {
                 globals.gameState = Game.LOAD_HIGHSCORE;
             }
         }else if (globals.action.return) {
-            // globals.sounds[Sound.STORY_MUSIC].pause()
-            // globals.sounds[Sound.MENU_MUSIC].play()
             globals.gameState = Game.LOAD_MAIN_MENU;
         }
 
@@ -356,7 +349,8 @@ function playGame() {
     updateInnerTime()
     updateMana();
     gameOverCheck()
-    updateLife();
+    lifeMinMaxCheck()
+
     updatePower();
     updateScore();
     createEnemiesEvent()
@@ -420,43 +414,15 @@ function updatePower() {
     globals.powerPreviousState = globals.power
 }
 function gameOverCheck() {
-    globals.life === -1 ? globals.gameState = Game.LOAD_GAMEOVER : false
+    globals.gameOver === true ? globals.gameState = Game.LOAD_GAMEOVER : false
 }
-function updateLife() {
-    if (globals.damagedCounter != 0) {
-        globals.damagedCounter++
-        if (globals.damagedCounter === 80) {
-            globals.damagedCounter = 0
-            globals.inmune = false
-        }
+function lifeMinMaxCheck() {
+    if (globals.life < 0) {
+        globals.life = 0
     }
-    for (let i = 0; i < globals.sprites.length; i++) {
-        const sprite = globals.sprites[i];
 
-        if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SKELETON) {
-            if (globals.damagedCounter === 0) {
-                globals.life -= 25
-                globals.currentSound = Sound.DAMAGE
-                globals.damagedCounter++
-
-            } 
-
-        } else if (sprite.isCollidingWithPlayer && sprite.id === SpriteId.SPIKE) {
-            if (globals.damagedCounter === 0) {
-                globals.life -= 50
-                globals.currentSound = Sound.DAMAGE
-                globals.damagedCounter++
-
-            }
-        }
-
-        if (globals.life < 0) {
-            globals.life = 0
-        }
-        if (globals.life > 200) {
-            globals.life = 200
-        }
-
+    if (globals.life > 200) {
+        globals.life = 200
     }
 }
 
@@ -497,6 +463,7 @@ function restoreDefaultValues() {
     globals.platforms           = []
     globals.shoots              = []
 
+    globals.gameOver            = false
     globals.life                = 200
     globals.damagedCounter      = 0
     globals.inmune              = false

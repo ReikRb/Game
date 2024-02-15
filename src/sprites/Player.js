@@ -26,7 +26,7 @@ export class Player extends Sprite {
 
         this.animationCompletionCheck()
 
-        this.damageAnimationCheck()
+        this.damageCheck()
 
                                 ///////////////////PLAYER STATES///////////////////
                                 
@@ -91,7 +91,7 @@ export class Player extends Sprite {
 
                 //Changes Game State if dead animation is completed(gameOverCheck method - GameLogic)
                 if (this.frames.frameCounter === (this.frames.framesPerState-1)) {
-                    globals.life--
+                    globals.gameOver = true
                 }
                 break;
             
@@ -191,25 +191,12 @@ export class Player extends Sprite {
         }
     }
 
-    damagedDisplacement(){
-        const displacementDirectionPower = this.state    % 2 === 0 ? -1000 : 1000
 
-        if (globals.damagedCounter === 1 && !globals.inmune) {
-            this.physics.vy = 0
-            this.physics.vy += this.physics.jumpForce/1.4
-        }
-
-        if (this.physics.vy != 0 && !globals.inmune) {
-            this.physics.vx = displacementDirectionPower
-        }  else {
-            globals.inmune = true
-        }
-    }
     
     attackMethod(){
         const xModifierVFX = this.state % 2 === 0 ? 78 : -42
         const direction = this.state    % 2 === 0 ? State.RIGHT : State.LEFT
-
+        
         //Resets shooting CD if not attacking
         if (this.previousState != this.state) {
             this.physics.shootingIntervalCounter = 0
@@ -229,31 +216,72 @@ export class Player extends Sprite {
         }
     }
 
-    damageAnimationCheck(){
-        
-        if (!globals.inmune) {
-            for (let i = 0; i < globals.sprites.length; i++) {
-                const sprite = globals.sprites[i];
+    damagedDisplacement(){
+        const displacementDirectionPower = this.state    % 2 === 0 ? -1000 : 1000
 
-                if (sprite.isCollidingWithPlayer) {
-
-                    if ( sprite.id === SpriteId.SKELETON || sprite.id === SpriteId.SPIKE) {
-
-                        if ((this.xPos+this.hitBox.xOffset + (this.hitBox.xSize/2)) > (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2)) ) {
-                            
-                            this.state = State.DAMAGED_LEFT
-
-                        } else {
-                            this.state = State.DAMAGED_RIGHT
-                        }
-                    }  
-                }
-
-            }
+        if (globals.damagedCounter === 2 ) {
+            this.physics.vy = 0
+            this.physics.vy += this.physics.jumpForce/1.4
             
         }
+        if(globals.damagedCounter > 1 && globals.damagedCounter < 25){
+            this.physics.vx = displacementDirectionPower
+        }
+        
     }
 
+    damageCheck(){
+        
+            if (!globals.inmune) {
+                for (let i = 0; i < globals.sprites.length; i++) {
+                    const sprite = globals.sprites[i];
+            
+                    if (sprite.isCollidingWithPlayer){
+                        switch (sprite.id) {
+                            case SpriteId.SKELETON:
+                                this.calculateDamage(sprite, 25)
+                                break;
+                            case SpriteId.SPIKE:
+                                this.calculateDamage(sprite, 50)
+                                break;
+                        }
+                    }
+                }
+
+            } else {
+                globals.damagedCounter++
+            if (globals.damagedCounter === 80) {
+                globals.damagedCounter = 0
+                globals.inmune = false
+
+            } else {
+                if (globals.damagedCounter <25) {
+                    this.state = this.previousState   
+                }
+            }
+        }
+
+
+
+    }
+
+    calculateDamage(sprite, damage){
+        globals.life -= damage
+
+        globals.currentSound = Sound.DAMAGE
+
+        globals.damagedCounter++
+        globals.inmune = true
+
+        this.calculateDamagedDirection (sprite)
+    }
+    
+    calculateDamagedDirection(sprite){
+        (this.xPos+this.hitBox.xOffset     +   (this.hitBox.xSize/2)) > 
+        (sprite.xPos+sprite.hitBox.xOffset + (sprite.hitBox.xSize/2)) ?
+        this.state = State.DAMAGED_LEFT : this.state = State.DAMAGED_RIGHT
+    }
+    
     animationCompletionCheck(){
         if        (this.previousState === State.ATTACK_RIGHT && this.frames.frameCounter / (this.frames.framesPerState-1) !=  1) {
             this.state = State.ATTACK_RIGHT
@@ -269,11 +297,7 @@ export class Player extends Sprite {
             this.frames.frameCounter = 0
             this.frames.frameChangeCounter = 0
             this.physics.shootingIntervalCounter = 0
-        } else if (this.previousState === State.DAMAGED_RIGHT && !globals.inmune){
-            this.state = State.DAMAGED_RIGHT
-        } else if (this.previousState === State.DAMAGED_LEFT && !globals.inmune){
-            this.state = State.DAMAGED_LEFT
-        }
+        } 
     }
 
     readKeyboardAndAssignState() {

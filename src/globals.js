@@ -104,6 +104,7 @@ export default {
     checkPointX:0,
     checkPointY:0,
     posted: false,
-    loadingCounter: 0
+    loadingCounter: 0,
+    gameOver: false
     
 }
