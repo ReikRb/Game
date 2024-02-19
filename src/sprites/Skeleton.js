@@ -72,7 +72,9 @@ export class Skeleton extends Sprite {
                     let index = globals.sprites.indexOf(this)
                     globals.sprites.splice(index, 1)
                     globals.score += this.score
-                    initCrystal(this.xPos, this.yPos)
+                    const random = Math.floor(Math.random() * 4)
+                    if (random === 0) 
+                        initCrystal(this.xPos, this.yPos)
 
                 }
                 break;

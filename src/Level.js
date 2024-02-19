@@ -449,6 +449,6 @@ const monsters = [monster1, monster2]
 
 const playerInitPos = [[230, 914], [530, 330]]
 
-const eventPos = [[1242,1522], [210, 2482]]
+const eventPos = [[1242,1650], [210, 2482]]
 
 export {Level, level1, monster1, mainMenu, levels, monsters, playerInitPos, eventPos}
