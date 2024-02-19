@@ -191,8 +191,6 @@ export class Player extends Sprite {
         }
     }
 
-
-    
     attackMethod(){
         const xModifierVFX = this.state % 2 === 0 ? 78 : -42
         const direction = this.state    % 2 === 0 ? State.RIGHT : State.LEFT
@@ -353,7 +351,3 @@ export class Player extends Sprite {
     }
 
 }
-
-
-
-//In-Game Sprites Functions
