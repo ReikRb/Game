@@ -192,7 +192,7 @@ if (player.xPos > spawnPosX         &&
 }
 
 export function getScores() {
-    const url = "./server/routes/getAllClassic.php"
+    const url = "https://woundsvalleyinn.vercel.app/server/routes/getAllClassic.php"
     const request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
@@ -230,7 +230,7 @@ export function postScore(){
         globals.highScores.push(newHighScore)
             
         const dataToSend ='name=' + newHighScore.name + '&score=' + newHighScore.score
-        const url = "./server/routes/postClassic.php"
+        const url = "https://woundsvalleyinn.vercel.app/server/routes/postClassic.php"
         const request = new XMLHttpRequest();
     
         request.open('POST', url, true)
