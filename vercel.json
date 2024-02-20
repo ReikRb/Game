@@ -1,8 +1,11 @@
 {
-    "functions": {
-        "api/**/*.php": { "runtime": "vercel-php@0.6.0" }
-    },
-    "routes": [
-        { "src": "/(.*)", "dest": "/index.html" }
-    ]
-}
+    "build": {
+      "env": {
+        "DB_HOST": "ep-snowy-hill-a2b4lgn2-pooler.eu-central-1.aws.neon.tech",
+        "DB_USER": "unai.roca",
+        "DB_PASSWORD": "RLv3DMOFl2fI",
+        "DB_DATABASE": "scores"
+      }
+    }
+  }
+  
