@@ -192,7 +192,7 @@ if (player.xPos > spawnPosX         &&
 }
 
 export function getScores() {
-    const url = "https://woundsvalleyinn.vercel.app/server/routes/getAllClassic.php"
+    const url = "./server/routes/getAllClassic.php"
     const request = new XMLHttpRequest();
 
     request.onreadystatechange = function () {
